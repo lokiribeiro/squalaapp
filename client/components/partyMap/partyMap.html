@@ -1,0 +1,21 @@
+<style>
+    .angular-google-map-container{height: 300px; }
+</style>
+
+<fieldset>
+    <legend>Party Map</legend>
+    <ui-gmap-google-map center="$ctrl.map.center" zoom="$ctrl.map.zoom" events="$ctrl.map.events">
+        <ui-gmap-marker coords="$ctrl.location"
+                        options="$ctrl.marker.options"
+                        events="$ctrl.marker.events" idKey="$ctrl.map.center">
+        </ui-gmap-marker>
+    </ui-gmap-google-map>
+</fieldset>
+
+<!--<button ng-click="$ctrl.getPartyLocation()">test</button>-->
+
+<!-- DEBUG INFO -->
+<!--<div>$ctrl.location: {{ $ctrl.location }}</div>-->
+<!--<div>map.center: {{ map.center  }}</div>-->
+<!--<div>marker: {{ marker  }}</div>-->
+<!-- /DEBUG INFO -->

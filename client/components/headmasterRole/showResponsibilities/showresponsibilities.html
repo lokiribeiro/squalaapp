@@ -1,0 +1,51 @@
+<div>
+  <md-toolbar class="md-primary md-hue-2">
+      <div class="md-toolbar-tools">
+        <img ng-src="../../assets/img/headmaster_icon.png" style="margin: auto 3px auto 0;" >
+        <a href="/Headmaster/HDMr/{{$root.userID}}" >
+        <md-tooltip md-direction="bottom">
+          Back to schools
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/white_back24.svg"></md-icon>
+        </a>
+        <h2 class="md-flex">Edit Responsibilities</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Apps" ng-click="$mdOpenMenu($event)">
+          <md-tooltip md-direction="bottom">
+            Help
+          </md-tooltip>
+          <md-icon md-svg-icon="../../assets/img/white_help24.svg"></md-icon>
+        </md-button>
+      </div>
+  </md-toolbar>
+<!-- <div layout="column" flex="100" flex-gt-sm="20" layout-align="start start" style="padding-bottom: 32px; padding-top: 10px; background-color: #ccc;" ng-cloak>
+</div> -->
+<div class="anim-slide-below-fade" data-anim-speed="500">
+<showresp></showresp>
+</div>
+
+<div ng-cloak>
+<md-fab-speed-dial ng-hide="demo.hidden" md-direction="up" md-scale md-open="demo.isOpen"
+                       class="md-scale md-fab-bottom-right" ng-class="{ 'md-hover-full': demo.hover }"
+                       ng-mouseenter="demo.isOpen=true" ng-mouseleave="demo.isOpen=false" ng-cloak style="position: fixed !important;">
+      <md-fab-trigger>
+        <md-button aria-label="menu" class="md-fab md-accent">
+          <md-tooltip md-direction="left" md-visible="tooltipVisible">Add</md-tooltip>
+          <md-icon md-svg-src="../../assets/img/white_add24.svg" aria-label="add"></md-icon>
+        </md-button>
+      </md-fab-trigger>
+      <md-fab-actions>
+        <div ng-repeat="item in items">
+          <md-button aria-label="{{item.name}}" class="md-fab md-raised md-mini md-accent"
+                     ng-click="openDialog($event, item)">
+            <md-tooltip md-direction="{{item.direction}}" md-visible="tooltipVisible"
+                        md-autohide="false">
+              {{item.name}}
+            </md-tooltip>
+            <md-icon md-svg-src="{{item.icon}}" aria-label="{{item.name}}"></md-icon>
+          </md-button>
+        </div>
+      </md-fab-actions>
+</md-fab-speed-dial>
+</div>
+</div>

@@ -1,0 +1,35 @@
+<fieldset>
+    <legend>Party Details</legend>
+    <p>
+        <div>Party name:</div>
+        <input type="text" ng-model="party.name" ng-disabled="!$root.isEditable(party)"/>
+    </p>
+    <p>
+        <div>Party description:</div>
+        <input type="text" ng-model="party.description" ng-disabled="!$root.isEditable(party)"/>
+    </p>
+
+    <p>
+        Public:
+        <input type="checkbox" ng-model="party.public"
+               ng-disabled="!$root.isEditable(party)" ng-change="$root.setPrivacity(party._id, party.public)"/>
+    </p>
+    <p>
+        <button ng-click="updateParty(party)" ng-disabled="!$root.isEditable(party)">Save</button>
+    </p>
+</fieldset>
+
+<party-uninvited party="party"></party-uninvited>
+
+<party-invited party="party"></party-invited>
+
+<party-map location="party.location"></party-map>
+
+<navigation></navigation>
+
+<!-- DEBUG INFO -->
+<!--<p>party.location: {{ party.location }}</p>-->
+<!--<p>user id: {{ $root.userLoggedIn}}</p>-->
+<!--<div>users: {{ users  }}</div>-->
+<!-- /DEBUG INFO -->
+

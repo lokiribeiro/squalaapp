@@ -1,0 +1,168 @@
+<div layout="row" layout-align="start start" layout-fill layout-wrap flex layout-padding class="inset">
+  <div flex-gt-md="20" flex="100" flex-gt-xs="100">
+    <md-card>
+    <md-list flex layout-fill >
+        <md-subheader layout="row" layout-align="start start">
+          <md-icon md-svg-icon="../../assets/img/black_roleadd24.svg"></md-icon>
+          {{totalRoles}} ROLES
+          <md-button ng-show="show" class="md-icon-button" aria-label="more" ng-click="null">
+            <md-icon ng-click="showMore()" md-svg-icon="../../assets/img/black_expandmore24.svg"></md-icon>
+          </md-button>
+          <md-button ng-hide="show" class="md-icon-button" aria-label="less" ng-click="null">
+            <md-icon ng-click="showMore()" md-svg-icon="../../assets/img/black_expandless24.svg"></md-icon>
+          </md-button>
+        </md-subheader>
+        <md-list-item class="md-2-line" ng-click="showRole(role)" ng-repeat="role in roles" ng-hide="show">
+          <div class="md-list-item-text" layout="column" ng-hide="role.role == selected.role">
+            <h3>{{role.role}}</h3>
+          </div>
+          <div class="md-list-item-text md-primary" layout="column" ng-show="role.role == selected.role">
+            <h2 class="md-primary">{{role.role}}</h2>
+          </div>
+        </md-list-item>
+    </md-list>
+    <md-toolbar class="md-table-toolbar md-accent" ng-hide="show" flex>
+      <div class="md-toolbar-tools" layout="row" layoug-align="end end">
+        <md-button class="md-accent md-raised" aria-label="create" ng-click="openDialogs($event, item)">
+          CREATE ROLE
+        </md-button>
+        <span flex></span>
+        <md-button ng-hide="page == 1" class="md-icon-button" aria-label="prev" ng-click="navLeft()">
+          <md-tooltip md-direction="bottom">
+            Previous
+          </md-tooltip>
+          <md-icon md-svg-icon="../../assets/img/white_chevronleft24.svg"></md-icon>
+        </md-button>
+        <md-button ng-hide="last" class="md-icon-button" aria-label="next" ng-click="navRight()" >
+          <md-tooltip md-direction="bottom">
+            Next
+          </md-tooltip>
+          <md-icon ng-click="null" md-svg-icon="../../assets/img/white_chevronright24.svg"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+  </md-card>
+</div>
+
+
+<div flex-gt-md="80" flex="100" flex-gt-xs="100">
+  <md-card>
+    <md-toolbar class="md-table-toolbar md-default" flex ng-show="selected.role === ''">
+      <div class="md-toolbar-tools" layout-align="start center">
+          <p>No selected role        </p>
+    </div>
+    </md-toolbar>
+  <md-toolbar class="md-table-toolbar md-accent" flex  ng-hide="selected.role === ''">
+  <div class="md-toolbar-tools" layout-align="space-between center">
+    <div ng-model="selected" flex="80">{{selected.role}}</div>
+    <md-button class="md-icon-button" aria-label="edit" ng-hide="selected.role == ''" ng-click="openProfile($event, selected)" >
+      <md-tooltip md-direction="bottom">
+        Edit Role
+      </md-tooltip>
+      <md-icon md-svg-icon="../../assets/img/white_edit24.svg"></md-icon>
+    </md-button>
+    <md-button class="md-icon-button" aria-label="delete" ng-hide="selected.role == ''" ng-click="openDelete($event, selected)" >
+      <md-tooltip md-direction="bottom">
+        Delete
+      </md-tooltip>
+      <md-icon md-svg-icon="../../assets/img/black_delete24.svg"></md-icon>
+    </md-button>
+  </div>
+  </md-toolbar>
+
+  <md-tabs md-dynamic-height md-border-bottom  ng-hide="selected.role === ''">
+        <md-tab label="Users">
+            <!--<h2 class="md-display-2">No users yet.</h2>-->
+            <md-table-container ng-hide="selected.role === ''">
+              <table md-table md-row-select ng-model="selected2" md-progress="promise" flex>
+                <thead md-head md-order="query.order" md-on-reorder="profiles" class="md-head">
+                  <tr md-row>
+                    <th md-column ><span></span></th>
+                    <th md-column md-order-by="profile.profiles_firstname" ng-click="changeSort()" ><span>Complete Name</span></th>
+                    <th md-column ><span>Email</span></th>
+                    <th md-column ><span>School Branch</span></th>
+                    <th md-column ><span>Job Title</span></th>
+                  </tr>
+                </thead>
+                <tbody md-body>
+                  <tr md-row md-select="profile" md-select-id="profile._id" md-auto-select ng-repeat="profile in profiles" ng-cloak>
+                    <td md-cell><img ng-src="{{profile.profiles_profilephoto}}" class="profile-pic2" alt="{{profile.profiles_firstname}}" /></td>
+                    <td md-cell>{{profile.profiles_firstname}} {{profile.profiles_lastname}}</td>
+                    <td md-cell>{{profile.profiles_email}}</td>
+                    <td md-cell>{{profile.profiles_branch}}</td>
+                    <td md-cell>{{profile.profiles_jobTitle}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </md-table-container>
+            <md-table-pagination ng-hide="selected.role === ''" md-page="page2" md-total="{{totalProfiles}}" md-on-paginate="profiles" md-page-select></md-table-pagination>
+            <md-toolbar class="md-table-toolbar md-default" ng-hide="filter.show" flex>
+            <div class="md-toolbar-tools">
+              <md-button class="md-default md-raised" aria-label="create" ng-click="assignUser($event, selected)">
+                ASSIGN USER
+              </md-button>
+              <div flex="" class="flex"></div>
+              <md-button class="md-icon-button" aria-label="Search" ng-click="filterShow()">
+                <md-icon md-svg-icon="../../assets/img/black_search24.svg"></md-icon>
+              </md-button>
+            </div>
+            </md-toolbar>
+            <md-toolbar class="md-table-toolbar md-default"  flex="100" ng-show="filter.show">
+            <div class="md-toolbar-tools">
+              <form name="filter.form" flex>
+                <md-input-container md-no-float class="md-block">
+                <md-icon md-svg-icon="../../assets/img/black_search24.svg"></md-icon>
+                <input type="text" ng-model="searchText" placeholder="search">
+                </md-input-container>
+              </form>
+              <md-button class="md-icon-button" aria-label="close" ng-click="closeFilter()">
+              <md-tooltip md-direction="bottom">
+                Close
+              </md-tooltip>
+              <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
+              </md-button>
+            </div>
+            </md-toolbar>
+            <md-toolbar class="md-table-toolbar md-accent " flex="100" ng-show="selected2.length">
+            <div class="md-toolbar-tools" layout-align="space-between center">
+              <div ng-model="selected" flex="80">{{selected2[0].profiles_firstname}} {{selected2[0].profiles_lastname}} selected</div>
+              <md-button class="md-icon-button" aria-label="edit" ng-click="openProfile2(selected2)">
+                <md-tooltip md-direction="bottom">
+                  Edit Account
+                </md-tooltip>
+                <md-icon md-svg-icon="../../assets/img/white_edit24.svg"></md-icon>
+              </md-button>
+              <md-button class="md-accent md-raised" aria-label="unassign" ng-click="unassignUser($event, selected2)">
+                UNASSIGN USER
+              </md-button>
+            </div>
+            </md-toolbar>
+        </md-tab>
+        <md-tab label="Responsibilities" ng-hide="selected.role === ''">
+          <md-content class="md-padding">
+            <!-- <h1 class="md-display-2">Tab Two</h1>-->
+            <md-subheader class="md-no-sticky">View and modify responsibilities</md-subheader>
+              <md-list-item ng-click="null" ng-repeat="responsibility in responsibilities track by $index">
+                <p > {{ responsibility.responsibilityname }} </p>
+                <md-switch class="md-accent" ng-model="enabled[$index]" ng-change="switchResponsibility(responsibility, enabled[$index], selected._id)"></md-switch>
+              </md-list-item>
+          </md-content>
+        </md-tab>
+        <md-tab label="Apps" ng-hide="selected.role === ''">
+          <md-content class="md-padding">
+            <!-- <h1 class="md-display-2">Tab Two</h1>-->
+            <md-subheader class="md-no-sticky">Link Squala Apps to Role</md-subheader>
+              <md-list-item ng-click="null" ng-repeat="app in apps track by $index">
+                <span flex>
+                <p ><img ng-src="{{app.loc}}" style="margin: auto 3px auto 0;" >  <b flex="10"> {{ app.appId }}: </b>
+                 {{app.desc}}
+               </p>
+              </span>
+              <md-switch class="md-accent" ng-model="installed[$index]"  ng-change="switchApp(app, installed[$index], selected._id)"></md-switch>
+              </md-list-item>
+          </md-content>
+        </md-tab>
+      </md-tabs>
+</md-card>
+</div>
+</div>

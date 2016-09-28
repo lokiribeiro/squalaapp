@@ -1,0 +1,22 @@
+<style>
+    .red {color: red}
+</style>
+<div ng-if="$root.userInvited($ctrl.party) && !isRsvpResponded($ctrl.party)">
+    <div class="red">Invited: {{ $root.userInvited($ctrl.party)  }}</div>
+    <div class="red">Assistance:{{ userAssistance($ctrl.party)  }}</div>
+    <div class="red">You are invited to this private party. Response:</div>
+    <div>
+        <button ng-click="going($ctrl.party)">Yes</button>
+        <button ng-click="notGoing($ctrl.party)">No</button>
+    </div>
+</div>
+<div ng-if="$root.userInvited($ctrl.party) && isRsvpResponded($ctrl.party) && userAssistance($ctrl.party)">
+    <div class="red">Invited: {{ $root.userInvited($ctrl.party)  }}</div>
+    <div class="red">Assistance:{{ userAssistance($ctrl.party)  }}</div>
+    <button ng-click="notGoing($ctrl.party)">Deny invitation</button>
+</div>
+<div ng-if="$root.userInvited($ctrl.party) && isRsvpResponded($ctrl.party) && !userAssistance($ctrl.party)">
+    <div class="red">Invited: {{ $root.userInvited($ctrl.party)  }}</div>
+    <div class="red">Assistance:{{ userAssistance($ctrl.party)  }}</div>
+    <button ng-click="going($ctrl.party)">Accept invitation</button>
+</div>

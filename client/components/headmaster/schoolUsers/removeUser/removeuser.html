@@ -1,0 +1,33 @@
+<md-dialog style="opacity: 1 !important;" aria-label="Create a new user">
+  <form name="createuserForm" layout="column" layout-align="start center" layout-fill>
+    <md-dialog-content layout-wrap layout-fill layout-padding flex>
+    <div layout="row" flex>
+      <h2 style="font-weight:normal" ng-hide="createdNow">Remove user from group </h2>
+      <h2 style="font-weight:normal" ng-if="done">Processing</h2>
+      <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> User removed</h2>
+      <span flex></span>
+        <md-button class="md-icon-button" aria-label="Apps" ng-click="closeDialog()" style="position:absolute; top:0; right:0; !important" ng-hide="done">
+        <md-tooltip md-direction="bottom">
+          Close
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
+        </md-button>
+    </div>
+    <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+    <!-- end here -->
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-align="space-between center" layout-fill >
+      <!-- hide these -->
+    <md-button ng-hide="createdNow" ng-click="closeDialog()">
+      CANCEL
+    </md-button>
+      <md-button type="submit" ng-click="removeNow()" ng-hide="createdNow" class="md-primary">
+        REMOVE
+      </md-button>
+      <!-- end hide -->
+        <md-button ng-if="createdNows" ng-click="closeDialog()" class="md-primary">
+          DONE
+        </md-button>      
+    </md-dialog-actions>
+  </form>
+</md-dialog>

@@ -1,0 +1,164 @@
+<md-toolbar class="md-primary md-hue-2 ">
+  <div flex flex-gt-sm="85" >
+    <div class="md-toolbar-tools">
+      <img ng-src="../../assets/img/headmaster_icon.png" style="margin: auto 3px auto 0;" >
+      <h2 class="md-flex" hide-xs>Headmaster</h2>
+      <h2 class="md-flex" style="border-left: 1px solid rgba(255,255,255,0.2) !important; margin-left: 24px !important; padding-left: 24px !important;">School Profile</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="Apps" ng-click="openRole()">
+        <md-tooltip md-direction="bottom">
+          View user roles
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/white_roleadd24.svg"></md-icon>
+      </md-button>
+      <md-button class="md-icon-button" aria-label="Apps" ng-click="openResp()">
+        <md-tooltip md-direction="bottom">
+          View responsibilities
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/white_respadd24.svg"></md-icon>
+      </md-button>
+    </div>
+  </div>
+</md-toolbar>
+
+<div class="anim-slide-below-fade" data-anim-speed="500">
+<md-content layout="row" layout-align="center center" layout-padding style="background-color:transparent !important;" layout-fill>
+  <div layout="column" flex="100" flex-gt-sm="70" layout-align="start start" layout-padding layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 10px;"  ng-cloak>
+      <div flex="100" flex-gt-sm="60" layout-padding layout-fill>
+      <div layout="column"  layout-fill layout-padding>
+      <md-expansion-panel md-component-id="panelOne" flex="100" flex-gt-sm="60" layout="column"  layout-fill style="padding: 0 !important;" ng-repeat="headmaster in headmasters" >
+          <md-expansion-panel-collapsed layout="row" layout-align="center center" layout-fill>
+            <div class="md-title">Profile</div>
+            <div class="md-summary">Edit general and other organization-wide details.</div>
+            <md-expansion-panel-icon></md-expansion-panel-icon>
+          </md-expansion-panel-collapsed>
+          <md-expansion-panel-expanded>
+            <md-expansion-panel-header ng-click="$panel.collapse()" >
+              <div class="md-title">School Profile</div>
+              <div class="md-summary"></div>
+              <md-expansion-panel-icon></md-expansion-panel-icon>
+            </md-expansion-panel-header>
+            <md-expansion-panel-content>
+              <form name="createuserForm">
+              <md-content layout="row" layout-align="start start" layout-wrap flex style="overflow: hidden;">
+                <span layout="column" flex="20"><h4>Organization Name</h4></span>
+                <span layout="column" flex>
+                <md-input-container  class="md-block">
+                  <label>Name</label>
+                    <input ng-model="headmaster.name" type="text" disabled>
+                </md-input-container>
+                </span>
+              </md-content>
+              <md-content layout="row" layout-align="start start" layout-wrap flex style="overflow: hidden;">
+                <span layout="column" flex="20"><h4>Organization Type</h4></span>
+                <span layout="column" flex>
+                  <md-input-container class="md-block">
+                    <label>Org Type</label>
+                    <md-select ng-model="headmaster.orgType" placeholder="Select Type" class="md-no-underline" disabled>
+                         <md-option value="primary">Primary/Secondary Education</md-option>
+                         <md-option value="higher">Higher Education</md-option>
+                         <md-option value="nonprofit">Not for Profit</md-option>
+                     </md-select>
+                  </md-input-container>
+                </span>
+              </md-content>
+              <md-content layout="row" layout-align="start start" layout-wrap flex style="overflow: hidden;">
+                <span layout="column" flex="20"><h4>Contact Information</h4></span>
+                <span layout="column" flex>
+                  <p> Designate contact email addresses for service communications, payment notifications and any email subscriptions.
+                  </p>
+                  <md-input-container class="md-block">
+                    <label>Primary administrator account</label>
+                    <input required type="email" name="clientEmail" disabled ng-model="headmaster.primaryEmail"
+                      minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+                    <div ng-messages="projectForm.clientEmail.$error" role="alert">
+                      <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                        Your email must be between 10 and 100 characters long and look like an e-mail address.
+                      </div>
+                    </div>
+                  </md-input-container>
+                  <md-input-container class="md-block">
+                    <label>Secondary email address</label>
+                    <input required type="email" name="clientEmail" disabled ng-model="headmaster.secondaryEmail"
+                      minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+                    <div ng-messages="projectForm.clientEmail.$error" role="alert">
+                      <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                        Your email must be between 10 and 100 characters long and look like an e-mail address.
+                      </div>
+                    </div>
+                  </md-input-container>
+                  <p> Note: To reset an administrator password, use the password recovery options.
+                  </p>
+                </span>
+              </md-content>
+              <md-content layout="row" layout-align="start start" layout-wrap flex style="overflow: hidden;">
+                <span layout="column" flex="20"><h4>Support Message</h4></span>
+                <span layout="column" flex>
+                  <p> Provide support contact information in case users need help
+                  </p>
+                  <md-input-container class="md-block">
+                    <label>Support account</label>
+                    <input required type="email" name="clientEmail" disabled ng-model="headmaster.supportEmail"
+                      minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+                    <div ng-messages="projectForm.clientEmail.$error" role="alert">
+                      <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                        Your email must be between 10 and 100 characters long and look like an e-mail address.
+                      </div>
+                    </div>
+                  </md-input-container>
+                </span>
+              </md-content>
+              </form>
+            </md-expansion-panel-content>
+            <md-expansion-panel-footer ng-hide="true">
+              <md-toolbar class="md-accent" layout="row" layout-align="end center">
+                <!-- <md-button ng-click="createSchool(school)" class="md-accent md-raised">
+                  Edit
+                </md-button> -->
+              </md-toolbar>
+            </md-expansion-panel-footer>
+          </md-expansion-panel-expanded>
+      </md-expansion-panel>
+    </div>
+  </div>
+      <div flex="100" flex-gt-sm="60" layout="column"  layout-fill layout-padding>
+        <h1 style="font-weight:normal; color:#555; margin-bottom: 0 !important;" >Parent School</h1>
+        <parentschool></parentschool>
+      </div>
+  <!-- Branch Schools Table -->
+
+      <div flex="100" flex-gt-sm="60" layout="column"  layout-fill>
+        <branchschools></branchschools>
+      </div>
+
+
+
+
+    </div>
+</md-content>
+
+<div ng-cloak>
+<md-fab-speed-dial ng-hide="demo.hidden" md-direction="up" md-scale md-open="demo.isOpen"
+                       class="md-scale md-fab-bottom-right" ng-class="{ 'md-hover-full': demo.hover }"
+                       ng-mouseenter="demo.isOpen=true" ng-mouseleave="demo.isOpen=false" ng-cloak style="position: fixed !important;">
+      <md-fab-trigger>
+        <md-button aria-label="menu" class="md-fab md-accent">
+          <md-tooltip md-direction="left" md-visible="tooltipVisible">Add</md-tooltip>
+          <md-icon md-svg-src="../../assets/img/white_add24.svg" aria-label="add"></md-icon>
+        </md-button>
+      </md-fab-trigger>
+      <md-fab-actions>
+        <div ng-repeat="item in items">
+          <md-button aria-label="{{item.name}}" class="md-fab md-raised md-mini md-accent"
+                     ng-click="openDialog($event, item)">
+            <md-tooltip md-direction="{{item.direction}}" md-visible="tooltipVisible"
+                        md-autohide="false">
+              {{item.name}}
+            </md-tooltip>
+            <md-icon md-svg-src="{{item.icon}}" aria-label="{{item.name}}"></md-icon>
+          </md-button>
+        </div>
+      </md-fab-actions>
+</md-fab-speed-dial>
+</div>
+</div>

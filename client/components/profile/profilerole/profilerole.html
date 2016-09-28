@@ -1,0 +1,10 @@
+<div ng-repeat="role in roles">
+        <div class="md-title">Role: {{role.role}}</div>
+        <div class="md-summary"></div>
+
+        <md-subheader class="md-no-sticky">View role responsibilities</md-subheader>
+        <md-list-item ng-click="null" ng-repeat="responsibility in responsibilities track by $index">
+          <p > {{ responsibility.responsibilityname }} </p>
+          <md-switch class="md-accent" ng-model="enabled[$index]" ></md-switch>
+        </md-list-item>
+</div>

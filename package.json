@@ -1,0 +1,26 @@
+{
+  "name": "SqualaApp",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-animate": "^1.5.8",
+    "angular-aria": "^1.5.8",
+    "angular-google-maps": "^2.3.3",
+    "angular-material": "^1.1.1",
+    "angular-material-data-table": "^0.10.9",
+    "angular-material-expansion-panel": "^0.6.1",
+    "angular-meteor": "^1.3.11",
+    "angular-simple-logger": "^0.1.7",
+    "angular-ui-router": "^0.2.18",
+    "angular-utils-pagination": "^0.11.1",
+    "material-avatar": "^0.3.4",
+    "meteor-node-stubs": "~0.2.0",
+    "please-wait": "0.0.5"
+  },
+  "devDependencies": {
+    "angular-ui-router-anim-in-out": "^1.0.2"
+  }
+}

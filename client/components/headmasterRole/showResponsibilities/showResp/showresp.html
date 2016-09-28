@@ -1,0 +1,61 @@
+<div layout="row" layout-align="center center" layout-wrap layout-fill>
+  <md-card flex="70" flex-gt-sm="60">
+  <md-toolbar class="md-table-toolbar md-accent" ng-hide="filter.show" flex>
+  <div class="md-toolbar-tools">
+    <h2 class="md-title">{{totalResponsibilities == 0 ? '0' : totalResponsibilities}} Responsibilities</h2>
+    <div flex="" class="flex"></div>
+    <md-button class="md-icon-button" aria-label="Search" ng-click="filterShow()">
+      <md-icon md-svg-icon="../../assets/img/white_search24.svg"></md-icon>
+    </md-button>
+  </div>
+  </md-toolbar>
+  <md-toolbar class="md-table-toolbar md-default"  flex="100" ng-show="filter.show">
+  <div class="md-toolbar-tools">
+    <form name="filter.form" flex>
+      <md-input-container md-no-float class="md-block">
+      <md-icon md-svg-icon="../../assets/img/black_search24.svg"></md-icon>
+      <input type="text" ng-model="searchText" placeholder="search">
+      </md-input-container>
+    </form>
+    <md-button class="md-icon-button" aria-label="close" ng-click="closeFilter()">
+    <md-tooltip md-direction="bottom">
+      Close
+    </md-tooltip>
+    <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
+    </md-button>
+  </div>
+  </md-toolbar>
+  <md-toolbar class="md-table-toolbar md-accent " flex="100" ng-show="selected.length">
+  <div class="md-toolbar-tools" layout-align="space-between stretch">
+    <div ng-model="selected" flex="80">{{selected[0].responsibilityname}}</div>
+    <md-button class="md-icon-button" aria-label="edit" ng-click="openEdit($event, selected)" >
+      <md-tooltip md-direction="bottom">
+        Edit
+      </md-tooltip>
+      <md-icon md-svg-icon="../../assets/img/white_edit24.svg"></md-icon>
+    </md-button>
+    <md-button class="md-icon-button" aria-label="delete" ng-click="openDialog($event, selected)" >
+      <md-tooltip md-direction="bottom">
+        Delete
+      </md-tooltip>
+      <md-icon md-svg-icon="../../assets/img/black_delete24.svg"></md-icon>
+    </md-button>
+  </div>
+  </md-toolbar>
+<md-table-container>
+  <table md-table md-row-select ng-model="selected" md-progress="promise" flex>
+    <thead md-head md-order="query.order" md-on-reorder="responsibilities" class="md-head">
+      <tr md-row>
+        <th md-column ><span>Description</span></th>
+      </tr>
+    </thead>
+    <tbody md-body>
+      <tr md-row md-select="responsibility" md-select-id="responsibility._id" md-auto-select ng-repeat="responsibility in responsibilities" ng-cloak>
+        <td md-cell>{{responsibility.responsibilityname}}</td>
+      </tr>
+    </tbody>
+  </table>
+</md-table-container>
+<md-table-pagination md-limit="perPage" md-limit-options="[5, 10, 15]" md-page="page" md-total="{{totalResponsibilities}}" md-on-paginate="users" md-page-select></md-table-pagination>
+</md-card>
+</div>

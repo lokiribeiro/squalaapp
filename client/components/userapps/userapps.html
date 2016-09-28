@@ -1,0 +1,22 @@
+<md-expansion-panel md-component-id="panelTwo" layout-fill>
+    <md-expansion-panel-collapsed layout="row" layout-align="center center" layout-fill>
+      <div class="md-title">{{totalUserapps}} Squala Apps</div>
+      <div class="md-summary">View active Squala apps and services.</div>
+      <md-expansion-panel-icon></md-expansion-panel-icon>
+    </md-expansion-panel-collapsed>
+    <md-expansion-panel-expanded>
+      <md-expansion-panel-header ng-click="$panel.collapse()" >
+        <div class="md-title">{{totalUserapps}} Squala Apps Enabled</div>
+        <div class="md-summary"></div>
+        <md-expansion-panel-icon></md-expansion-panel-icon>
+      </md-expansion-panel-header>
+      <md-expansion-panel-content>
+        <span layout = "row" layout-align="start start" layout-fill layout-wrap>
+        <span flex="33" ng-repeat="userapp in userapps" layout="column" layout-align="start center">
+            <img ng-src="{{userapp.appLoc}}" style="margin: auto 3px auto 0;" >
+            <span class="md-subhead">{{userapp.appName}}</span>
+        </span>
+      </span>
+      </md-expansion-panel-content>
+    </md-expansion-panel-expanded>
+</md-expansion-panel>

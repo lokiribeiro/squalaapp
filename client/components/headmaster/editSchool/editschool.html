@@ -1,0 +1,75 @@
+<md-toolbar class="md-primary md-hue-2" layout="row" layout-align="center center">
+  <div flex="100" flex-gt-sm="70" layout="column" layout-fill>
+    <div class="md-toolbar-tools">
+      <a href="/Headmaster/HDMr/{{$root.userID}}" >
+      <md-tooltip md-direction="bottom">
+        Back
+      </md-tooltip>
+      <md-icon md-svg-icon="../../assets/img/white_backarrow24.svg"></md-icon>
+      </a>
+      <h2 class="md-flex" style="padding-left: 24px !important;">View School</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="Apps" ng-click="openRole()">
+        <md-tooltip md-direction="bottom">
+          View user roles
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/white_roleadd24.svg"></md-icon>
+      </md-button>
+      <md-button class="md-icon-button" aria-label="Apps" ng-click="openResp()">
+        <md-tooltip md-direction="bottom">
+          View responsibilities
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/white_respadd24.svg"></md-icon>
+      </md-button>
+    </div>
+  </div>
+</md-toolbar>
+
+<div class="anim-slide-below-fade" data-anim-speed="500">
+<md-content flex layout-padding style="background-color:transparent !important;" layout="row" layout-align="center center">
+  <div layout="column" layout-align="center center" flex="100" flex-gt-sm="70" layout-padding >
+    <div layout="row" layout-wrap layout-fill ng-cloak style="padding: 16px 16px 16px 16px !important;">
+
+      <md-card layout-wrap layout-fill>
+        <md-toolbar class="md-table-toolbar md-primary" layout="row" layout-align="space-between stretch" layout-padding layout-fill>
+        <div flex layout="column" layout-align="center center">
+          <img ng-src="../../assets/img/school_icon48.svg" alt="photo"/>
+        </div>
+        <div class="md-list-item-text" flex="60" layout="column" layout-align="start start" ng-repeat="branch in branches">
+          <span class="md-headline">{{branch.branch_name}}</span>
+            <span class="md-subhead">{{branch.branches_city}} </span>
+        </div>
+        <div layout="row" layout-align="end start" flex="20" layout-fill>
+          <md-button class="md-icon-button" aria-label="delete" ng-hide="selected.role == ''" ng-click="openDialog($event)"  >
+            <md-tooltip md-direction="bottom">
+              Delete branch
+            </md-tooltip>
+            <md-icon md-svg-icon="../../assets/img/black_delete24.svg"></md-icon>
+          </md-button>
+          <md-button class="md-icon-button " aria-label="transfer" ng-click="addStaff($event, selected)">
+            <md-tooltip md-direction="bottom">
+              Add users to branch
+            </md-tooltip>
+            <md-icon md-svg-icon="../../assets/img/white_addgroup24.svg"></md-icon>
+          </md-button>
+        </div>
+      </md-toolbar>
+      </md-card>
+
+      <div layout-fill >
+      <schoolaccount></schoolaccount>
+      </div>
+
+      </div>
+
+
+
+      <div flex="100" flex-gt-sm="60"  layout="column" layout-fill layout-wrap>
+      <schoolusers></schoolusers>
+      </div>
+
+
+
+  </div>
+</md-content>
+</div>

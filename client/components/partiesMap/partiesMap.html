@@ -1,0 +1,17 @@
+<style>
+    .angular-google-map-container{height: 300px; }
+</style>
+
+<fieldset>
+    <legend>Parties Map</legend>
+    <ui-gmap-google-map center="{latitude: 45, longitude:-73}" control="" zoom="8">
+        <ui-gmap-markers models="partiesInMap" coords="'location'" idKey="'_id'" fit="true">
+        </ui-gmap-markers>
+    </ui-gmap-google-map>
+</fieldset>
+
+
+<!-- DEBUG INFO -->
+<!--<div><button ng-click="$ctrl.test()">test</button></div>-->
+<!--<div>partiesInMap: {{ partiesInMap  }}</div>-->
+<!-- !DEBUG INFO -->

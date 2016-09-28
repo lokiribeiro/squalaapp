@@ -1,0 +1,66 @@
+<div layout="row" flex>
+  <md-toolbar class="md-primary toolbars" md-scroll-shrink ng-if="true" >
+      <div class="md-toolbar-tools" >
+        <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleLeft()"
+            ng-hide="isOpenLeft()">
+          <md-icon md-svg-icon="../../assets/img/white_menu.svg"></md-icon>
+        </md-button>
+        <span flex="50" layout-align="center center">
+          <img alt="SQUALA" style="width:170; height:22px;" class="img-responsive" src="../../assets/img/logo3.png" />
+        </span>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Apps" ng-click="$mdOpenMenu($event)">
+          <md-tooltip md-direction="bottom">
+            Notifications
+          </md-tooltip>
+          <md-icon md-svg-icon="../../assets/img/white_notify24.svg"></md-icon>
+        </md-button>
+        <md-menu md-position-mode="target-right target" md-offset="0 48">
+          <md-button class="md-icon-button" aria-label="Apps" ng-click="$mdOpenMenu($event)">
+            <md-tooltip md-direction="bottom">
+              My Apps
+            </md-tooltip>
+            <md-icon md-svg-icon="../../assets/img/white_apps24.svg"></md-icon>
+          </md-button>
+          <md-menu-content width="4" >
+            <md-menu-item ng-repeat="userapp in userappsMenu" >
+              <md-button ng-click="redirect(userapp.appName)">
+                  <div layout="row" flex>
+                    <p flex>{{userapp.appName}}</p>
+                    <img src="{{userapp.appLoc}}" style="margin: auto 3px auto 0;" />
+                  </div>
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+        <md-menu md-position-mode="target-right target"  md-offset="0 30">
+          <md-card-avatar ng-click="$mdOpenMenu($event)">
+            <md-tooltip md-direction="bottom">
+              My Profile
+            </md-tooltip>
+          <img class="avatar-2 img-responsive" src="../../assets/img/profiles/user.png">
+          </md-card-avatar>
+          <md-menu-content width="3" >
+            <md-menu-item >
+              <md-button ng-click="redirectProfile()">
+                  <div layout="row" flex>
+                    <p flex>My Profile</p>
+                    <md-icon md-svg-icon="../../assets/img/black_person24.svg" style="margin: auto 3px auto 0;"></md-icon>
+                  </div>
+              </md-button>
+            </md-menu-item>
+            <md-menu-item >
+              <md-button ng-click="logout()">
+                  <div layout="row" flex>
+                    <p flex>Logout</p>
+                    <md-icon md-svg-icon="../../assets/img/black_logout24.svg" style="margin: auto 3px auto 0;"></md-icon>
+                  </div>
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+      </div>
+    </md-toolbar>
+    <md-content></md-content>
+</div>
+<navigation></navigation>

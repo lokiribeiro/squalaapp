@@ -1,0 +1,20 @@
+<fieldset ng-if="$root.userLoggedIn">
+    <legend>Add party</legend>
+    <form ng-submit="insertParty(party)">
+        <p>
+            <label>Party Name:</label>
+            <input type="text" ng-model="party.name" ng-required="true"/>
+        </p>
+        <p>
+            <label>Description:</label>
+            <input type="text" ng-model="party.description"/>
+        </p>
+        <p>
+            Public:
+            <input type="radio" ng-checked="true" ng-model="party.public" ng-value="true"/>
+            Private:
+            <input type="radio" ng-model="party.public" ng-value="false"/>
+        </p>
+        <input type="submit" value="Add Party"/>
+    </form>
+</fieldset>

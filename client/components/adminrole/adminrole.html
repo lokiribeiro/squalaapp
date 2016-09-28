@@ -1,0 +1,21 @@
+<md-expansion-panel md-component-id="panelThree" ng-repeat="role in roles">
+    <md-expansion-panel-collapsed layout="row" layout-align="center center" layout-fill>
+      <div class="md-title">{{totalRoles}} Squala Role/s</div>
+      <div class="md-summary">View administrative roles and privileges.</div>
+      <md-expansion-panel-icon></md-expansion-panel-icon>
+    </md-expansion-panel-collapsed>
+    <md-expansion-panel-expanded>
+      <md-expansion-panel-header ng-click="$panel.collapse()" >
+        <div class="md-title">Role: {{role.role}}</div>
+        <div class="md-summary"></div>
+        <md-expansion-panel-icon></md-expansion-panel-icon>
+      </md-expansion-panel-header>
+      <md-expansion-panel-content>
+        <md-subheader class="md-no-sticky">View role responsibilities</md-subheader>
+        <md-list-item ng-click="null" ng-repeat="responsibility in responsibilities track by $index">
+          <p > {{ responsibility.responsibilityname }} </p>
+          <md-switch class="md-accent" ng-model="enabled[$index]" ></md-switch>
+        </md-list-item>
+      </md-expansion-panel-content>
+    </md-expansion-panel-expanded>
+</md-expansion-panel>

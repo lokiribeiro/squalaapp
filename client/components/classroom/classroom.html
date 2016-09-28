@@ -1,0 +1,102 @@
+<md-toolbar class="md-primary md-hue-2">
+    <div class="md-toolbar-tools">
+      <img ng-src="../../assets/img/classroom_icon.png" style="margin: auto 3px auto 0;" >
+      <h2 class="md-flex">Classroom</h2>
+      <md-icon md-svg-icon="../../assets/img/white_chevron24.svg"></md-icon>
+      <h2 class="md-flex">Classes</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="Apps" ng-click="$mdOpenMenu($event)">
+        <md-tooltip md-direction="bottom">
+          Help
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/white_help24.svg"></md-icon>
+      </md-button>
+    </div>
+</md-toolbar>
+<div class="anim-slide-below-fade" data-anim-speed="500">
+<md-content flex layout-padding style="background-color:transparent !important;">
+  <div layout="column" flex>
+    <div layout="row" layout-align="center center" layout-padding layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 10px;" ng-cloak>
+      <md-whiteframe class="md-whiteframe-2dp" flex="100" flex-gt-sm="60" layout="row" layout-align="start start" layout-padding layout-wrap layout-fill style="padding-left:30px;">
+        <div class="md-list-item-text" flex="70" layout="column" layout-align="start start">
+          <h1 style="font-weight:normal; color:#555;" >APEC Schools Profile</h1>
+        </div>
+      </md-whiteframe>
+      <md-expansion-panel md-component-id="panelOne" flex="100" flex-gt-sm="60" layout="column"  layout-fill>
+          <md-expansion-panel-collapsed layout="row" layout-align="center center" layout-fill>
+            <div class="md-title">Profile</div>
+            <div class="md-summary">Edit general and other organization-wide details.</div>
+            <md-expansion-panel-icon></md-expansion-panel-icon>
+          </md-expansion-panel-collapsed>
+          <md-expansion-panel-expanded>
+            <md-expansion-panel-header ng-click="$panel.collapse()" >
+              <div class="md-title">School Profile</div>
+              <div class="md-summary"></div>
+              <md-expansion-panel-icon></md-expansion-panel-icon>
+            </md-expansion-panel-header>
+            <md-expansion-panel-content>
+              <md-content layout="row" layout-align="start center">
+                <span layout="column" flex="20"><h4>Organization Name</h4></span>
+                <span layout="column" flex>
+                <md-input-container class="md-icon-float md-block">
+                  <label>Name</label>
+                  <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
+                    <input ng-model="yow" type="text">
+                </md-input-container>
+                </span>
+              </md-content>
+              <md-content layout="row" layout-align="start center">
+                <span layout="column" flex="20"><h4>Organization Type</h4></span>
+                <span layout="column" flex>
+                  <md-input-container class="md-block">
+                    <label>Org Type</label>
+                    <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
+                    <md-select ng-model="size">
+                      <md-option>Primary/Secondary Education</md-option>
+                    </md-select>
+                  </md-input-container>
+                </span>
+              </md-content>
+            </md-expansion-panel-content>
+          </md-expansion-panel-expanded>
+      </md-expansion-panel>
+      <md-expansion-panel md-component-id="panelTwo" flex="100" flex-gt-sm="60" layout="column"  layout-fill>
+          <md-expansion-panel-collapsed layout="row" layout-align="center center" layout-fill>
+            <div class="md-title">7 Squala Apps</div>
+            <div class="md-summary">View active Squala apps and services.</div>
+            <md-expansion-panel-icon></md-expansion-panel-icon>
+          </md-expansion-panel-collapsed>
+          <md-expansion-panel-expanded>
+            <md-expansion-panel-header ng-click="$panel.collapse()" >
+              <div class="md-title">7 Squala Apps Enabled</div>
+              <div class="md-summary"></div>
+              <md-expansion-panel-icon></md-expansion-panel-icon>
+            </md-expansion-panel-header>
+            <md-expansion-panel-content>
+              <h4>Squala App Details</h4>
+              <p>Manage this basic information — your name, email, and phone number — to help others find you on Squala products and make it easier to get in touch.</p>
+            </md-expansion-panel-content>
+          </md-expansion-panel-expanded>
+      </md-expansion-panel>
+      <md-expansion-panel md-component-id="panelThree" flex="100" flex-gt-sm="60" layout="column"  layout-fill>
+          <md-expansion-panel-collapsed layout="row" layout-align="center center" layout-fill>
+            <div class="md-title">1 Admin Role/s</div>
+            <div class="md-summary">View administrative roles and privileges.</div>
+            <md-expansion-panel-icon></md-expansion-panel-icon>
+          </md-expansion-panel-collapsed>
+          <md-expansion-panel-expanded>
+            <md-expansion-panel-header ng-click="$panel.collapse()" >
+              <div class="md-title">1 Admin roles and privileges</div>
+              <div class="md-summary"></div>
+              <md-expansion-panel-icon></md-expansion-panel-icon>
+            </md-expansion-panel-header>
+            <md-expansion-panel-content>
+              <h4>Admin role details</h4>
+              <p>Manage this basic information — your name, email, and phone number — to help others find you on Squala products and make it easier to get in touch.</p>
+            </md-expansion-panel-content>
+          </md-expansion-panel-expanded>
+      </md-expansion-panel>
+    </div>
+  </div>
+</md-content>
+</div>

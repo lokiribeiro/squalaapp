@@ -1,0 +1,40 @@
+<md-dialog aria-label="Delete user">
+  <form name="createuserForm"  layout="column" layout-align="start center">
+    <md-dialog-content  layout-wrap layout-fill layout-padding flex ng-repeat="role in roles">
+    <div layout="row" flex>
+      <h2 style="font-weight:normal" ng-hide="deletedNow">Delete role: {{role.role}}</h2>
+      <h2 style="font-weight:normal" ng-if="done">Deleting role</h2>
+      <h2 style="font-weight:normal" ng-show="deletedNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Role deleted</h2>
+      <span flex></span>
+        <md-button class="md-icon-button" aria-label="Close" ng-click="cancelNow()" style="position:absolute; top:0; right:0; !important" ng-hide="done">
+        <md-tooltip md-direction="bottom">
+          Close
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
+        </md-button>
+    </div>
+    <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+
+    <span layout="column" layout-align="start start" flex ng-hide="deletedNow">
+      <span layout="row">
+        <p> Note: all users linked to this role will be stripped off of their role privileges.</p>
+      </span>
+    </span>    
+    </md-dialog-content>
+    <md-dialog-actions >
+      <span layout="row" layout-align="space-between center" layout-fill>
+      <!-- hide these -->
+    <md-button ng-hide="done" ng-click="cancelNow()">
+      CANCEL
+    </md-button>
+      <md-button type="submit" ng-click="deleteroleNow()" ng-hide="deletedNow" class="md-primary">
+        DELETE ROLE
+      </md-button>
+      <!-- end hide -->
+      <md-button ng-if="deletedNows" ng-click="cancelNow()" class="md-primary">
+        DONE
+      </md-button>
+      </span>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

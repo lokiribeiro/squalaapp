@@ -1,0 +1,92 @@
+<md-dialog style="opacity: 1 !important;" aria-label="Create a new user" layout="column" layout-align="start center" flex="100">
+  <form name="createuserForm">
+    <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
+    <div layout="row" flex>
+      <h2 style="font-weight:normal" ng-hide="createdNow">Create a new user</h2>
+      <h2 style="font-weight:normal" ng-if="done">Creating new user</h2>
+      <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Created new user</h2>
+      <span flex></span>
+        <md-button class="md-icon-button" aria-label="Apps" ng-click="closeDialog()" style="position:absolute; top:0; right:0; !important" ng-hide="done">
+        <md-tooltip md-direction="bottom">
+          Close
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
+        </md-button>
+    </div>
+    <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+
+    <!-- hide here -->
+    <span layout="row" flex ng-hide="createdNow" >
+    <md-input-container  md-no-float class="md-block" style="margin: 10px 0 !important;">
+        <input ng-model="create.register.firstname" aria-label="firstname" type="text" placeholder="First Name" ng-required>
+    </md-input-container>
+    <md-input-container md-no-float class="md-block" style="margin: 10px 0 !important;">
+        <input ng-model="create.register.lastname" aria-label="lastname" type="text" placeholder="Last Name" ng-required>
+    </md-input-container>
+    </span>
+    <span layout="column" ng-hide="createdNow" layout-fill>
+    <md-input-container flex="100"  md-no-float class="md-block" style="margin: 10px 0 !important;">
+      <md-icon md-svg-icon="../../assets/img/black_person24.svg"></md-icon>
+        <input ng-model="create.register.username" aria-label="email" type="text" placeholder="Username" ng-required>
+    </md-input-container>
+    <md-input-container md-no-float class="md-block" style="margin: 10px 0 !important;">
+     <!-- Use floating placeholder instead of label -->
+     <md-icon md-svg-icon="../../assets/img/black_email24.svg"></md-icon>
+     <input ng-model="create.register.email" type="email" placeholder="Primary Email" >
+   </md-input-container>
+    </span>
+    <span layout="row" ng-hide="createdNow">
+    Temporary password will be assigned
+    </span>
+    <!-- end here -->
+    <md-toolbar ng-show="existing" class="md-primary" layout="row" layout-fill layout-padding layout-margin>
+    <p class="md-body-1">User already registered</p>
+    </md-toolbar>
+    <span layout="column" layout-align="start start" flex ng-if="createdNows">
+      <span layout="row">
+      <p>
+        A new user named <b>{{registered.firstname}} {{registered.lastname}} </b> has been created
+      </p>
+      </span>
+      <span layout="row">
+      <p>
+        Sign in to Squala for APEC Schools services at
+        https://squalaforapecschools.io
+      </p>
+      </span>
+      <span layout="row" layout-align="start start" layout-fill>
+      <p>
+        Username: <b>{{registered.username}}</b>
+      </p>
+      <span flex = "10"></span>
+      <p>
+        Password: <b>{{registered.password}}</b>
+      </p>
+    </span>
+    </span>
+    <span layout="row" style="background-color: #fafafa;" flex="100" ng-if="createdNows" layout-fill>
+      <img ng-src="../../assets/img/headmaster_icon.png" style="margin: auto 3px auto 0;" >
+      Need to add user anytime, anywhere?
+      Use Squala mobile app.
+    </span>
+    </md-dialog-content>
+    <md-dialog-actions >
+      <span layout="row" layout-align="space-between start" layout-fill>
+      <!-- hide these -->
+    <md-button ng-hide="createdNow" ng-click="closeDialog()">
+      Cancel
+    </md-button>
+      <md-button type="submit" ng-click="createUser(create.register)" ng-hide="createdNow" class="md-primary">
+        Create
+      </md-button>
+      <!-- end hide -->
+      <md-button ng-if="createdNows" ng-click="createAnother()">
+        CREATE ANOTHER USER
+      </md-button>
+        <md-button ng-if="createdNows" ng-click="closeDialog()" class="md-primary">
+          DONE
+        </md-button>
+      </span>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

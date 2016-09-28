@@ -1,0 +1,45 @@
+<md-dialog aria-label="Delete user" layout="column" layout-align="start start">
+  <form name="updateResponsibility" layout-padding layout-wrap layout-fill flex>
+    <md-dialog-content >
+    <div layout="row" layout-fill>
+      <h2 style="font-weight:normal" ng-hide="deletedNow">Delete Responsibility</h2>
+      <h2 style="font-weight:normal" ng-if="done">Deleting</h2>
+      <h2 style="font-weight:normal" ng-if="deletedNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Responsibility Removed</h2>
+        <md-button class="md-icon-button" aria-label="Close" ng-click="cancelNow()" style="position:absolute; top:0; right:0; !important" ng-hide="done">
+        <md-tooltip md-direction="bottom">
+          Close
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
+        </md-button>
+    </div>
+    <md-progress-linear md-mode="indeterminate" ng-show="done"></md-progress-linear>
+
+    <span layout="column" layout-align="start start" ng-hide="deletedNow" layout-fill>
+      <span layout="row" flex layout-fill>
+        <h4>
+          {{responsibilities.responsibilityname}}
+        </h4>
+      </span>
+      <span layout="row">
+      <p>
+        Note: All roles linked to this responsibility will be affected.
+      </p>
+      </span>
+    </span>
+    <span flex layout-fill></span>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-align="space-between center" layout-fill>
+      <!-- hide these --><span flex ng-if="deletedNows" ></span>
+    <md-button ng-hide="deletedNow" ng-click="cancelNow()">
+      CANCEL
+    </md-button>
+      <md-button type="submit" ng-click="deleteResp(userDel)" ng-hide="deletedNow" class="md-primary">
+        DELETE
+      </md-button>
+      <!-- end hide -->
+      <md-button ng-if="deletedNows" ng-click="cancelNow()" class="md-primary">
+        DONE
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

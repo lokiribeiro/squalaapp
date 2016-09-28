@@ -1,0 +1,51 @@
+<!-- content -->
+<md-toolbar class="md-primary md-hue-2">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">My Apps </h2>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="Apps" ng-click="$mdOpenMenu($event)">
+        <md-tooltip md-direction="bottom">
+          Help
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/white_help24.svg"></md-icon>
+      </md-button>
+    </div>
+</md-toolbar>
+<div class="anim-slide-below-fade" data-anim-speed="500">
+<md-content flex layout-padding layout-fill style="background-color: transparent !important;">
+  <div layout="column"  flex>
+    <div layout="row" layout-align="center center" layout-padding layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 10px;" ng-cloak>
+
+      <md-card ng-click="redirect(userapp.appName)" class="card-1" ng-repeat="userapp in userapps" flex-gt-sm="50" flex-gt-md="30" layout-wrap layout-fill style="margin: 10px 10px 0 0;">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{userapp.appName}}</span>
+            <span class="md-subhead">{{userapp.desc}}</span>
+          </md-card-title-text>
+          <md-card-title-media >
+            <div class="md-media-sm card-media" layout="row" layout-align="end center">
+            <img ng-src="{{userapp.appLoc}}" style="margin: auto 3px auto 0;" >
+          </div>
+          </md-card-title-media>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-icon-button" aria-label="Apps">
+            <md-tooltip md-direction="top">
+              Go to {{userapp.appName}}
+            </md-tooltip>
+            <md-icon md-svg-icon="../../assets/img/black_launch24.svg"></md-icon>
+          </md-button>
+        </md-card-actions>
+      </md-card>
+    </div>
+  </div>
+</md-content>
+</div>
+
+
+
+<!-- /content -->
+
+<!-- footer -->
+
+<!-- / footer -->

@@ -1,0 +1,10 @@
+<div layout="column" layout-fill>
+        <div class="md-title">{{totalUserapps}} Squala Apps Enabled</div>
+        <div class="md-summary"></div>
+        <span layout = "row" layout-align="start start" layout-fill layout-wrap>
+        <span flex="33" ng-repeat="userapp in userapps" layout="column" layout-align="start center">
+            <img ng-src="{{userapp.appLoc}}" style="margin: auto 3px auto 0;" >
+            <span class="md-subhead">{{userapp.appName}}</span>
+        </span>
+      </span>    
+</div>

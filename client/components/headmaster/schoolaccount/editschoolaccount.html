@@ -1,0 +1,67 @@
+<md-dialog style="opacity: 1 !important;" aria-label="Edit Account" >
+  <form name="res" layout="column" layout-align="start center" layout-padding layout-wrap layout-fill flex >
+    <md-dialog-content >
+    <div layout="row" flex >
+      <h2 style="font-weight:normal" ng-hide="updatedNow">Update school: {{results.branch_name}}</h2>
+      <h2 style="font-weight:normal" ng-if="done">Updating school</h2>
+      <h2 style="font-weight:normal" ng-if="updatedNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Updated school {{results.branch_name}}</h2>
+      <span flex></span>
+        <md-button class="md-icon-button" aria-label="Apps" ng-click="cancelNow()" style="position:absolute; top:0; right:0; !important" ng-hide="done">
+        <md-tooltip md-direction="bottom">
+          Close
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
+        </md-button>
+    </div>
+
+    <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+
+    <!-- hide here -->
+    <span layout="column"  flex ng-hide="updatedNow" layout-fill>
+      <md-input-container flex="100"  md-no-float class="md-block" style="margin: 10px 0 !important;">
+          <input ng-model="results.branch_name" aria-label="schoolname" type="text" placeholder="School name" ng-required>
+      </md-input-container>
+
+        <md-input-container class="md-block" style="margin: 10px 0 !important;">
+         <!-- Use floating placeholder instead of label -->
+         <md-select ng-model="results.branches_type" placeholder="School Type" class="md-no-underline">
+              <md-option value="parent">Parent</md-option>
+              <md-option value="branch">Branch</md-option>
+          </md-select>
+        </md-input-container>
+
+    </span>
+
+    <span layout="row" ng-hide="updatedNow" layout-fill>
+      <md-input-container  md-no-float class="md-block" style="margin: 10px 0 !important;">
+       <input ng-model="results.branches_address" aria-label="firstname" type="text" placeholder="Street name" ng-required>
+      </md-input-container>
+      <md-input-container md-no-float class="md-block" style="margin: 10px 0 !important;">
+       <input ng-model="results.branches_city" aria-label="lastname" type="text" placeholder="City" ng-required>
+      </md-input-container>
+    </span>
+
+    <span layout="column" flex ng-hide="updatedNow" layout-fill>
+    <md-input-container flex="100"  md-no-float class="md-block" style="margin: 10px 0 !important;">
+      <md-icon md-svg-icon="../../assets/img/black_person24.svg"></md-icon>
+      <md-select placeholder="School Admin" aria-label="address" ng-model="results.branches_schooladmin" >
+        <md-option ng-value="user" ng-repeat="user in users">{{user.name}}</md-option>
+      </md-select>
+    </md-input-container>
+  </span>
+    <!-- end here -->
+    </md-dialog-content>
+    <md-dialog-actions  layout="row" layout-align="space-between center" layout-fill>
+    <md-button ng-hide="done"  ng-click="cancelNow()">
+      Cancel
+    </md-button>
+      <md-button type="submit" ng-click="updateSchool(results)" ng-hide="updatedNow" class="md-primary">
+        Update
+      </md-button>
+      <!-- end hide -->
+        <md-button ng-if="updatedNows" ng-click="cancelNow()" class="md-primary">
+          DONE
+        </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

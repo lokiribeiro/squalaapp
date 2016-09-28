@@ -1,0 +1,24 @@
+<style scoped>
+    .centered {text-align: center}
+    .disabled {
+        text-decoration: none;
+        text-underline-style: none;
+        text-underline-mode: none;
+        color: grey;
+        cursor: default;
+    }
+</style>
+<div class="centered">
+    <span class="range-label">Page {{ pagination.current }} of {{ pagination.last }}</span>&nbsp;
+
+    <a href="" title="Previous page"
+               ng-class="{ disabled : pagination.current == 1 }"
+               ng-click="setCurrent(pagination.current - 1)">&blacktriangleleft; Prev</a>
+
+    <a href="" title="Next page"
+               ng-class="{ disabled : pagination.current == pagination.last }"
+               ng-click="setCurrent(pagination.current + 1)">Next &blacktriangleright;</a>
+</div>
+<!-- DEBUG INFO -->
+<!--<div>range.total: {{ range.total  }}</div>-->
+<!-- /DEBUG INFO -->

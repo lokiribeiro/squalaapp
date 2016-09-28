@@ -1,0 +1,18 @@
+<!--todo: 'none' cuando no haya usuarios a invitar-->
+
+<fieldset ng-if="!$ctrl.party.public">
+    <legend>Uninvited users</legend>
+    <ul class="list">
+        <li ng-repeat="user in users | uninvitedFilter: $ctrl.party" class="cornsilk">
+            {{ user.emails[0].address }}
+            <button ng-click="invite(user, $ctrl.party)" class="floatRight">Invite</button>
+            <br/>
+            <hr/>
+        </li>
+    </ul>
+
+</fieldset>
+
+<!-- DEBUG INFO -->
+<!--<div>uninvited users: {{ users  }}</div>-->
+<!-- /DEBUG INFO -->

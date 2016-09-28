@@ -1,0 +1,46 @@
+<fieldset ng-if="!$ctrl.party.public">
+    <legend>Invited Users</legend>
+
+    <fieldset>
+        <legend>Waiting response</legend>
+        <ul class="list">
+            <li ng-repeat="user in $ctrl.party.invitedUsers | filter: {responded: false}" class="cornsilk">
+                <div><b>User:</b> {{ user.email  }}
+                    <button ng-click="uninvite(user.userId, $ctrl.party)" class="floatRight">Uninvite</button></div>
+                <div><b>Rsvp responded:</b> {{ user.responded  }}</div>
+                <div><b>Assistance:</b> {{ user.assistance  }}</div>
+                <hr/>
+            </li>
+        </ul>
+    </fieldset>
+
+    <fieldset>
+        <legend>Confirmed Assistance</legend>
+        <ul class="list">
+            <li ng-repeat="user in $ctrl.party.invitedUsers | filter: {assistance: true}" class="cornsilk">
+                <div><b>User:</b> {{ user.email  }}
+                    <button ng-click="uninvite(user.userId, $ctrl.party)" class="floatRight">Uninvite</button></div>
+                <div><b>Rsvp responded:</b> {{ user.responded  }}</div>
+                <div><b>Assistance:</b> {{ user.assistance  }}</div>
+                <hr/>
+            </li>
+        </ul>
+    </fieldset>
+
+    <fieldset>
+        <legend>Denied Assistance</legend>
+        <ul class="list">
+            <li ng-repeat="user in $ctrl.party.invitedUsers | filter: {assistance: false, responded: true}" class="cornsilk">
+                <div><b>User:</b> {{ user.email  }}
+                    <button ng-click="uninvite(user.userId, $ctrl.party)" class="floatRight">Uninvite</button></div>
+                <div><b>Rsvp responded:</b> {{ user.responded  }}</div>
+                <div><b>Assistance:</b> {{ user.assistance  }}</div>
+                <hr/>
+            </li>
+        </ul>
+    </fieldset>
+</fieldset>
+
+
+
+

@@ -1,0 +1,38 @@
+<md-dialog aria-label="Delete user" >
+    <md-dialog-content  layout="column" layout-align="start start"  layout-wrap layout-fill layout-padding flex>
+    <div layout="row" flex>
+      <h2 style="font-weight:normal" ng-hide="deletedNow">Delete School</h2>
+      <h2 style="font-weight:normal" ng-if="done">Deleting school</h2>
+      <h2 style="font-weight:normal" ng-if="deletedNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> School Deleted</h2>
+      <span flex></span>
+        <md-button class="md-icon-button" aria-label="Close" ng-click="cancelNow()" style="position:absolute; top:0; right:0; !important" ng-hide="done">
+        <md-tooltip md-direction="bottom">
+          Close
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
+        </md-button>
+    </div>
+    <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+
+    <span layout="column" layout-align="start start" flex ng-hide="deletedNow">
+      <span layout="row">
+      <p>
+        {{selected}} Note: All data associated with this school will be deleted. All existing Vault data will also be deleted.
+      </p>
+      </span>
+    </span>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-align="space-between center" layout-fill>
+      <!-- hide these -->
+    <md-button ng-hide="deletedNow" ng-click="cancelNow()">
+      CANCEL
+    </md-button>
+      <md-button type="submit" ng-click="removeuserNow(userDel)" ng-hide="deletedNow" class="md-primary">
+        DELETE SCHOOL
+      </md-button>
+      <!-- end hide -->
+      <md-button ng-if="deletedNows" ng-click="cancelNow()" class="md-primary">
+        DONE
+      </md-button>
+    </md-dialog-actions>
+</md-dialog>

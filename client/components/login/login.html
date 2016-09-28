@@ -1,0 +1,54 @@
+<div flex-md layout-align="center center" class="slide smooth">
+  <div layout="column" layout-fill layout-padding>
+    <div layout="row" layout-align ="center none" layout-wrap>
+      <img alt="SQUALA" style="width:220px; height:50px" class="img-responsive text-center" src="../../assets/img/logo.png" />
+    </div>
+  </div>
+    <h1 style="font-weight: normal;" layout="row" layout-fill layout-align ="center center">Sign in with your Squala Account</h1>
+  <div flex layout="row" layout-align="center none" layout-wrap>
+      <md-card class="card card-1">
+        <md-card-title>
+          <md-card-title-text layout-align="center none">
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+          <form name="loginForm" layout="column" layout-align="center center" layout-fill layout-padding layout-margin ng-submit="login(login.credentials)" >
+            <!-- <img class="avatar-3 img-responsive" src="../../assets/img/profiles/user.png"> -->
+            <md-input-container class="md-icon-float md-block">
+              <label>
+                Username
+              </label>
+              <md-icon md-svg-icon="../../assets/img/black_person24.svg" class="name"></md-icon>
+              <input type="text" ng-model="login.credentials.username" aria-label="username" required/>
+            </md-input-container>
+            <md-input-container class="md-icon-float md-block">
+              <label>
+                Password
+              </label>
+              <md-icon md-svg-icon="../../assets/img/black_lock24.svg" class="name"></md-icon>
+              <input type="password" ng-model="login.credentials.password" aria-label="password" required/>
+            </md-input-container>
+            <div layout="row" layout-align="space-between center">
+              <a  href="/password">Forgot password?</a>
+              <md-button type="submit" class="md-raised md-primary" aria-label="login" ng-disabled="login.loginForm.$invalid()">Sign In
+              </md-button>
+            </div>
+          </form>
+          <md-toolbar ng-show="login.error" class="md-warn" layout="row" layout-fill layout-padding layout-margin>
+            <p class="md-body-1">{{ login.error }}</p>
+          </md-toolbar>
+        </md-card-content>
+      </md-card>
+    </div>
+    <div layout="column" layout-fill layout-margin >
+      <!-- <div layout="row" layout-align="center">
+        <a class="md-button" href="/register" ng-disabled>Need an account?</a>
+      </div> -->
+      <div layout="row" layout-align="center end" >
+          <img alt="Squala Apps" style="width:230px; height:23px" class="img-responsive text-center" src="../../assets/img/wlogostrip_230x17_1x.png" />
+      </div>
+      <div layout="row" layout-align="center end">
+        <small class="text-muted">Squala School Management Platform  &copy; 2016</small>
+      </div>
+    </div>
+</div>

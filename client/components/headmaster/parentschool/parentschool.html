@@ -1,0 +1,33 @@
+
+<md-expansion-panel md-component-id="panel" ng-repeat="branch in branches">
+    <md-expansion-panel-collapsed layout="row" layout-align="center center" layout-fill>
+      <div class="md-title">{{branch.branch_name}}</div>
+      <div class="md-summary">{{branch.branches_address}}, {{branch.branches_city}}</div>
+      <md-expansion-panel-icon></md-expansion-panel-icon>
+    </md-expansion-panel-collapsed>
+    <md-expansion-panel-expanded>
+      <md-expansion-panel-header ng-click="$panel.collapse()" >
+        <div class="md-title">{{branch.branch_name}}</div>
+        <div class="md-summary"></div>
+        <md-expansion-panel-icon></md-expansion-panel-icon>
+      </md-expansion-panel-header>
+      <md-expansion-panel-content>
+        <span layout="row" layout-align="start start" layout-fill layout-wrap >
+          <span flex="20">
+            <h4 style="color: #555;">School Admin</h4>
+          </span>
+          <span flex="80">
+            <p>{{branch.branches_schooladminname == '' ? 'none assigned' : branch.branches_schooladminname}}</p>
+          </span>
+      </span>
+      </md-expansion-panel-content>
+      <md-expansion-panel-footer>
+        <div class="md-default md-toolbar-tools">
+          <span flex></span>
+          <md-button ng-click="openSchool(branch)" md-no-ink class="md-accent">
+            View School
+          </md-button>
+        </div>
+      </md-expansion-panel-footer>
+    </md-expansion-panel-expanded>
+</md-expansion-panel>

@@ -1,0 +1,47 @@
+<md-expansion-panel md-component-id="panelOne" ng-repeat="profile in profiles" >
+    <md-expansion-panel-collapsed layout="row" layout-align="center center" layout-fill>
+      <div class="md-title">Account</div>
+      <div class="md-summary">View and manage profile, security, and usage stats.</div>
+      <md-expansion-panel-icon></md-expansion-panel-icon>
+    </md-expansion-panel-collapsed>
+    <md-expansion-panel-expanded>
+      <md-expansion-panel-header ng-click="$panel.collapse()" >
+        <div class="md-title">Account Info</div>
+        <div class="md-summary"></div>
+        <md-expansion-panel-icon></md-expansion-panel-icon>
+      </md-expansion-panel-header>
+      <md-expansion-panel-content>
+        <span layout="row" layout-align="start start" layout-fill layout-wrap >
+          <span flex="20">
+            <h4 style="color: #555;">Basic info</h4>
+          </span>
+          <span flex="80">
+            <p>Name: {{profile.profiles_firstname}} {{profile.profiles_lastname}}</p>
+            <p>Email: {{profile.profiles_email}}</p>
+            <p>Username: {{profile.profiles_username}}</p>
+            <p>Phone: {{profile.profiles_phone}}</p>
+            <p>Birthday: {{ profile.profiles_birthday | date :'medium'}} </p>
+            <p>Gender: {{profile.profiles_gender}}</p>
+          </span>
+      </span>
+      <span layout="row" layout-align="start start" layout-fill layout-wrap >
+        <span flex="20">
+          <h4 style="color: #555;">User Type</h4>
+        </span>
+        <span flex="80">
+          <p><b>{{profile.profiles_type}}</b></p>
+          <p>User Role: <b ng-repeat="role in roles">{{role._id == profile.profiles_userroleID ? role.role : ''}}</b></p>
+          <p>Branch: <b ng-repeat="branch in branches">{{branch.branch_name}}</b></p>
+        </span>
+      </span>
+      </md-expansion-panel-content>
+      <md-expansion-panel-footer>
+        <div class="md-default md-toolbar-tools" >
+          <span flex></span>
+          <md-button ng-click="openDialog($event)" md-no-ink class="md-accent">
+            Edit
+          </md-button>
+        </div>
+      </md-expansion-panel-footer>
+    </md-expansion-panel-expanded>
+</md-expansion-panel>
