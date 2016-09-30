@@ -9,13 +9,13 @@
     </div>
       <h2 class="md-flex" style="padding-left: 24px !important;">View user</h2>
       <span flex></span>
-      <md-button class="md-icon-button" aria-label="Apps" ng-click="openRole()">
+      <md-button class="md-icon-button" aria-label="Apps" ng-click="openRole()" ng-if="$root.userLoggedInRole == 'superadmin'">
         <md-tooltip md-direction="bottom">
           View user roles
         </md-tooltip>
         <md-icon md-svg-icon="../../assets/img/white_roleadd24.svg"></md-icon>
       </md-button>
-      <md-button class="md-icon-button" aria-label="Apps" ng-click="openResp()">
+      <md-button class="md-icon-button" aria-label="Apps" ng-click="openResp()" ng-if="$root.userLoggedInRole == 'superadmin'">
         <md-tooltip md-direction="bottom">
           View responsibilities
         </md-tooltip>
@@ -45,7 +45,7 @@
             </p>
         </div>
         <div layout="row" layout-align="end start" flex="20" layout-fill hide-xs>
-          <md-menu md-position-mode="target-right target" >
+          <md-menu md-position-mode="target-right target" ng-if="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'" >
           <md-button class="md-icon-button " aria-label="transfer" ng-click="$mdOpenMenu($event)">
             <md-tooltip md-direction="bottom">
               Associate to role
@@ -62,7 +62,7 @@
             </md-menu-item>
           </md-menu-content>
         </md-menu>
-          <md-menu md-position-mode="target-right target" >
+          <md-menu md-position-mode="target-right target" ng-if="$root.userLoggedInRole == 'superadmin'">
           <md-button class="md-icon-button " aria-label="transfer" ng-click="$mdOpenMenu($event)">
             <md-tooltip md-direction="bottom">
               Move user to another branch
@@ -79,7 +79,7 @@
             </md-menu-item>
           </md-menu-content>
         </md-menu>
-          <md-button class="md-icon-button " aria-label="reset" ng-click="null">
+          <md-button class="md-icon-button " aria-label="reset" ng-click="null" ng-if="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
             <md-tooltip md-direction="bottom">
               Reset Password
             </md-tooltip>

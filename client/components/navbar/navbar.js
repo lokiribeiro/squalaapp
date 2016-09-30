@@ -18,7 +18,11 @@ class NavbarCtrl{
 
       $scope.helpers({
           userappsMenu() {
-            var userID = $scope.userId;
+            $scope.promise = $timeout(function(){
+
+
+            }, 2000);
+            var userID =  $scope.getReactively('userId');
             var sort  = $scope.sort;
             var selector = {userID: userID};
             var modifier = {sort: {appName: sort}};

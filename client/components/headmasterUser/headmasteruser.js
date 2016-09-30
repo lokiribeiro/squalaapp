@@ -30,22 +30,24 @@ class HeadmasteruserCtrl{
 
       $scope.openDialog = function($event, item) {
         // Show the dialog
-        $mdDialog.show({
-          clickOutsideToClose: false,
-          escapeToClose: true,
-          controller: function($mdDialog) {
-            // Save the clicked item
-            $scope.FABitem = item;
-            // Setup some handlers
-            $scope.close = function() {
-              $mdDialog.cancel();
-            };
-          },
-          controllerAs: 'headmastercreateuser',
-          controller: HeadmasteruserCtrl,
-          template: '<headmastercreateuser></headmastercreateuser>',
-          targetEvent: $event
-        });
+        if(item.name == "Add user") {
+          $mdDialog.show({
+            clickOutsideToClose: false,
+            escapeToClose: true,
+            controller: function($mdDialog) {
+              // Save the clicked item
+              $scope.FABitem = item;
+              // Setup some handlers
+              $scope.close = function() {
+                $mdDialog.cancel();
+              };
+            },
+            controllerAs: 'headmastercreateuser',
+            controller: HeadmasteruserCtrl,
+            template: '<headmastercreateuser></headmastercreateuser>',
+            targetEvent: $event
+          });
+        }
       }
 
       $scope.openSchool = function (selected) {
@@ -53,6 +55,15 @@ class HeadmasteruserCtrl{
         var branchID = selected[0]._id;
         $state.go('Headmasterschool', {stateHolder : 'Headmaster', userID : Meteor.userId(), branchID : branchID});
       }
+
+      $scope.openRole = function () {
+        $state.go('Headmasterrole', {stateHolder : 'Headmaster', userID : Meteor.userId()});
+      }
+
+      $scope.openResp = function () {
+        $state.go('Headmasterresp', {stateHolder : 'Headmaster', userID : Meteor.userId()});
+      }
+
 
 
     }

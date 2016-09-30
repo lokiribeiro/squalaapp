@@ -1,22 +1,4 @@
-<!-- <md-table-container>
-  <table md-table md-row-select ng-model="selected" md-progress="promise" flex>
-    <thead md-head md-order="query.order" md-on-reorder="profiles" class="md-head">
-      <tr md-row>
-        <th md-column ><span></span></th>
-
-      </tr>
-    </thead>
-    <tbody md-body>
-      <tr md-row md-select="profile" md-select-id="profile._id" md-auto-select ng-repeat="profile in profiles" ng-cloak>
-        <td md-cell><img ng-src="{{profile.profiles_profilephoto}}" class="profile-pic2" alt="{{profile.profiles_firstname}}" /></td>
-
-      </tr>
-    </tbody>
-  </table>
-</md-table-container>
-<md-table-pagination ng-hide="selected.role === ''" md-page="page" md-total="{{totalUsers}}" md-on-paginate="users" md-page-select></md-table-pagination>-->
-
-<md-toolbar class="md-table-toolbar md-accent" ng-hide="filter.show" flex>
+<md-toolbar class="md-table-toolbar md-primary" ng-hide="filter.show || selected.length" flex>
 <div class="md-toolbar-tools">
   <h2 class="md-title">{{totalUsers}} Users</h2>
   <div flex="" class="flex"></div>
@@ -25,6 +7,7 @@
   </md-button>
 </div>
 </md-toolbar>
+
 <md-toolbar class="md-table-toolbar md-default"  flex="100" ng-show="filter.show">
 <div class="md-toolbar-tools">
   <form name="filter.form" flex>
@@ -41,14 +24,15 @@
   </md-button>
 </div>
 </md-toolbar>
-<md-toolbar class="md-table-toolbar md-accent " flex="100" ng-show="selected.length">
+
+<md-toolbar class="md-table-toolbar md-primaryt " flex="100" ng-show="selected.length">
 <div class="md-toolbar-tools" layout-align="space-between stretch">
   <div ng-model="selected" flex="80">{{selected[0].username}} selected</div>
   <md-button class="md-icon-button" aria-label="edit" ng-click="openProfile(selected)" >
     <md-tooltip md-direction="bottom">
-      Edit Account
+      View Account
     </md-tooltip>
-    <md-icon md-svg-icon="../../assets/img/white_edit24.svg"></md-icon>
+    <md-icon md-svg-icon="../../assets/img/white_launch24.svg"></md-icon>
   </md-button>
   <md-button class="md-icon-button" aria-label="reset" ng-click="openDialog($event, selected)" >
     <md-tooltip md-direction="bottom">

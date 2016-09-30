@@ -8,75 +8,57 @@
 
 <md-content layout="row" layout-align="center center" layout-wrap layout-fill layout-padding style="background-color:transparent !important;">
         <!-- <md-whiteframe class="md-whiteframe-2dp" flex="100" flex-gt-sm="60" layout="row" layout-align="start start" layout-padding layout-wrap layout-fill style="padding-left:30px;">-->
-        <div flex flex-gt-xs="70" layout="column" layout-fill layout-align="center center" ng-repeat="profile in profiles" style="background-color:transparent !important; padding-bottom: 32px; padding-top: 10px;" ng-cloak>
-          <div layout="row" layout-fill flex-gt-xs="40">
-            <span flex="70" flex-gt-md="66">
-            </span>
+        <div layout-padding flex flex-gt-xs="80" layout="row" layout-fill layout-align="start start" ng-repeat="profile in profiles" style="background-color:transparent !important; padding-bottom: 32px; padding-top: 10px;" ng-cloak>
 
-            <md-button class="md-icon-button " aria-label="reset" ng-click="null">
-            <md-tooltip md-direction="bottom">
-              Change Password
-            </md-tooltip>
-            <md-icon md-svg-icon="../../assets/img/white_resetpass24.svg"></md-icon>
-          </md-button>
-          <md-button class="md-icon-button " aria-label="reset" ng-click="null">
-          <md-tooltip md-direction="bottom">
-            More options
-          </md-tooltip>
-          <md-icon md-svg-icon="../../assets/img/black_more24.svg"></md-icon>
-        </md-button>
-          <span flex-gt-xs="5" flex-gt-md="10">
-          </span>
+          <div flex="30" layout-fill >
+            <div class="card3" layout-fill layout="column" layout-align="center center">
+              <div layout-fill layout="row" layout-align="end center" >
+                <span flex></span>
+                <md-button class="md-icon-button " aria-label="reset" ng-click="null">
+                  <md-tooltip md-direction="bottom">
+                    Change Password
+                  </md-tooltip>
+                  <md-icon md-svg-icon="../../assets/img/white_resetpass24.svg"></md-icon>
+                </md-button>
+                <md-button class="md-icon-button " aria-label="reset" ng-click="null">
+                  <md-tooltip md-direction="bottom">
+                    More options
+                  </md-tooltip>
+                  <md-icon md-svg-icon="../../assets/img/black_more24.svg"></md-icon>
+                </md-button>
+              </div>
+
+                <img class="avatar-5" src="../../assets/img/profiles/user.png">
+                <p class="app-name md-title">{{profile.profiles_firstname}} {{profile.profiles_lastname}}</p>
+
+
+            </div>
+
+
+
+
+
 
           </div>
 
-        <div class="post">
-            <div class="content">
-                <div class="hover-content" layout="column" layout-align="center center">
-                  <span>
-                    <p class="md-subhead" ng-repeat="branch in branches">{{branch.branch_name}}</p>
-                  </span>
-                  <span>
-                    <p class="md-subhead">
-                      <span ng-repeat="role in roles">{{role._id == profile.profiles_userroleID ? role.role : ''}}</span>
-                      | {{profile.profiles_type}}
-                    </p>
-                  </span>
-                </div>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <div class="post-content" layout="column" layout-align="center center">
-                <img class="avatar" src="../../assets/img/profiles/user.png">
-                <p class="app-name md-title">{{profile.profiles_firstname}} {{profile.profiles_lastname}}</p>
-                </div>
-            </div>
-            <img src="../../assets/img/wallpaper2.png">
-        </div>
 
+      <div flex="70" layout-fill >
+        <section class="card3" layout-fill>
+        <profileaccount></profileaccount>
+        </section>
+
+        <section class="card3" layout-fill>
+        <profileapps></profileapps>
+        </section>
+
+        <section class="card3" layout-fill>
+        <profilerole></profilerole>
+        </section>
       </div>
 
 
+
+          </div>
+
+
 </md-content>
-<div layout="row" layout-align="center center" layout-wrap layout-fill layout-padding style="background-color:transparent !important; margin-top: 32px !important;" ng-cloak>
-<div flex flex-gt-xs="70" flex-gt-md="40" layout="column" layout-fill layout-align="center center" ng-repeat="profile in profiles" style="background-color:transparent !important; padding-bottom: 32px; padding-top: 10px;" ng-cloak>
-
-
-<section class="card3" layout-fill>
-<profileaccount></profileaccount>
-</section>
-
-<section class="card3" layout-fill>
-<profileapps></profileapps>
-</section>
-
-<section class="card3" layout-fill>
-<profilerole></profilerole>
-</section>
-
-</div>
-</div>

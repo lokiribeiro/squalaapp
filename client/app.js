@@ -220,6 +220,22 @@ app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdT
                       $rootScope.stateHolder = $stateParams.stateHolder;
                   }
               })
+              .state('AdmissionsApplicantProfile', {
+                    url:'/:stateHolder/AAPe/:userID',
+                    template: '<admissionsapplicantprofile></admissionsapplicantprofile>',
+                    resolve: {
+                        currentUser($q, $state) {
+                            if (!Meteor.userId()) {
+                                return $q.reject('AUTH_REQUIRED');
+                            } else {
+                                return $q.resolve();
+                            }
+                        }
+                    },
+                    onEnter: function($rootScope, $stateParams, $state) {
+                        $rootScope.stateHolder = $stateParams.stateHolder;
+                    }
+                })
             .state('Admissions', {
                   url:'/:stateHolder/ADMs/:userID',
                   template: '<admissions></admissions>',
@@ -524,11 +540,28 @@ app.run(function ($state, $rootScope, $stateParams, $mdTheming) {
         // todo: revisar este helper ya que el usuario se puede obtener
         // todo: en teoria de forma global usando Meteor.user()
         userLoggedIn(){
-            console.info('user', Meteor.user());
-            return Meteor.user()
+            return Meteor.user();
         },
         userID(){
-            return Meteor.userId()
+            return Meteor.userId();
+        },
+        userLoggedInRole(){
+          var role = null;
+          if(Meteor.user()){
+            var details = Meteor.user();
+            role = details.role;
+            console.info('role', role);
+          }
+          return role;
+        },
+        userLoggedInBranch(){
+          var branch = null;
+          if(Meteor.user()) {
+            var details = Meteor.user();
+            branch = details.branchId;
+            console.info('branch', branch);
+          }
+          return branch;
         }
     });
 

@@ -14,6 +14,8 @@ class NavigationCtrl{
           return [$rootScope.getReactively('stateHolder')];
       });
 
+      $scope.subscribe('users');
+
       $scope.helpers({
         navigations(){
           var sort = $scope.sort;

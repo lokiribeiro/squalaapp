@@ -1,23 +1,25 @@
-<div>
-  <md-toolbar class="md-primary md-hue-2">
-      <div class="md-toolbar-tools">
-        <img ng-src="../../assets/img/headmaster_icon.png" style="margin: auto 3px auto 0;" >
-        <a href="/Headmaster/HDMr/{{$root.userID}}" >
+<md-toolbar class="md-primary md-hue-2" layout="row" layout-align="center center">
+  <div flex flex-gt-sm="60" layout="column" layout-fill>
+    <div class="md-toolbar-tools">
+      <a href="/Headmaster/HDMr/{{$root.userID}}" >
+      <md-tooltip md-direction="bottom">
+        Back
+      </md-tooltip>
+      <md-icon md-svg-icon="../../assets/img/white_backarrow24.svg"></md-icon>
+      </a>
+      <h2 class="md-flex" style="padding-left: 24px !important;">Edit responsibilities</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="Apps" ng-click="openRole()">
         <md-tooltip md-direction="bottom">
-          Back to schools
+          View user roles
         </md-tooltip>
-        <md-icon md-svg-icon="../../assets/img/white_back24.svg"></md-icon>
-        </a>
-        <h2 class="md-flex">Edit Responsibilities</h2>
-        <span flex></span>
-        <md-button class="md-icon-button" aria-label="Apps" ng-click="$mdOpenMenu($event)">
-          <md-tooltip md-direction="bottom">
-            Help
-          </md-tooltip>
-          <md-icon md-svg-icon="../../assets/img/white_help24.svg"></md-icon>
-        </md-button>
-      </div>
-  </md-toolbar>
+        <md-icon md-svg-icon="../../assets/img/white_roleadd24.svg"></md-icon>
+      </md-button>
+    </div>
+  </div>
+</md-toolbar>
+
+
 <!-- <div layout="column" flex="100" flex-gt-sm="20" layout-align="start start" style="padding-bottom: 32px; padding-top: 10px; background-color: #ccc;" ng-cloak>
 </div> -->
 <div class="anim-slide-below-fade" data-anim-speed="500">
@@ -47,5 +49,4 @@
         </div>
       </md-fab-actions>
 </md-fab-speed-dial>
-</div>
 </div>

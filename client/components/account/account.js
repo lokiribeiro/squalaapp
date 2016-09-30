@@ -26,6 +26,8 @@ class AccountCtrl{
           return [$scope.getReactively('branchID')];
       });
 
+      $scope.subscribe('users');
+
       $scope.helpers({
           profiles() {
                 var profileID = $scope.getReactively('profileID');

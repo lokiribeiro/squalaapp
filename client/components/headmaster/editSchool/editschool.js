@@ -163,6 +163,13 @@ class HeadmasterschoolCtrl{
                       var removeAdmin = Branches.update(selector,modifier);
                     });
                     //var status = createUserFromAdmin(details);
+                    Meteor.call('upsertNewBranchFromAdmin', userID, branchId, function(err, detailss) {
+                      if (err) {
+                          //do something with the id : for ex create profile
+                        console.log('error upserting branch to meteor.user()');
+                     }
+                    });
+
                     $scope.register = Meteor.call('upsertProfileFromStaff', userID, userType, branchId, function(err, userID) {
                       if (err) {
                          console.log('error here');
@@ -198,6 +205,14 @@ class HeadmasterschoolCtrl{
                       var removeAdmin = Branches.update(selector,modifier);
                     });
                     //var status = createUserFromAdmin(details);
+
+                    Meteor.call('upsertNewBranchFromAdmin', userID, branchId, function(err, detailss) {
+                      if (err) {
+                          //do something with the id : for ex create profile
+                        console.log('error upserting branch to meteor.user()');
+                     }
+                    });
+
                     $scope.register = Meteor.call('upsertProfileFromStaff', userID, userType, branchId, function(err, userID) {
                       if (err) {
                         $scope.done = false;
@@ -247,7 +262,15 @@ class HeadmasterschoolCtrl{
         });
       }
 
-    
+      $scope.openRole = function () {
+        $state.go('Headmasterrole', {stateHolder : 'Headmaster', userID : Meteor.userId()});
+      }
+
+      $scope.openResp = function () {
+        $state.go('Headmasterresp', {stateHolder : 'Headmaster', userID : Meteor.userId()});
+      }
+
+
 
     }
 }

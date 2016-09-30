@@ -24,7 +24,7 @@
           </span>
       </span>
       </md-expansion-panel-content>
-      <md-expansion-panel-footer>
+      <md-expansion-panel-footer ng-show="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
         <div class="md-default md-toolbar-tools">
           <span flex></span>
           <md-button ng-click="openDialog($event)" md-no-ink class="md-accent">

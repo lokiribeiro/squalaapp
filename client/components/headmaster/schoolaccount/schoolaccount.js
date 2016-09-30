@@ -15,6 +15,8 @@ class SchoolaccountCtrl{
           return [$scope.getReactively('branchID')];
       });
 
+      $scope.subscribe('users');
+
       $scope.helpers({
           branches() {
                 var branchID = $scope.getReactively('branchID');
@@ -131,6 +133,13 @@ class SchoolaccountCtrl{
                     console.log('daan error')
                       throw new Meteor.Error(error);
                   }else {
+                    Meteor.call('upsertNewBranchFromAdmin', profileID, branchID, function(err, detailss) {
+                      if (err) {
+                          //do something with the id : for ex create profile
+                        console.log('error upserting branch to meteor.user()');
+                     }
+                    });
+
                     Meteor.call('upsertProfileFromAdmin', profileID, branchID, branchName, userType, function(err, detail) {
                       if (err) {
                           //do something with the id : for ex create profile

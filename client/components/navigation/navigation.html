@@ -14,7 +14,7 @@
       <md-content class="md-primary" layout-padding>
         <md-list class="md-primary" flex>
         <a  class="md-primary" ng-repeat="navigation in navigations" href="/{{navigation.appName}}/{{navigation.menuRoute}}/{{$root.userID}}"  ng-click="toggleLeft()">
-          <md-list-item class="md-2-line" ng-click="null">
+          <md-list-item class="md-2-line" ng-click="null" ng-hide="$root.userLoggedInRole != 'superadmin' && navigation.menuItem == 'Users'">
             <md-icon md-svg-icon="{{navigation.menuIcon}}" style="margin: auto 3px auto 0;"></md-icon>
             <div class="md-list-item-text" layout="column">
               <h3 class="md-primary"> {{navigation.menuItem}} </h3>

@@ -30,11 +30,21 @@ class HeadmasterCtrl{
           return [$scope.getReactively('searchTexts')];
       });
 
+      $scope.subscribe('users');
+
       $scope.helpers({
         headmasters() {
               var headmasters = Headmasters.find();
               return headmasters;
             }
+        /*loggedInRole() {
+              var userID = $scope.getReactively('thisUser');
+              var selector = {_id: userID}
+              var loggedInRoles = Meteor.users.find(selector);
+              console.info(loggedInRoles);
+              var loggedInRole = loggedInRoles.role;
+              return loggedInRole;
+        }*/
       });
 
       angular.element(document).ready(function () {
@@ -49,6 +59,7 @@ class HeadmasterCtrl{
           profileDetails.forEach(function(profileDetail){
             $scope.firstname = profileDetail.profiles_firstname;
             $scope.lastname = profileDetail.profiles_lastname;
+            $scope.branchMainId = profileDetail.profiles_branchID;
             $scope.branchName = profileDetail.profiles_branch;
           });
 

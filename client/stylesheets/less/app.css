@@ -5755,6 +5755,13 @@ header {
 		border: none !important;;
 }
 
+.avatar-5 {
+		height: 80px !important;
+		width: 80px !important;
+		border-radius: 50%;
+		border: none !important;;
+}
+
 .avatar-3 {
 		background: #eee;
 		height: 80px !important;

@@ -91,6 +91,13 @@ class headmastercreateschoolCtrl{
         console.info('status', branchID);
         console.info('branchname', branchName);
 
+        Meteor.call('upsertNewBranchFromAdmin', profileID, branchID, function(err, detailss) {
+          if (err) {
+              //do something with the id : for ex create profile
+            console.log('error upserting branch to meteor.user()');
+         }
+        });
+
         Meteor.call('upsertProfileFromAdmin', profileID, branchID, branchName, userType, function(err, detail) {
         if (err) {
             //do something with the id : for ex create profile

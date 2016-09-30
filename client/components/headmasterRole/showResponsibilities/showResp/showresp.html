@@ -1,6 +1,6 @@
 <div layout="row" layout-align="center center" layout-wrap layout-fill>
   <md-card flex="70" flex-gt-sm="60">
-  <md-toolbar class="md-table-toolbar md-accent" ng-hide="filter.show" flex>
+  <md-toolbar class="md-table-toolbar md-primary" ng-hide="filter.show || selected.length" flex>
   <div class="md-toolbar-tools">
     <h2 class="md-title">{{totalResponsibilities == 0 ? '0' : totalResponsibilities}} Responsibilities</h2>
     <div flex="" class="flex"></div>
@@ -25,9 +25,9 @@
     </md-button>
   </div>
   </md-toolbar>
-  <md-toolbar class="md-table-toolbar md-accent " flex="100" ng-show="selected.length">
-  <div class="md-toolbar-tools" layout-align="space-between stretch">
-    <div ng-model="selected" flex="80">{{selected[0].responsibilityname}}</div>
+  <md-toolbar class="md-table-toolbar md-primary md-hue-1 " flex="100" ng-show="selected.length">
+  <div class="md-toolbar-tools" >
+    <div ng-model="selected" flex>{{selected[0].responsibilityname}}</div>
     <md-button class="md-icon-button" aria-label="edit" ng-click="openEdit($event, selected)" >
       <md-tooltip md-direction="bottom">
         Edit

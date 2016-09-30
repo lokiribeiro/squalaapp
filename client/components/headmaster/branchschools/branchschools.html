@@ -1,9 +1,10 @@
 <md-card flex>
 <md-toolbar class="md-table-toolbar md-primary" ng-hide="filter.show || selected.length" flex>
 <div class="md-toolbar-tools">
-  <h2 class="md-title">{{totalBranches}} Branch schools</h2>
+  <h2 ng-show="$root.userLoggedInRole == 'superadmin'" class="md-title">{{totalBranches}} Branch schools</h2>
+  <h2 ng-show="$root.userLoggedInRole != 'superadmin'" class="md-title">Hello!</h2>
   <div flex="" class="flex"></div>
-  <md-button class="md-icon-button" aria-label="Search" ng-click="filterShow()">
+  <md-button class="md-icon-button" aria-label="Search" ng-click="filterShow()" ng-show="$root.userLoggedInRole == 'superadmin'">
     <md-icon md-svg-icon="../../assets/img/white_search24.svg"></md-icon>
   </md-button>
 </div>
@@ -25,15 +26,15 @@
 </div>
 </md-toolbar>
 <md-toolbar class="md-table-toolbar md-primary md-hue-1 " flex="100" ng-show="selected.length">
-<div class="md-toolbar-tools" layout-align="space-between center">
-  <div ng-model="selected" flex="80">{{selected[0].branch_name}} selected</div>
+<div class="md-toolbar-tools">
+  <div ng-model="selected" flex>{{selected[0].branch_name}} selected</div>
   <md-button class="md-icon-button" aria-label="edit" ng-click="openSchool(selected)" >
     <md-tooltip md-direction="bottom">
       Go to School
     </md-tooltip>
     <md-icon md-svg-icon="../../assets/img/white_launch24.svg"></md-icon>
   </md-button>
-  <md-button class="md-icon-button" aria-label="delete" ng-click="openDialog($event, selected)" >
+  <md-button class="md-icon-button" aria-label="delete" ng-click="openDialog($event, selected)" ng-show="$root.userLoggedInRole == 'superadmin'" >
     <md-tooltip md-direction="bottom">
       Delete
     </md-tooltip>
@@ -52,7 +53,7 @@
     </tr>
   </thead>
   <tbody md-body>
-    <tr md-row md-select="branch" md-select-id="branch._id" md-auto-select ng-repeat="branch in branches" ng-hide="branch.branches_type == 'parent'" ng-cloak>
+    <tr md-row md-select="branch" md-select-id="branch._id" md-auto-select ng-repeat="branch in branches" ng-hide="(($root.userLoggedInRole != 'superadmin' && branch.branches_type == 'parent') || ($root.userLoggedInRole != 'superadmin' && branch._id != $root.userLoggedInBranch))" ng-cloak>
       <td md-cell>{{branch.branch_name}}</td>
       <td md-cell>{{branch.branches_schooladminname == '' ? 'none' : branch.branches_schooladminname}}</td>
       <td md-cell>{{branch.branches_address}}</td>
@@ -65,5 +66,5 @@
   </tbody>
 </table>
 </md-table-container>
-<md-table-pagination md-limit="perPage" md-limit-options="[5, 10, 15]" md-page="page" md-total="{{totalBranches}}" md-on-paginate="branches" md-page-select></md-table-pagination>
+<md-table-pagination ng-show="$root.userLoggedInRole == 'superadmin'" md-limit="perPage" md-limit-options="[5, 10, 15]" md-page="page" md-total="{{totalBranches}}" md-on-paginate="branches" md-page-select></md-table-pagination>
 </md-card>

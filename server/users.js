@@ -45,5 +45,21 @@ Meteor.methods({
               }};
               var userUpsert = Meteor.users.upsert(selector, modifier);
               return userUpsert;
+            },
+            upsertNewRoleFromAdmin(userID, userRole){
+              var selector = {_id: userID};
+              var modifier = {$set: {
+                role: userRole
+              }};
+              var roleUpsert = Meteor.users.upsert(selector, modifier);
+              return roleUpsert;
+            },
+            upsertNewBranchFromAdmin(userID, userBranch){
+              var selector = {_id: userID};
+              var modifier = {$set: {
+                branchId: userBranch
+              }};
+              var branchUpsert = Meteor.users.upsert(selector, modifier);
+              return branchUpsert;
             }
 })

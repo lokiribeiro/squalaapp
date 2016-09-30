@@ -34,6 +34,8 @@ class parentschoolCtrl{
 
       $scope.subscribe('branches');
 
+      $scope.subscribe('users');
+
       $scope.helpers({
           branches() {
                 $scope.promise = $timeout(function(){

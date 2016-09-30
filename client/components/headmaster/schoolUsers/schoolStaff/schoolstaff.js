@@ -48,6 +48,8 @@ class SchoolstaffCtrl{
           return [$scope.getReactively('rolesID')];
       });
 
+      $scope.subscribe('users');
+
       $scope.helpers({
           profiles(){
             //var sort = 1;
@@ -152,9 +154,17 @@ class SchoolstaffCtrl{
                 users(){
                       var sort  = 1;
                       var selector = {};
+                      var userRole = $rootScope.userLoggedInRole;
+                      console.log(userRole);
+
+                      if(userRole == 'admin'){
+                          selector = {branchId: branchID};
+                      }
+
                       var users = Meteor.users.find(
                             selector, { sort: {name: sort} }
-                        );
+                      );
+                      console.log('dumaan sa superadmin');
                       return users;
                   }
               });

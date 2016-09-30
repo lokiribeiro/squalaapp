@@ -12,7 +12,7 @@
       <md-tab label="Parents" >
           <schoolparents></schoolparents>
       </md-tab>
-      <md-tab label="Unsorted" >
+      <md-tab label="Unsorted" ng-if="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
           <unsorted></unsorted>
       </md-tab>
     </md-tabs>

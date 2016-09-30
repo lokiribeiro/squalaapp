@@ -1,14 +1,16 @@
 <div layout="row" layout-align="center center" layout-wrap layout-fill>
   <md-card flex="90" flex-gt-sm="80">
-  <md-toolbar class="md-table-toolbar md-accent" ng-hide="filter.show" flex>
+  <md-toolbar class="md-table-toolbar md-primary" ng-hide="filter.show || selected.length" flex>
   <div class="md-toolbar-tools">
-    <h2 class="md-title">{{totalUsers}} Users</h2>
+    <h2 class="md-title">{{totalUsers - 1}} Users</h2>
     <div flex="" class="flex"></div>
     <md-button class="md-icon-button" aria-label="Search" ng-click="filterShow()">
       <md-icon md-svg-icon="../../assets/img/white_search24.svg"></md-icon>
     </md-button>
   </div>
   </md-toolbar>
+
+
   <md-toolbar class="md-table-toolbar md-default"  flex="100" ng-show="filter.show">
   <div class="md-toolbar-tools">
     <form name="filter.form" flex>
@@ -25,14 +27,16 @@
     </md-button>
   </div>
   </md-toolbar>
-  <md-toolbar class="md-table-toolbar md-accent " flex="100" ng-show="selected.length">
-  <div class="md-toolbar-tools" layout-align="space-between stretch">
+
+
+  <md-toolbar class="md-table-toolbar md-primary md-hue-1 " flex="100" ng-show="selected.length">
+  <div class="md-toolbar-tools" layout-align="space-between center">
     <div ng-model="selected" flex="80">{{selected[0].username}} selected</div>
     <md-button class="md-icon-button" aria-label="edit" ng-click="openProfile(selected)" >
       <md-tooltip md-direction="bottom">
-        Edit Account
+        View Account
       </md-tooltip>
-      <md-icon md-svg-icon="../../assets/img/white_edit24.svg"></md-icon>
+      <md-icon md-svg-icon="../../assets/img/white_launch24.svg"></md-icon>
     </md-button>
     <md-button class="md-icon-button" aria-label="reset" ng-click="openDialog($event, selected)" >
       <md-tooltip md-direction="bottom">
@@ -59,7 +63,7 @@
       </tr>
     </thead>
     <tbody md-body>
-      <tr md-row md-select="user" md-select-id="user._id" md-auto-select ng-repeat="user in users" ng-cloak>
+      <tr md-row md-select="user" md-select-id="user._id" md-auto-select ng-repeat="user in users" ng-cloak ng-hide="user._id == $root.userID">
         <td md-cell>{{user.name}}</td>
         <td md-cell>{{user.username}}</td>
         <td md-cell>{{user.emails[0].address}}</td>

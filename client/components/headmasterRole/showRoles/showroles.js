@@ -23,12 +23,14 @@ class ShowrolesCtrl{
 
       $scope.selected2 = [];
 
-      $scope.show = false;
+      $scope.show = true;
 
       $scope.perPage = 5;
+      $scope.perPage2 = 5;
       $scope.page = 1;
       $scope.page2 = 1;
       $scope.sort = 1;
+      $scope.sort3 = 1;
       $scope.searchText = null;
       $scope.partyID = null;
       $scope.deletedNow = false;
@@ -54,12 +56,9 @@ class ShowrolesCtrl{
 
       $scope.helpers({
           roles() {
-                $scope.promise = $timeout(function(){
-
-                }, 2000);
-                var limit = parseInt($scope.getReactively('perPage'));
-                var skip  = parseInt(( $scope.getReactively('page')-1 )* $scope.perPage);
-                var sort  = $scope.getReactively('sort');
+                var limit = parseInt($scope.getReactively('perPage2'));
+                var skip  = parseInt(( $scope.getReactively('page2')-1 )* $scope.perPage2);
+                var sort  = $scope.getReactively('sort3');
                 var selector = {};
                 var roles = Roles.find(
                       selector, { limit: limit, skip: skip, sort: {role: sort} }
@@ -88,12 +87,21 @@ class ShowrolesCtrl{
             return roleresps;
           },
           profiles(){
+            var limit = parseInt($scope.getReactively('perPage'));
+            var skip  = parseInt(( $scope.getReactively('page')-1 )* $scope.perPage);
+            var sort  = $scope.getReactively('sort');
+            var selector = {};
             var sort = 1;
             var role = $scope.getReactively('selected._id');
             console.info('role', role);
             var selector = {profiles_userroleID: role};
-            var modifier= {sort: {profiles_firstname: sort}};
-            var profiles = Profiles.find(selector, modifier);
+
+            var modifier= { limit: limit, skip: skip, sort: {profiles_firstname: sort}};
+            var profiles = null;
+            if(role != undefined)
+             {
+               var profiles = Profiles.find(selector, modifier);
+             }
             console.info('profiles', profiles);
             return profiles;
           },
@@ -101,7 +109,11 @@ class ShowrolesCtrl{
             var role = $scope.getReactively('selected._id');
             console.info('role', role);
             var selector = {profiles_userroleID: role};
-            var totalProfiles = Profiles.find(selector).count();
+             var totalProfiles = null;
+            if(role != undefined)
+             {
+               var totalProfiles = Profiles.find(selector).count();
+             }
             console.info('profiles', totalProfiles);
             return totalProfiles;
 
@@ -308,13 +320,13 @@ class ShowrolesCtrl{
       };
 
       $scope.navRight = function () {
-          $scope.page = $scope.page + 1;
+          $scope.page2 = $scope.page2 + 1;
           var totalroles = Roles.find().count();
           console.info('total', totalroles);
           var lastPage = totalroles / 5;
           console.info('lastpage', lastPage);
-          console.info('page', $scope.page);
-          if($scope.page < lastPage)
+          console.info('page', $scope.page2);
+          if($scope.page2 < lastPage)
           {
             $scope.last = false;
           }
@@ -324,13 +336,13 @@ class ShowrolesCtrl{
       };
 
       $scope.navLeft = function () {
-          $scope.page = $scope.page - 1;
+          $scope.page2 = $scope.page2 - 1;
           var totalroles = Roles.find().count();
           console.info('total', totalroles);
           var lastPage = totalroles / 5;
           console.info('lastpage', lastPage);
-          console.info('page', $scope.page);
-          if($scope.page < lastPage)
+          console.info('page', $scope.page2);
+          if($scope.page2 < lastPage)
           {
             $scope.last = false;
           }
@@ -420,6 +432,7 @@ class ShowrolesCtrl{
         // Show the dialog
         $scope.passedId = item._id;
         $scope.passedRole = item.role;
+
         $mdDialog.show({
           clickOutsideToClose: false,
           escapeToClose: true,
@@ -462,6 +475,14 @@ class ShowrolesCtrl{
               $scope.done = true;
               $scope.existing = false;
               $scope.createdNow = !$scope.createdNow;
+
+
+              Meteor.call('upsertNewRoleFromAdmin', userID, passedID, function(err, stats) {
+                if (err) {
+                  console.log('error upsert role to meteor.user');
+               }
+              });
+
               //var status = createUserFromAdmin(details);
               $scope.register = Meteor.call('upsertProfileFromRole', userID, passedID, function(err, userID) {
               if (err) {
@@ -585,6 +606,12 @@ class ShowrolesCtrl{
               $scope.existing = false;
               $scope.createdNow = !$scope.createdNow;
               //var status = createUserFromAdmin(details);
+              Meteor.call('upsertNewRoleFromAdmin', userID, passedID, function(err, stats) {
+                if (err) {
+                  console.log('error upsert role to meteor.user');
+               }
+              });
+
               $scope.register = Meteor.call('unassignProfileFromRole', userID, passedID, function(err, userID) {
               if (err) {
                 $scope.done = false;

@@ -31,6 +31,7 @@ class HeadmasterprofileCtrl{
 
       $scope.subscribe('userapps2');
       $scope.subscribe('apps');
+      $scope.subscribe('users');
 
 
 
@@ -114,8 +115,12 @@ class HeadmasterprofileCtrl{
           })
       }
 
-
-
+      Meteor.call('upsertNewBranchFromAdmin', profileID, branchID, function(err, detailss) {
+        if (err) {
+            //do something with the id : for ex create profile
+          console.log('error upserting branch to meteor.user()');
+       }
+      });
 
       Meteor.call('upsertProfileFromAdmin', profileID, branchID, branchname, userType, function(err, detail) {
           if (err) {
@@ -141,6 +146,12 @@ class HeadmasterprofileCtrl{
             .title('Processing')
             .targetEvent($event)
         );
+
+        Meteor.call('upsertNewRoleFromAdmin', userId, roleId, function(err, stats) {
+          if (err) {
+            console.log('error upsert role to meteor.user');
+         }
+        });
 
         Meteor.call('upsertProfileFromRole', userId, roleId, function(err, detail) {
             if (err) {

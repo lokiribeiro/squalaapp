@@ -2,6 +2,7 @@
     <div class="md-toolbar-tools">
       <img ng-src="../../assets/img/admissions_icon.png" style="margin: auto 3px auto 0;" >
       <h2 class="md-flex" style="color: #fff !important;">Admissions</h2>
+      <h2 class="md-flex" style="color: #fff !important; border-left: 1px solid rgba(255,255,255,0.2) !important; margin-left: 24px !important; padding-left: 24px !important;">Kickstart Enrollment</h2>
       <span flex></span>
       <md-button class="md-icon-button" aria-label="Apps" ng-click="$mdOpenMenu($event)">
         <md-tooltip md-direction="bottom">
@@ -14,36 +15,39 @@
 
 
 <div class="anim-slide-below-fade" data-anim-speed="500">
-<md-content flex layout-padding style="background-color:transparent !important;">
-  <div class="post">
-  		<div class="content">
-  				<div class="hover-content" >
-            <span>
-  						<p class="bold-caps">Offered By</p>
-  						<br>
-  						<p class="thin"></p>
-  					</span>
-  					<span>
-  				<p class="bold-caps">Size</p>
-  				<br>
-  				<p class="thin">10 mb</p>
-  			   </span>
-  				</div>
-  				<div class="rating">
-  						<i class="fa fa-star"></i>
-  						<i class="fa fa-star"></i>
-  						<i class="fa fa-star"></i>
-  						<i class="fa fa-star"></i>
-  						<i class="fa fa-star-half-o"></i>
-  				</div>
-  				<div class="post-content">
-  				<img class="avatar" src="../../assets/img/profiles/user.png">
-  				<p class="app-name"> Now</p>
-  				<md-button class="md-accent md-raised">Install</md-button>
-  				</div>
-  		</div>
-  		<img src="http://3.bp.blogspot.com/-dXxdKFkVrdw/VKLa3bMmv2I/AAAAAAAAVjI/Lp0vf22tynE/s1600/sandiegodusk.png">
-  </div>
+  <md-content layout="row" layout-align="center center" layout-padding style="background-color:transparent !important;" layout-fill>
+    <div layout="column" flex="100" flex-gt-sm="70" layout-align="start start" layout-padding layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 10px;"  ng-cloak>
 
-</md-content>
+      <div flex="100" flex-gt-sm="60" layout="column"  layout-fill>
+        <applicants></applicants>
+      </div>
+
+        </div>
+  </md-content>
+
+
+  <div ng-cloak >
+  <md-fab-speed-dial ng-hide="demo.hidden" md-direction="up" md-scale md-open="demo.isOpen"
+                         class="md-scale md-fab-bottom-right" ng-class="{ 'md-hover-full': demo.hover }"
+                         ng-mouseenter="demo.isOpen=true" ng-mouseleave="demo.isOpen=false" ng-cloak style="position: fixed !important;">
+        <md-fab-trigger>
+          <md-button aria-label="menu" class="md-fab md-accent">
+            <md-tooltip md-direction="left" md-visible="tooltipVisible">Add</md-tooltip>
+            <md-icon md-svg-src="../../assets/img/white_add24.svg" aria-label="add"></md-icon>
+          </md-button>
+        </md-fab-trigger>
+        <md-fab-actions>
+          <div ng-repeat="item in items">
+            <md-button aria-label="{{item.name}}" class="md-fab md-raised md-mini md-accent"
+                       ng-click="openDialog($event, item)">
+              <md-tooltip md-direction="{{item.direction}}" md-visible="tooltipVisible"
+                          md-autohide="false">
+                {{item.name}}
+              </md-tooltip>
+              <md-icon md-svg-src="{{item.icon}}" aria-label="{{item.name}}"></md-icon>
+            </md-button>
+          </div>
+        </md-fab-actions>
+  </md-fab-speed-dial>
+  </div>
 </div>

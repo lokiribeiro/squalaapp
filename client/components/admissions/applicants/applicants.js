@@ -1,12 +1,12 @@
 import {app} from '/client/app.js';
 
-class SchoolusersCtrl{
+class ApplicantsCtrl{
 
   constructor($scope, $timeout, $mdSidenav, $log, $mdDialog, $state, $q, $mdToast){
       'ngInject';
 
-      $scope.subscribe('users');
-      
+      $scope.subscribe('applicants');
+
 
           //$state.go('Headmasterprofile', {stateHolder : 'Headmaster', userID : Meteor.userId(), profileID : profileID});
       // On opening, add a delayed property which shows tooltips after the speed dial has opened
@@ -14,9 +14,9 @@ class SchoolusersCtrl{
     }
 }
 
-app.component('schoolusers', {
-    templateUrl: 'client/components/headmaster/schoolUsers/schoolusers.html',
-    controllerAs: 'schoolusers',
-    controller: SchoolusersCtrl,
+app.component('applicants', {
+    templateUrl: 'client/components/admissions/applicants/applicants.html',
+    controllerAs: 'applicants',
+    controller: ApplicantsCtrl,
     transclude: true
 })

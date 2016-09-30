@@ -24,7 +24,7 @@
             <p>Gender: {{profile.profiles_gender}}</p>
           </span>
       </span>
-      <span layout="row" layout-align="start start" layout-fill layout-wrap >
+      <span layout="row" layout-align="start start" layout-fill layout-wrap ng-if="$root.userLoggedInRole == 'superadmin'">
         <span flex="20">
           <h4 style="color: #555;">User Type</h4>
         </span>
@@ -35,7 +35,7 @@
         </span>
       </span>
       </md-expansion-panel-content>
-      <md-expansion-panel-footer>
+      <md-expansion-panel-footer ng-if="$root.userLoggedInRole == 'superadmin'">
         <div class="md-default md-toolbar-tools" >
           <span flex></span>
           <md-button ng-click="openDialog($event)" md-no-ink class="md-accent">

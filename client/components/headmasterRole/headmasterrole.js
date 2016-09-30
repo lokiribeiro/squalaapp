@@ -175,6 +175,57 @@ class HeadmasterroleCtrl{
           $state.go('Headmasterschool', {stateHolder : 'Headmaster', userID : Meteor.userId(), branchID : branchID});
         }
 
+        $scope.openRole = function () {
+          $state.go('Headmasterrole', {stateHolder : 'Headmaster', userID : Meteor.userId()});
+        }
+
+        $scope.openResp = function () {
+          $state.go('Headmasterresp', {stateHolder : 'Headmaster', userID : Meteor.userId()});
+        }
+
+
+        $scope.hidden = false;
+        $scope.isOpen = false;
+        $scope.hover = false;
+        // On opening, add a delayed property which shows tooltips after the speed dial has opened
+        // so that they have the proper position; if closing, immediately hide the tooltips
+        $scope.$watch('demo.isOpen', function(isOpen) {
+          if (isOpen) {
+            $timeout(function() {
+              $scope.tooltipVisible = $scope.isOpen;
+            }, 600);
+          } else {
+            $scope.tooltipVisible = $scope.isOpen;
+          }
+        });
+
+        $scope.items = [
+          { name: "Add user roles", icon: "../../assets/img/white_roleadd24.svg", direction: "left" }
+        ];
+
+
+        $scope.openDialog2 = function($event, item) {
+          // Show the dialog
+
+          $mdDialog.show({
+            clickOutsideToClose: false,
+            escapeToClose: true,
+            controller: function($mdDialog) {
+              // Save the clicked item
+              $scope.FABitem = item;
+              // Setup some handlers
+              $scope.close = function() {
+                $mdDialog.cancel();
+              };
+            },
+            controllerAs: 'headmastercreaterole',
+            controller: HeadmasterroleCtrl,
+            template: '<headmastercreaterole></headmastercreaterole>',
+            targetEvent: $event
+          });
+      }
+
+
 
 
       // On opening, add a delayed property which shows tooltips after the speed dial has opened
