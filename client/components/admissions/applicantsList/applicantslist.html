@@ -1,0 +1,422 @@
+<md-toolbar class="md-primary md-hue-2">
+    <div class="md-toolbar-tools">
+      <img ng-src="../../assets/img/admissions_icon.png" style="margin: auto 3px auto 0;" >
+      <h2 class="md-flex" style="color: #fff !important;">Admissions</h2>
+      <h2 class="md-flex" style="color: #fff !important; border-left: 1px solid rgba(255,255,255,0.2) !important; margin-left: 24px !important; padding-left: 24px !important;">New applications</h2>
+      <span layout-padding flex>
+
+        <md-card layout="row" flex flex-gt-xs="60" style="background-color: #FFAB40 !important; border-radius: 4px !important; box-shadow: none !important; margin: 0px !important;" >
+        <form name="filter.form" layout-fill  style="background-color: transparent !important;">
+
+          <div layout="row" >
+              <md-icon md-svg-icon="../../assets/img/white_search24.svg"></md-icon>
+              <input flex ng-model="searchText" type="search" placeholder="Search" style="border-radius: 4px !important; border-style: hidden !important; margin-left: 12px !important; background-color: transparent !important; color: #fff !important;" >
+              <md-button class="md-icon-button" aria-label="close" ng-click="closeFilter()" ng-hide="searchText == null" style="padding: 0px !important; margin: 0 !important; min-height: 24px !important; width: 24px !important; height: 24px !important;">
+              <md-tooltip md-direction="bottom">
+                Close
+              </md-tooltip>
+              <md-icon md-svg-icon="../../assets/img/white_close24.svg"></md-icon>
+              </md-button>
+          </div>
+        </form>
+        </md-card>
+
+
+
+      </span>
+      <md-button class="md-icon-button" aria-label="Apps" ng-click="$mdOpenMenu($event)">
+        <md-tooltip md-direction="bottom">
+          Help
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/white_help24.svg"></md-icon>
+      </md-button>
+    </div>
+</md-toolbar>
+
+
+
+  <md-content layout="row" layout-align="center center" layout-padding style="background-color:transparent !important;" layout-fill>
+    <div layout="column" flex="100" flex-gt-sm="70" layout-align="start start" layout-padding layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 10px;"  ng-cloak>
+
+
+      <div flex="100" flex-gt-sm="60" layout="column"  layout-fill style="overflow: hidden !important;">
+
+
+      <!--<div flex="100" flex-gt-sm="60" layout="column"  layout-fill>
+        <applicants></applicants>
+      </div>-->
+
+
+
+<div layout="row" layout-align = "center center" layout-fill ng-show="doneSearching">
+  <md-progress-circular md-mode="indeterminate" ng-show="doneSearching" ></md-progress-circular>
+</div>
+
+
+
+<md-expansion-panel-group md-component-id="applicant.createdAt" ng-init="newHeader = true">
+  <div ng-repeat="applicant in applicants track by $index" layout="column" layout-align="center center">
+  <div  ng-if="((applicant.createdAt | date: mediumDate) == formattedDay) && newHeader" style="width:90% !important; max-width: 90% !important;">
+    <span  ng-init="applicantdata = (applicant.createdAt | date: mediumDate)" >
+      <b style="color: #555;" ng-cloak class="showUp">{{ ($index == 0) ?  'Today' : ''}}</b>
+    </span>
+  </div>
+  <div layout="row" layout-align="space-between center" layout-fill ng-if="((applicant.createdAt | date: mediumDate) != formattedDay) && newHeader" style="width:90% !important; max-width: 90% !important;">
+    <span ng-init="applicantdata = (applicant.createdAt | date: mediumDate)" >
+      <b style="color: #555;" ng-cloak  class="showUp">{{ ($index == 0) ?  applicantdata : (applicantdata == (applicants[$index-1].createdAt | date: mediumDate) ? '' : (applicants[$index].createdAt | date: mediumDate) )}}</b>
+    </span>
+  </div>
+<md-expansion-panel md-component-id="{{applicant._id}}"  layout-fill class="cardapp" ng-cloak>
+    <md-expansion-panel-collapsed layout-fill ng-cloak>
+      <span layout="row" layout-fill layout-align="start center">
+
+      <div class="md-title" layout="row" layout-align="start center" layout-wrap hide-xs><img ng-src="{{applicant.photo}}" class="avatar-2" alt="{{applicant.firstname}}" /><span layout-padding hide-xs>App# {{applicant.applicationNum}}</span></div>
+      <div class="md-summary" layout="row" layout-align="start center" layout-wrap><img ng-src="{{applicant.photo}}" class="avatar-2" alt="{{applicant.firstname}}" show-xs hide-gt-xs/> <span layout-padding>{{applicant.firstname}} {{applicant.middlename}} {{applicant.lastname}}</span></div>
+    </span>
+      <md-expansion-panel-icon></md-expansion-panel-icon>
+    </md-expansion-panel-collapsed>
+    <md-progress-linear md-mode="indeterminate" flex ng-show="doneagain" ></md-progress-linear>
+    <md-expansion-panel-expanded ng-cloak>
+      <md-expansion-panel-header ng-click="$panel.collapse()">
+        <span layout="row" layout-fill layout-align="start center">
+
+        <div class="md-summary" layout="row" layout-align="start center" layout-wrap><img ng-src="{{applicant.photo}}" class="avatar-2" alt="{{applicant.firstname}}" /><span layout-padding >App# {{applicant.applicationNum}} : <span layout-padding>{{applicant.firstname}} {{applicant.middlename}} {{applicant.lastname}}</span></span></div>
+      </span>
+      <span layout="row" layout-align="end center">
+        <md-button class="md-icon-button" aria-label="feedback" ng-click="openDialog($event, selected)" >
+          <md-tooltip md-direction="bottom">
+            Add feedback
+          </md-tooltip>
+          <md-icon md-svg-icon="../../assets/img/black_comment24.svg"></md-icon>
+        </md-button>
+        <md-button class="md-icon-button" aria-label="forward" ng-click="openDialog($event, selected)" >
+          <md-tooltip md-direction="bottom">
+            Change application status
+          </md-tooltip>
+          <md-icon md-svg-icon="../../assets/img/black_forward24.svg"></md-icon>
+        </md-button>
+        <md-button class="md-icon-button" aria-label="delete" ng-click="openDialog($event, selected)" >
+          <md-tooltip md-direction="bottom">
+            Delete
+          </md-tooltip>
+          <md-icon md-svg-icon="../../assets/img/black_delete24.svg"></md-icon>
+        </md-button>
+      </span>
+        <md-expansion-panel-icon></md-expansion-panel-icon>
+      </md-expansion-panel-header>
+      <md-expansion-panel-content>
+      <span layout="row" layout-align="start start" layout-fill layout-wrap >
+        <span flex="20">
+          <h4 style="color: #555;">User Type</h4>
+        </span>
+        <span flex="80">
+          <span flex="80">
+            <p>Name: {{applicant.firstname}} {{applicant.middlename}} {{applicant.lastname}}</p>
+            <p>Email: {{applicant.createdAt | date: mediumDate}}</p>
+          </span>
+        </span>
+      </span>
+      <md-tabs md-dynamic-height md-border-bottom>
+         <md-tab label="student info">
+
+      <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
+      <!-- hide here -->
+      <span layout="row" flex ng-hide="createdNow" >
+        <md-input-container class="md-block" style="margin: 10px 0 !important;">
+          <label> firstname </label>
+          <md-icon md-svg-icon="../../assets/img/black_person24.svg"></md-icon>
+            <input ng-model="selected[0].firstname" aria-label="email" type="text"  ng-required>
+        </md-input-container>
+      <md-input-container md-no-float class="md-block" style="margin: 10px 0 !important;">
+        <label> middlename </label>
+          <input ng-model="selected[0].middlename" aria-label="lastname" type="text"  ng-required>
+      </md-input-container>
+      <md-input-container class="md-block" style="margin: 10px 0 !important;">
+          <label> lastname </label>
+          <input ng-model="selected[0].lastname" aria-label="firstname" type="text"  ng-required>
+      </md-input-container>
+      </span>
+      <span layout="column" ng-hide="createdNow" layout-fill>
+      <md-input-container  class="md-block" style="margin: 10px 0 !important;">
+        <label> email </label>
+       <!-- Use floating placeholder instead of label -->
+       <md-icon md-svg-icon="../../assets/img/black_email24.svg"></md-icon>
+       <input ng-model="selected[0].email" type="email"  >
+      </md-input-container>
+        <span layout="row" flex ng-hide="createdNow" layout-fill>
+        <md-input-container layout-fill  class="md-block" style="margin: 10px 0 !important;">
+          <label> cellphone number </label>
+        <md-icon md-svg-icon="../../assets/img/black_phone24.svg"></md-icon>
+            <input ng-model="results.profiles_phone" aria-label="phone" type="text"  ng-required>
+        </md-input-container>
+        <md-input-container  layout-fill class="md-block" style="margin: 10px 0 !important;">
+          <label> gender </label>
+        <md-icon md-svg-icon="../../assets/img/black_gender24.svg"></md-icon>
+        <md-select ng-model="results.profiles_gender"  class="md-no-underline">
+          <md-option value="male">male</md-option>
+          <md-option value="female">female</md-option>
+        </md-select>
+      </md-input-container>
+      </span>
+      </span>
+
+      <!-- end here -->
+      <!-- <md-toolbar ng-show="existing" class="md-primary" layout="row" layout-fill layout-padding layout-margin>
+      <p class="md-body-1">applicant already registered</p>
+      </md-toolbar>
+      <span layout="column" layout-align="start start" flex ng-if="createdNows">
+        <span layout="row">
+        <p>
+          A new application for <b>{{registered.firstname}} {{registered.lastname}} </b> has been created
+        </p>
+        </span>
+        <span layout="row">
+        <p>
+          Track progress of application by saving the generated code below
+        </p>
+        </span>
+        <span layout="row" layout-align="start start" layout-fill>
+        <p>
+          Application number: <b>{{registered.application}}</b>
+        </p>
+        <span flex = "10"></span>
+      </span>
+      </span>
+      <span layout="row" style="background-color: #fafafa;" flex="100" ng-if="createdNows" layout-fill>
+        <img ng-src="../../assets/img/admissions_icon.png" style="margin: auto 3px auto 0;" >
+        Need to add student applications anytime, anywhere?
+        Use Squala mobile app.
+      </span>-->
+      </md-dialog-content>
+    </md-tab>
+
+  <md-tab label="more info">
+    <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
+      <div layout="row" layout-align="start center" layout-fill>
+        <span flex>
+        <h2 style="font-weight:normal" ng-if="done">Creating new application</h2>
+        <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/yellow_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Created new applicant</h2>
+        </span>
+
+      </div>
+      <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+
+
+    <span layout="row" flex ng-hide="createdNow" >
+      <md-input-container md-float class="md-block" style="margin: 10px 0 !important;">
+        <label> nickname </label>
+          <input ng-model="moreinfo.nickname" aria-label="email" type="text" ng-required>
+      </md-input-container>
+      <md-input-container>
+            <label>Birth date</label>
+            <md-datepicker ng-model="moreinfo.birthdate" name="dateField" md-min-date="minDate"
+              md-max-date="maxDate"></md-datepicker>
+
+            <div ng-messages="myOtherForm.dateField.$error">
+              <div ng-message="valid">The entered value is not a date!</div>
+              <div ng-message="required">This date is required!</div>
+              <div ng-message="mindate">Date is too early!</div>
+              <div ng-message="maxdate">Date is too late!</div>
+            </div>
+          </md-input-container>
+    </span>
+    <span layout="row" flex ng-hide="createdNow" layout-fill >
+      <md-input-container flex="70" class="md-block" style="margin: 10px 0 !important;">
+        <label> religion </label>
+          <input ng-model="moreinfo.religion" aria-label="email" type="text" ng-required>
+      </md-input-container>
+      <md-input-container  layout-fill class="md-block" style="margin: 10px 0 !important;">
+        <label> last grade completed </label>
+      <md-select ng-model="moreinfo.gradecompleted" class="md-no-underline">
+        <md-option ng-repeat="item in items" value="{{item.value}}">{{item.name}}</md-option>
+      </md-select>
+    </md-input-container>
+
+    </span>
+    <span layout="row" ng-hide="createdNow" layout-fill>
+    <md-input-container  class="md-block" style="margin: 10px 0 !important;">
+      <label> city / municipality </label>
+     <!-- Use floating placeholder instead of label -->
+     <input ng-model="moreinfo.city" type="email" >
+    </md-input-container>
+      <md-input-container layout-fill  class="md-block" style="margin: 10px 0 !important;">
+        <label> address </label>
+          <input ng-model="more.address" aria-label="phone" type="text" ng-required>
+      </md-input-container>
+    </span>
+
+
+  </md-dialog-content>
+  </md-tab>
+
+  <md-tab label="elementary educ">
+    <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
+      <div layout="row" layout-align="start center" layout-fill>
+        <span flex>
+        <h2 style="font-weight:normal" ng-if="done">Creating new application</h2>
+        <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/yellow_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Created new applicant</h2>
+        </span>
+
+      </div>
+      <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+
+
+    <span layout="column" flex layout-fill ng-hide="createdNow" >
+      <md-input-container md-float class="md-block" style="margin: 10px 0 !important;">
+        <label> elementary school </label>
+          <input ng-model="moreinfo.elemschool" aria-label="email" type="text" ng-required>
+      </md-input-container>
+    </span>
+    <span layout="row" flex ng-hide="createdNow" layout-fill >
+      <md-input-container  layout-fill class="md-block" style="margin: 10px 0 !important;">
+        <label> school type </label>
+      <md-select ng-model="moreinfo.schooltype"  class="md-no-underline">
+        <md-option value="public">public</md-option>
+        <md-option value="private">private</md-option>
+      </md-select>
+    </md-input-container>
+      <md-input-container flex="70" class="md-block" style="margin: 10px 0 !important;">
+        <label> contact number </label>
+          <input ng-model="moreinfo.elemcontactnum" aria-label="email" type="text" ng-required>
+      </md-input-container>
+
+    </span>
+    <span layout="row" ng-hide="createdNow" layout-fill>
+    <md-input-container  class="md-block" style="margin: 10px 0 !important;">
+      <label> year graduated </label>
+     <!-- Use floating placeholder instead of label -->
+     <input ng-model="moreinfo.elemgrad" type="email" >
+    </md-input-container>
+      <md-input-container layout-fill  class="md-block" style="margin: 10px 0 !important;">
+        <label> address </label>
+          <input ng-model="more.elemaddress" aria-label="phone" type="text" ng-required>
+      </md-input-container>
+    </span>
+
+
+  </md-dialog-content>
+  </md-tab>
+
+  <md-tab label="highschool educ">
+    <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
+      <div layout="row" layout-align="start center" layout-fill>
+        <span flex>
+        <h2 style="font-weight:normal" ng-if="done">Creating new application</h2>
+        <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/yellow_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Created new applicant</h2>
+        </span>
+
+      </div>
+      <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+
+
+    <span layout="column" flex layout-fill ng-hide="createdNow" >
+      <md-input-container md-float class="md-block" style="margin: 10px 0 !important;">
+        <label> high school </label>
+          <input ng-model="moreinfo.highschool" aria-label="email" type="text" ng-required>
+      </md-input-container>
+    </span>
+    <span layout="row" flex ng-hide="createdNow" layout-fill >
+      <md-input-container  layout-fill class="md-block" style="margin: 10px 0 !important;">
+        <label> school type </label>
+      <md-select ng-model="moreinfo.highschooltype"  class="md-no-underline">
+        <md-option value="public">public</md-option>
+        <md-option value="private">private</md-option>
+      </md-select>
+    </md-input-container>
+      <md-input-container flex="70" class="md-block" style="margin: 10px 0 !important;">
+        <label> contact number </label>
+          <input ng-model="moreinfo.highcontactnum" aria-label="email" type="text" ng-required>
+      </md-input-container>
+
+    </span>
+    <span layout="row" ng-hide="createdNow" layout-fill>
+    <md-input-container  class="md-block" style="margin: 10px 0 !important;">
+      <label> reason for transferring </label>
+     <!-- Use floating placeholder instead of label -->
+     <input ng-model="moreinfo.highreason" type="email" >
+    </md-input-container>
+      <md-input-container layout-fill  class="md-block" style="margin: 10px 0 !important;">
+        <label> address </label>
+          <input ng-model="more.highaddress" aria-label="phone" type="text" ng-required>
+      </md-input-container>
+    </span>
+
+
+  </md-dialog-content>
+  </md-tab>
+
+  <md-tab label="parent/guardian">
+    <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
+      <div layout="row" layout-align="start center" layout-fill>
+        <span flex>
+        <h2 style="font-weight:normal" ng-if="done">Creating new application</h2>
+        <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/yellow_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Created new applicant</h2>
+        </span>
+
+      </div>
+      <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+
+      <span layout="row">
+      <p>
+        Who will the student live with while attending school? Please indicate all. (e.g., 2 parents, 1 sibling, 1 grandparent, 1 aunt, 2 cousins)
+      </p>
+      </span>
+
+    <span layout="column" flex layout-fill ng-hide="createdNow" >
+      <md-input-container md-float class="md-block" style="margin: 10px 0 !important;">
+        <label> full name </label>
+          <input ng-model="moreinfo.parentname" aria-label="email" type="text" ng-required>
+      </md-input-container>
+    </span>
+    <span layout="row" flex ng-hide="createdNow" layout-fill >
+      <md-input-container  layout-fill class="md-block" style="margin: 10px 0 !important;">
+        <label> relation </label>
+      <md-select ng-model="moreinfo.relation"  class="md-no-underline">
+        <md-option value="mother">mother</md-option>
+        <md-option value="father">father</md-option>
+        <md-option value="guardian">guardian</md-option>
+      </md-select>
+    </md-input-container>
+      <md-input-container flex="70" class="md-block" style="margin: 10px 0 !important;">
+        <label> contact number </label>
+          <input ng-model="moreinfo.parentnum" aria-label="email" type="text" ng-required>
+      </md-input-container>
+
+    </span>
+    <span layout="row" ng-hide="createdNow" layout-fill>
+    <md-input-container  class="md-block" style="margin: 10px 0 !important;">
+      <label> email </label>
+     <!-- Use floating placeholder instead of label -->
+     <md-icon md-svg-icon="../../assets/img/black_email24.svg"></md-icon>
+     <input ng-model="more.parentemail" type="email"  >
+    </md-input-container>
+  </span>
+
+
+  </md-dialog-content>
+  </md-tab>
+
+
+
+
+  </md-tabs>
+      </md-expansion-panel-content>
+      <md-expansion-panel-footer ng-cloak>
+        <div class="md-default md-toolbar-tools" >
+          <span flex></span>
+          <md-button ng-click="openDialog($event)" md-no-ink class="md-accent">
+            Edit
+          </md-button>
+        </div>
+      </md-expansion-panel-footer>
+    </md-expansion-panel-expanded>
+
+
+</md-expansion-panel>
+</div>
+</md-expansion-panel-group>
+
+
+</div>
+</div>
+</md-content>

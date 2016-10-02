@@ -1,29 +1,12 @@
-<md-toolbar class="md-primary md-hue-2">
-    <div class="md-toolbar-tools">
-      <img ng-src="../../assets/img/admissions_icon.png" style="margin: auto 3px auto 0;" >
-      <h2 class="md-flex" style="color: #fff !important;">Admissions</h2>
-      <h2 class="md-flex" style="color: #fff !important; border-left: 1px solid rgba(255,255,255,0.2) !important; margin-left: 24px !important; padding-left: 24px !important;">Kickstart Enrollment</h2>
-      <span flex></span>
-      <md-button class="md-icon-button" aria-label="Apps" ng-click="$mdOpenMenu($event)">
-        <md-tooltip md-direction="bottom">
-          Help
-        </md-tooltip>
-        <md-icon md-svg-icon="../../assets/img/white_help24.svg"></md-icon>
-      </md-button>
-    </div>
-</md-toolbar>
-
-
 <div class="anim-slide-below-fade" data-anim-speed="500">
-  <md-content layout="row" layout-align="center center" layout-padding style="background-color:transparent !important;" layout-fill>
-    <div layout="column" flex="100" flex-gt-sm="70" layout-align="start start" layout-padding layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 10px;"  ng-cloak>
 
-      <div flex="100" flex-gt-sm="60" layout="column"  layout-fill>
-        <applicants></applicants>
+      <div flex layout="column" layout-style="center center" layout-fill style="overflow: hidden !important;">
+        <applicantslist></applicantslist>
       </div>
 
-        </div>
-  </md-content>
+      <!--<div flex="100" flex-gt-sm="60" layout="column"  layout-fill>
+        <applicants></applicants>
+      </div>-->
 
 
   <div ng-cloak >

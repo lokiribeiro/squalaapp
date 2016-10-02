@@ -28,7 +28,8 @@ class AdmissionsnewapplicationCtrl{
         status: '',
         encodedBy: '',
         photo: '',
-        encoderName: ''
+        encoderName: '',
+        createdAt: ''
       }
 
       $scope.error = '';
@@ -48,12 +49,14 @@ class AdmissionsnewapplicationCtrl{
         detail.encodedBy = $scope.userID;
         detail.photo = '../../assets/img/applicants/user.jpg';
         detail.encoderName = $scope.encoderName;
+        var date = new Date();
+        detail.createdAt = date.toJSON();
         $scope.done = true;
         $scope.existing = false;
         $scope.createdNow = !$scope.createdNow;
         //var status = createUserFromAdmin(details);
 
-        Meteor.call('createApplicantFromAdmin', detail.firstname, detail.middlename, detail.lastname, detail.email, detail.status, detail.application, detail.branch, detail.encodedBy, detail.photo, detail.encoderName, function(err, detail) {
+        Meteor.call('createApplicantFromAdmin', detail.firstname, detail.middlename, detail.lastname, detail.email, detail.status, detail.application, detail.branch, detail.encodedBy, detail.photo, detail.encoderName, detail.createdAt, function(err, detail) {
               var detail = detail;
               console.log(detail);
                 if (err) {

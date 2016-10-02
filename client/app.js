@@ -13,9 +13,10 @@ import mdDataTable from 'angular-material-data-table';
 import '../imports/ui/loading.js';
 import Navigations from '/imports/models/navigations.js';
 import '../imports/ui/anim-in-out.js';
+import ngInfiniteScroll from 'ng-infinite-scroll';
 
 export var app = angular.module('squala',
-    [angularMeteor, ngMaterial, uiRouter, 'accounts.ui', utilsPagination, ngAnimate, 'material.components.expansionPanels', mdDataTable, 'anim-in-out']);
+    [angularMeteor, ngMaterial, uiRouter, 'accounts.ui', utilsPagination, ngAnimate, 'material.components.expansionPanels', mdDataTable, 'anim-in-out', ngInfiniteScroll]);
 
 app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdThemingProvider, $mdIconProvider, $provide) {
     'ngInject';

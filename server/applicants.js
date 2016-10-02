@@ -32,10 +32,15 @@ Meteor.publish('applicantsNew', function (searchText) {
 
   if(typeof searchText === 'string' && searchText.length){
         var searchString = {$regex: `.*${searchText}.*`, $options: 'i'}
-        selector = {firstname : searchString, $and : [
+        selector = {status : type, $and  : [
+              { $or : [
+                {lastname: searchString},
+                {middlename: searchString},
+                {applicationNum: searchString},
+                {firstname : searchString}
           //{ branchId : branchId },
-          { status : type}
-        ]};
+              ]}
+      ]};
   } else {
       selector =  //{$and : [
         //{branchId: branchId},
@@ -49,8 +54,8 @@ Meteor.publish('applicantsNew', function (searchText) {
 
 Meteor.methods({
 
-          createApplicantFromAdmin(firstname, middlename, lastname, email, status, applicationNum, branchId, encodedBy, photo, encoderName){
-                var applicant = Applicants.insert({firstname:firstname, middlename:middlename, lastname:lastname, email:email, status:status, branchId: branchId, applicationNum: applicationNum, encodedBy: encodedBy, photo: photo, encoderName: encoderName });
+          createApplicantFromAdmin(firstname, middlename, lastname, email, status, applicationNum, branchId, encodedBy, photo, encoderName, createdAt){
+                var applicant = Applicants.insert({firstname:firstname, middlename:middlename, lastname:lastname, email:email, status:status, branchId: branchId, applicationNum: applicationNum, encodedBy: encodedBy, photo: photo, encoderName: encoderName, createdAt: createdAt });
                 return applicant;
             }
 

@@ -4,13 +4,15 @@ import Applicants from '/imports/models/applicants.js';
 import Profiles from '/imports/models/profiles.js';
 import Branches from '/imports/models/branches.js';
 
-class NewapplicationsCtrl{
 
-  constructor($scope, $timeout, $window, $mdSidenav, $log, $mdDialog, $state, $q, $mdToast, $rootScope){
+
+class ApplicantslistCtrl{
+
+  constructor($scope, $timeout, $filter, $window, $mdSidenav, $log, $mdDialog, $state, $q, $mdToast, $rootScope){
       'ngInject';
 
       angular.element(document).ready(function () {
-        
+        $window.loading_screen.finish();
 
         $scope.promise = $timeout(function(){
           var userDetails = Meteor.userId();
@@ -30,7 +32,16 @@ class NewapplicationsCtrl{
           var toasted = $scope.branchName + ': Hi ' + $scope.firstname + ' ' + $scope.lastname + '!';
           var pinTo = $scope.getToastPosition();
 
-
+          $mdToast.show(
+            $mdToast.simple()
+            .textContent(toasted)
+            .position(pinTo )
+            .hideDelay(3000)
+            .theme('Admissions')
+            .action('HIDE')
+            .highlightAction(true)
+            .highlightClass('md-accent')
+          );
         }, 2000);
       });
 
@@ -64,23 +75,31 @@ class NewapplicationsCtrl{
           return [$scope.getReactively('thisUser')];
       });
 
+      $scope.applicantID = [];
+      $scope.sort = -1;
+
       $scope.helpers({
           applicants(){
             //var sort = 1;
             //var selector = {};
             //var modifier= {sort: {profiles_firstname: sort}};
+            $scope.doneSearching = true;
+
             $scope.promise = $timeout(function(){
+
               $scope.brancID = $scope.branchID;
+              $scope.doneSearching = false;
+
 
             }, 2000);
             var thisuserID = $scope.getReactively('thisUser');
             var branchID = $scope.getReactively('brancID');
             var type = 'New application';
             var selector = {branchId: branchID, $and: [{status: type}]};
-            var applicants = Applicants.find(selector);
+            var sort = $scope.getReactively('sort');
+            var modifier = {sort : {createdAt: sort}};
+            var applicants = Applicants.find(selector, modifier);
             var count = applicants.count();
-            console.info('profiles', applicants);
-            console.info('count', count);
             return applicants;
           },
           totalApplicants(){
@@ -94,13 +113,15 @@ class NewapplicationsCtrl{
             var selector = {branchId: branchID, $and: [{status: type}]};
             var applicants = Applicants.find(selector);
             var count = applicants.count();
-            console.info('profiles', applicants);
-            console.info('count', count);
             return count;
           }
       })//helpers
 
       $scope.rolesID = null;
+      $scope.doneSearching = false;
+      $scope.dateToday = new Date();
+      $scope.formattedDay = $filter('date')($scope.dateToday);
+      console.info('formattedDay', $scope.formattedDay);
 
       $scope.selected2 = [];
 
@@ -119,10 +140,11 @@ class NewapplicationsCtrl{
 
       $scope.show = false;
 
+
+
       $scope.perPage = 15;
       $scope.page = 1;
       $scope.page2 = 1;
-      $scope.sort = 1;
       $scope.searchText = null;
       $scope.searchText2 = null;
       $scope.partyID = null;
@@ -340,15 +362,41 @@ class NewapplicationsCtrl{
         console.log($scope.selected[0]._id);
 
 
-
+      $scope.openPanel = function(applicantId) {
+        $scope.applicantIdInstance = applicantId;
+        console.info('applicantId', $scope.applicantIdInstance );
       }
+      }
+
+      /**/
+
+      /*
+      $mdExpansionPanel().waitFor(applicantID).then(function (instance) {
+        instance.expand();
+        instance.collapse();
+        instance.remove({animation: false});
+        instance.onRemove(function () {});
+        instance.isOpen();
+        });
+      */
+
+
+      //$mdExpansionPanel(appID).addClickCatcher(function () {
+      //  console.log('clicked');
+      //});
+
+      // In this example, we set up our model using a plain object.
+       // Using a class works too. All that matters is that we implement
+       // getItemAtIndex and getLength.
+
+
+
 
     }
 }
 
-app.component('newapplications', {
-    templateUrl: 'client/components/admissions/newapplications/newapplications.html',
-    controllerAs: 'newapplications',
-    controller: NewapplicationsCtrl,
-    transclude: true
+app.component('applicantslist', {
+    templateUrl: 'client/components/admissions/applicantsList/applicantslist.html',
+    controllerAs: 'applicantslist',
+    controller: ApplicantslistCtrl
 })

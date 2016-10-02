@@ -27,9 +27,9 @@
 <md-toolbar class="md-table-toolbar md-primary md-hue-1" flex="100" ng-show="selected2.length">
 <div class="md-toolbar-tools" >
   <div ng-model="selected" flex>{{selected2[0].firstname}} {{selected2[0].lastname}} selected</div>
-  <md-button class="md-icon-button" aria-label="edit" ng-click="openProfile2(selected2)">
+  <md-button class="md-icon-button" aria-label="edit" ng-click="openDialog($event)">
     <md-tooltip md-direction="bottom">
-      View Account
+      View Details
     </md-tooltip>
     <md-icon md-svg-icon="../../assets/img/black_launch24.svg"></md-icon>
   </md-button>
