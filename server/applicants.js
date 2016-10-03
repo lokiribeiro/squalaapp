@@ -52,6 +52,11 @@ Meteor.publish('applicantsNew', function (searchText) {
   return Applicants.find(selector);
 });
 
+Meteor.publish('applicants', function (applicantID) {
+  var selector = {_id: applicantID};
+  return Applicants.find(selector);
+});
+
 Meteor.methods({
 
           createApplicantFromAdmin(firstname, middlename, lastname, email, status, applicationNum, branchId, encodedBy, photo, encoderName, createdAt){

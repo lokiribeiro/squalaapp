@@ -1,0 +1,75 @@
+<!-- <md-expansion-panel-group md-component-id="applicant.createdAt" ng-init="newHeader = true" layout-padding >-->
+  <div ng-repeat="applicant in applicants track by $index" layout="column" layout-align="center center" >
+<md-expansion-panel md-component-id="{{applicant._id}}"  layout-fill class="cardapp" ng-cloak >
+    <md-expansion-panel-collapsed layout-fill ng-cloak>
+      <span layout="row" layout-fill layout-align="start center">
+
+      <div class="md-title" layout="row" layout-align="start center" layout-wrap hide-xs><span layout-padding hide-xs><md-icon md-svg-icon="../../assets/img/black_archive24.svg"></md-icon>Requirements</span></div>
+    </span>
+      <md-expansion-panel-icon></md-expansion-panel-icon>
+    </md-expansion-panel-collapsed>
+    <md-progress-linear md-mode="indeterminate" flex ng-show="doneagain" ></md-progress-linear>
+    <md-expansion-panel-expanded ng-cloak>
+      <md-expansion-panel-header ng-click="$panel.collapse()">
+        <span layout="row" layout-fill layout-align="start center" >
+
+        <div class="md-summary" layout="row" layout-align="start center" layout-wrap><span layout-padding >Requirements</span></div>
+      </span>
+        <md-expansion-panel-icon></md-expansion-panel-icon>
+      </md-expansion-panel-header>
+      <md-expansion-panel-content>
+        <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
+
+          <span layout="column" flex layout-fill ng-hide="createdNow" >
+            <!-- <input type = "file" file-model = "myFile"/>
+         <button ng-click = "uploadFile()">upload me</button> -->
+
+         <!-- <button type="file" ngf-select="uploadFiles($file, $invalidFiles)"
+          accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
+      Select File</button>
+  <br><br>
+  File:
+  <div style="font:smaller">{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
+      <span class="progress" ng-show="f.progress >= 0">
+          <div style="width:{{f.progress}}%"
+               ng-bind="f.progress + '%'"></div>
+      </span>
+  </div>-->
+                <form name="appdocs">
+                  <div>
+                  Uploading <b>{{file.name}}</b>:
+                </div>{{currentUpload}}
+                   <md-progress-linear md-mode="determinate" value="{{progress}}"></md-progress-linear>
+                   <md-button type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="image/*" ngf-max-height="1000" class="md-icon-button" aria-label="forward" >
+                     <md-tooltip md-direction="bottom">
+                       Upload
+                     </md-tooltip>
+                     <md-icon md-svg-icon="../../assets/img/black_forward24.svg"></md-icon>
+                   </md-button>
+
+                </form>
+
+
+          </span>
+
+
+        </md-dialog-content>
+      </md-expansion-panel-content>
+      <md-expansion-panel-footer ng-cloak>
+        <div class="md-default md-toolbar-tools" >
+          <span flex>
+            <h6 style="color: #555 !important;">Encoded by: {{applicant.encoderName}}</h6></span>
+          <md-button class="md-icon-button" aria-label="forward" ng-click="openDialog($event, selected)" >
+            <md-tooltip md-direction="bottom">
+              Change application status
+            </md-tooltip>
+            <md-icon md-svg-icon="../../assets/img/black_forward24.svg"></md-icon>
+          </md-button>
+        </div>
+      </md-expansion-panel-footer>
+    </md-expansion-panel-expanded>
+
+
+</md-expansion-panel>
+</div>
+<!--</md-expansion-panel-group> -->

@@ -5757,6 +5757,37 @@ header {
   pointer-events:none;
 }
 
+.cardapp2 {
+  /*padding:1.5rem;*/
+  box-shadow:0 1px 2px #aaa;
+  background:white;
+  /*margin:0 1rem 1rem !important;*/
+  border-radius:3px;
+  user-select:none;
+  border-bottom: none;
+  animation:fly-in-from-left .2s .3s ease both;
+  transform-origin:top left;
+}
+.cardapp2:nth-child(even){
+  animation-name:fly-in-from-right .2s .3s ease both;;
+  animation-delay:.6s;
+ transform-origin:top right;
+}
+
+.cardapp2:after {
+  position:absolute;
+  font-size:.9rem;
+  top:1.5rem;
+  right:1rem;
+  border:thin solid gray;
+  color:gray;
+  width:1rem;
+  line-height:1rem;
+  text-align:center;
+  border-radius:50%;
+  pointer-events:none;
+}
+
 .map {
   height:12rem;
   background:whitesmoke;
@@ -5817,6 +5848,15 @@ header {
 		border-radius: 50%;
 		margin-top: -100% !important;
 		border: none !important;;
+}
+
+.avatar-6 {
+		background: #eee;
+		height: 80px !important;
+		width: 80px !important;
+		border-radius: 50%;
+		margin-top: -100% !important;
+		border: solid 3px #fff;
 }
 
 .avatar-5 {
@@ -5886,4 +5926,49 @@ color: white !important;
 
 input[type="search"]:-ms-input-placeholder {
 color: white !important;
+}
+
+.ng-crop {
+    h3: {
+      margin-top: 0;
+    }
+  }
+
+  .ng-crop-container {
+    width: 400px;
+    height: 225px;
+  }
+
+  .images-container-title {
+    padding-bottom: 30px;
+  }
+  .party-image-container {
+    position: relative;
+    margin-right: 10px;
+    max-height: 200px;
+    max-width: 200px;
+    img: {
+      max-height: 100%;
+      max-width: 100%;
+    }
+  }
+  .main-image {
+    border: 2px solid #ddd;
+  }
+
+
+  .drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    text-align: center;
+    padding: 25px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+  }
+  .drop-box.dragover {
+    border: 5px dashed blue;
+  }
+  .drop-box.dragover-err {
+    border: 5px dashed red;
+  }
 }

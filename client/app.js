@@ -14,9 +14,11 @@ import '../imports/ui/loading.js';
 import Navigations from '/imports/models/navigations.js';
 import '../imports/ui/anim-in-out.js';
 import ngInfiniteScroll from 'ng-infinite-scroll';
+import ngFileUpload from 'ng-file-upload';
+//import { FilesCollection } from 'meteor/ostrio:files';
 
 export var app = angular.module('squala',
-    [angularMeteor, ngMaterial, uiRouter, 'accounts.ui', utilsPagination, ngAnimate, 'material.components.expansionPanels', mdDataTable, 'anim-in-out', ngInfiniteScroll]);
+    [angularMeteor, ngMaterial, uiRouter, 'accounts.ui', utilsPagination, ngAnimate, 'material.components.expansionPanels', mdDataTable, 'anim-in-out', ngInfiniteScroll, ngFileUpload]);
 
 app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdThemingProvider, $mdIconProvider, $provide) {
     'ngInject';
@@ -222,8 +224,8 @@ app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdT
                   }
               })
               .state('AdmissionsApplicantProfile', {
-                    url:'/:stateHolder/AAPe/:userID',
-                    template: '<admissionsapplicantprofile></admissionsapplicantprofile>',
+                    url:'/:stateHolder/AAPe/:userID/:applicantID',
+                    template: '<newappdetails></newappdetails>',
                     resolve: {
                         currentUser($q, $state) {
                             if (!Meteor.userId()) {
@@ -235,6 +237,7 @@ app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdT
                     },
                     onEnter: function($rootScope, $stateParams, $state) {
                         $rootScope.stateHolder = $stateParams.stateHolder;
+                        $rootScope.applicantID = $stateParams.applicantID;
                     }
                 })
             .state('Admissions', {

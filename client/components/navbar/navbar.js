@@ -7,7 +7,10 @@ class NavbarCtrl{
   constructor($scope, $timeout, $mdSidenav, $log, $mdDialog, $state, $mdComponentRegistry, $stateParams){
       'ngInject';
 
+    
       $scope.userId = Meteor.userId();
+
+
       console.info('thisid', $scope.userId);
 
       $scope.sort = 1;
@@ -18,11 +21,8 @@ class NavbarCtrl{
 
       $scope.helpers({
           userappsMenu() {
-            $scope.promise = $timeout(function(){
-
-
-            }, 2000);
-            var userID =  $scope.getReactively('userId');
+            var userID = $scope.userId;
+            console.info('userID', userID);
             var sort  = $scope.sort;
             var selector = {userID: userID};
             var modifier = {sort: {appName: sort}};
@@ -31,24 +31,18 @@ class NavbarCtrl{
           return userapps;
         },
         totalApps(){
-            var userID = Meteor.userId();
+            var userID =  $scope.userId;
             var query = {userID: userID};
             return Userapps.find(query).count();
-        },
-        currentusers(){
-            var userID = Meteor.userId();
-            var query = {userID: userID};
-            var listahan = Userapps.findOne(query);
-            return Userapps.findOne(query);
         }
       });//helpers
 
       $scope.redirect = function (appName) {
-        $state.go(appName, { stateHolder : appName, userID : Meteor.userId() });
+        $state.go(appName, { stateHolder : appName, userID : $scope.userId });
       }
 
       $scope.redirectProfile = function () {
-        $state.go('Profile', {stateHolder : 'Dashboard', userID : Meteor.userId()});
+        $state.go('Profile', {stateHolder : 'Dashboard', userID : $scope.userId});
       }
 
     $scope.logout = function() {
@@ -77,7 +71,7 @@ class NavbarCtrl{
     }
 
     function totalAppCount() {
-      var userID = Meteor.userId();
+      var userID = $scope.userId;
       var query = {userID: userID};
       console.log(query);
       var listahan = Userapps.find().count();

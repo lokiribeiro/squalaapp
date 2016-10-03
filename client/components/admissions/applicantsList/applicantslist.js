@@ -167,30 +167,6 @@ class ApplicantslistCtrl{
 
       $scope.toastPosition = angular.extend({},last);
 
-      $scope.openProfile2 = function (selected2) {
-        console.info('selected:', selected2[0].profiles_userID);
-        var profileID = selected2[0].profiles_userID;
-        $state.go('Headmasterprofile', {stateHolder : 'Headmaster', userID : Meteor.userId(), profileID : profileID});
-      }
-
-      $scope.getToastPosition = function() {
-        sanitizePosition();
-
-        return Object.keys($scope.toastPosition)
-        .filter(function(pos) { return $scope.toastPosition[pos]; })
-        .join(' ');
-      };
-
-      function sanitizePosition() {
-        var current = $scope.toastPosition;
-
-        if ( current.bottom && last.top ) current.top = false;
-        if ( current.top && last.bottom ) current.bottom = false;
-        if ( current.right && last.left ) current.left = false;
-        if ( current.left && last.right ) current.right = false;
-
-        last = angular.extend({},current);
-      }
 
       $scope.pageChange = function (newPageNumber) {
           $scope.page = newPageNumber;
@@ -215,7 +191,7 @@ class ApplicantslistCtrl{
       $scope.closeFilter = function(){
         $scope.filter.show = !$scope.filter.show;
         $scope.selected2 = [];
-        $scope.searchText = null;
+        $scope.searchText = '';
       }
 
 
@@ -388,6 +364,67 @@ class ApplicantslistCtrl{
       // In this example, we set up our model using a plain object.
        // Using a class works too. All that matters is that we implement
        // getItemAtIndex and getLength.
+
+       $scope.removeUser = function($event, item) {
+         // Show the dialog
+         $scope.passedId = item._id;
+         console.info('unassign', $scope.passedId);
+
+         $mdDialog.show({
+           clickOutsideToClose: false,
+           escapeToClose: true,
+           transclude: true,
+           locals: {
+             passedId: $scope.passedId
+           },
+           controller: function($mdDialog, passedId, $scope) {
+               $scope.passedId = passedId;
+
+               $scope.removeNow = function() {
+                   var userID = $scope.passedId;
+
+                   $scope.done = true;
+                   $scope.existing = false;
+                   $scope.createdNow = !$scope.createdNow;
+                   //var status = createUserFromAdmin(details);
+                   var selector = {_id:userID};
+                   var err = Applicants.remove(selector);
+
+                   if (err) {
+                     $scope.createdNows = !$scope.createdNows;
+                     $scope.done = false;
+                     $scope.selected3 = '';
+                     //delete old apps
+                     window.setTimeout(function(){
+                       $scope.$apply();
+                     },2000);
+                       //do something with the id : for ex create profile
+                     } else {
+                       $scope.done = false;
+                       $scope.createdNow = !$scope.createdNow;
+                       $scope.existing = true;
+                       window.setTimeout(function(){
+                         $scope.$apply();
+                       },2000);
+
+                     }
+
+                 }
+
+                 $scope.closeDialog = function() {
+                   $mdDialog.cancel();
+                 };
+               },
+               templateUrl: 'client/components/admissions/removeDialogs/deleteapplicant.html',
+               targetEvent: $event
+             });
+           }
+
+           $scope.openApplication = function (selected) {
+             console.info('selected:', selected._id);
+             var applicantID = selected._id;
+             $state.go('AdmissionsApplicantProfile', {stateHolder : 'Admissions', userID : Meteor.userId(), applicantID : applicantID});
+           }
 
 
 
