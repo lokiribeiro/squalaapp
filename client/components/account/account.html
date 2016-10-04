@@ -1,4 +1,5 @@
-<md-expansion-panel md-component-id="panelOne" ng-repeat="profile in profiles" >
+<div layout-fill layout="column" layout-align="center center" layout-padding>
+<md-expansion-panel md-component-id="panelOne" ng-repeat="profile in profiles" class="cardapp" layout-fill>
     <md-expansion-panel-collapsed layout="row" layout-align="center center" layout-fill>
       <div class="md-title">Account</div>
       <div class="md-summary">View and manage profile, security, and usage stats.</div>
@@ -45,3 +46,4 @@
       </md-expansion-panel-footer>
     </md-expansion-panel-expanded>
 </md-expansion-panel>
+</div>

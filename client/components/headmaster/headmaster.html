@@ -23,10 +23,10 @@
 
 <div class="anim-slide-below-fade" data-anim-speed="500">
 <md-content layout="row" layout-align="center center" layout-padding style="background-color:transparent !important;" layout-fill>
-  <div layout="column" flex="100" flex-gt-sm="70" layout-align="start start" layout-padding layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 10px;"  ng-cloak>
+  <div layout="column" flex="100" flex-gt-sm="70" layout-align="center center" layout-padding layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 10px;"  ng-cloak>
       <div flex="100" flex-gt-sm="60" layout-padding layout-fill ng-show="$root.userLoggedInRole == 'superadmin'">
-        <div layout="column"  layout-fill layout-padding>
-          <md-expansion-panel md-component-id="panelOne" flex="100" flex-gt-sm="60" layout="column"  layout-fill style="padding: 0 !important;" ng-repeat="headmaster in headmasters" >
+        <div layout="column"  layout-align="center center">
+          <md-expansion-panel class="cardapp" md-component-id="panelOne" layout-fill style="padding: 0 !important;" ng-repeat="headmaster in headmasters" >
           <md-expansion-panel-collapsed layout="row" layout-align="center center" layout-fill>
             <div class="md-title">Profile</div>
             <div class="md-summary">Edit general and other organization-wide details.</div>
@@ -121,12 +121,12 @@
           </md-expansion-panel>
         </div>
       </div>
-      <div flex="100" flex-gt-sm="60" layout="column"  layout-fill layout-padding>        
+      <div  flex flex-gt-sm="60" layout-fill layout-padding>
         <parentschool></parentschool>
       </div>
   <!-- Branch Schools Table -->
 
-      <div flex="100" flex-gt-sm="60" layout="column"  layout-fill>
+      <div flex="100" flex-gt-sm="60" layout="column"  layout-fill layout-padding>
         <branchschools></branchschools>
       </div>
 

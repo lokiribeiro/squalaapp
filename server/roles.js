@@ -28,12 +28,9 @@ Meteor.publish('roles', function (searchText) {
   return Roles.find(selector);
 });
 
-Meteor.publish('roles2', function (selector) {
-  if(selector === null || selector ===''){
-    selector = {};
-  } else {
-    selector = {_id: selector};
-  }
+Meteor.publish('roles2', function (search) {
+  var profileID = search;
+  var selector = {_id: profileID};
 
   return Roles.find(selector);
 });

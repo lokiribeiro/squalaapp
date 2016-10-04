@@ -1,7 +1,7 @@
 <md-card flex>
 <md-toolbar class="md-table-toolbar md-primary" ng-hide="filter.show || selected.length" flex>
 <div class="md-toolbar-tools">
-  <h2 ng-show="$root.userLoggedInRole == 'superadmin'" class="md-title">{{totalBranches}} Branch schools</h2>
+  <h2 ng-show="$root.userLoggedInRole == 'superadmin'" class="md-title">{{totalBranches}} Homeschools</h2>
   <h2 ng-show="$root.userLoggedInRole != 'superadmin'" class="md-title">Hello!</h2>
   <div flex="" class="flex"></div>
   <md-button class="md-icon-button" aria-label="Search" ng-click="filterShow()" ng-show="$root.userLoggedInRole == 'superadmin'">

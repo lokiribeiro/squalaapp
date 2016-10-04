@@ -1,4 +1,5 @@
-<md-expansion-panel md-component-id="panelThree" ng-repeat="role in roles">
+<div layout-fill layout="column" layout-align="center center" layout-padding ng-repeat="role in roles">
+<md-expansion-panel md-component-id="panelThree"  class="cardapp" layout-fill>
     <md-expansion-panel-collapsed layout="row" layout-align="center center" layout-fill>
       <div class="md-title">{{totalRoles}} Squala Role/s</div>
       <div class="md-summary">View administrative roles and privileges.</div>
@@ -19,3 +20,4 @@
       </md-expansion-panel-content>
     </md-expansion-panel-expanded>
 </md-expansion-panel>
+</div>

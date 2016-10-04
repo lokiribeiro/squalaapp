@@ -26,12 +26,26 @@ class AdminroleCtrl{
 
       $scope.helpers({
         roles() {
-          var profileID = $scope.profileID;
+          $scope.promise = $timeout(function(){
+            $scope.profileIDD = $scope.getReactively('profileID');
+          }, 2000);
+
+          var profileID = $scope.getReactively('profileIDD');
           var selector = {profiles_userID : profileID};
-          var profiles = Profiles.findOne(selector);
-          var roleID = profiles.profiles_userroleID;
-          console.info('roleID', roleID);
-          var roles = Roles.find(roleID);
+          var profiles = Profiles.find(selector);
+          console.info('profiles', profiles);
+          $scope.roleID = '';
+          var counter = profiles.count();
+          if(counter) {
+          profiles.forEach(function(profile){
+              roleID = profile.profiles_userroleID;
+            });
+          }
+          var rolesIDD = $scope.getReactively('roleID');
+          var roles = Roles.find(rolesIDD);
+          var counter = roles.count();
+          console.info('roles', roles);
+          console.info('counter', counter);
           return roles;
         },
         profiles(){
@@ -54,8 +68,14 @@ class AdminroleCtrl{
           //get role from profileID
           var profileID = $scope.profileID;
           var selector = {profiles_userID : profileID};
-          var profiles = Profiles.findOne(selector);
-          var roleID = profiles.profiles_userroleID;
+          var profiles = Profiles.find(selector);
+          var counter = profiles.count();
+          var roleID = '';
+          if(counter) {
+          profiles.forEach(function(profile){
+            roleID = profiles.profiles_userroleID;
+          });
+        }
           console.info('roleID', roleID);
           var roles = Roles.find(roleID);
           console.info('rolesfindone', roles);

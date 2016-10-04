@@ -7,7 +7,6 @@ class NavbarCtrl{
   constructor($scope, $timeout, $mdSidenav, $log, $mdDialog, $state, $mdComponentRegistry, $stateParams){
       'ngInject';
 
-    
       $scope.userId = Meteor.userId();
 
 
@@ -27,7 +26,9 @@ class NavbarCtrl{
             var selector = {userID: userID};
             var modifier = {sort: {appName: sort}};
             var userapps = Userapps.find(selector,modifier);
+            var counter = userapps.count();
             console.info('userapps', userapps);
+            console.info('counter', counter);
           return userapps;
         },
         totalApps(){

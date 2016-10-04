@@ -10,15 +10,14 @@ import ngMaterial from 'angular-material';
 import ngAnimate from 'angular-animate';
 import mdExpansionPanel from 'angular-material-expansion-panel';
 import mdDataTable from 'angular-material-data-table';
-import '../imports/ui/loading.js';
 import Navigations from '/imports/models/navigations.js';
 import '../imports/ui/anim-in-out.js';
-import ngInfiniteScroll from 'ng-infinite-scroll';
+//import ngInfiniteScroll from 'ng-infinite-scroll';
 import ngFileUpload from 'ng-file-upload';
 //import { FilesCollection } from 'meteor/ostrio:files';
 
 export var app = angular.module('squala',
-    [angularMeteor, ngMaterial, uiRouter, 'accounts.ui', utilsPagination, ngAnimate, 'material.components.expansionPanels', mdDataTable, 'anim-in-out', ngInfiniteScroll, ngFileUpload]);
+    [angularMeteor, ngMaterial, uiRouter, 'accounts.ui', utilsPagination, ngAnimate, 'material.components.expansionPanels', mdDataTable, 'anim-in-out', ngFileUpload]);
 
 app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdThemingProvider, $mdIconProvider, $provide) {
     'ngInject';
@@ -52,6 +51,20 @@ app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdT
                         return $q.resolve();
                     }
                 }
+              }
+    })
+    .state(
+        'verify-email', {
+            url:'/verify-email/:token',
+            template: '<verify></verify>',
+            controller: function() {
+              Accounts.verifyEmail( params.token, ( error ) =>{
+                if ( error ) {
+                  console.log('error');
+                } else {
+                  $state.go('Dashboard');
+                }
+              })
               }
     })
     .state(
@@ -598,5 +611,6 @@ app.run(function ($state, $rootScope, $stateParams, $mdTheming) {
 
         }
     };
+
 
 });

@@ -1,7 +1,5 @@
 import {app} from '/client/app.js';
 
-import '/imports/ui/loading.js';
-
 //import Users from '/imports/models/users.js';
 
 class ShowuserCtrl{

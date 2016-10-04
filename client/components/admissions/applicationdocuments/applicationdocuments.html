@@ -21,37 +21,16 @@
         <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
 
           <span layout="column" flex layout-fill ng-hide="createdNow" >
-            <!-- <input type = "file" file-model = "myFile"/>
-         <button ng-click = "uploadFile()">upload me</button> -->
 
-         <!-- <button type="file" ngf-select="uploadFiles($file, $invalidFiles)"
-          accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
-      Select File</button>
-  <br><br>
-  File:
-  <div style="font:smaller">{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
-      <span class="progress" ng-show="f.progress >= 0">
-          <div style="width:{{f.progress}}%"
-               ng-bind="f.progress + '%'"></div>
-      </span>
-  </div>-->
-                <form name="appdocs">
+
                   <div>
                   Uploading <b>{{file.name}}</b>:
                 </div>{{currentUpload}}
                    <md-progress-linear md-mode="determinate" value="{{progress}}"></md-progress-linear>
-                   <md-button type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="image/*" ngf-max-height="1000" class="md-icon-button" aria-label="forward" >
-                     <md-tooltip md-direction="bottom">
-                       Upload
-                     </md-tooltip>
-                     <md-icon md-svg-icon="../../assets/img/black_forward24.svg"></md-icon>
-                   </md-button>
-
-                </form>
-
+                   <input type="file" ngf-select="uploadFiles($file, $invalidFiles)" ngf-max-height="1000" class="md-icon-button" aria-label="forward" />
+              
 
           </span>
-
 
         </md-dialog-content>
       </md-expansion-panel-content>

@@ -17,8 +17,7 @@ Userapps.allow({
 });
 
 Meteor.publish('userapps4', function () {
-  var selector = null;
-  selector = { userID: this.userId
+  var selector = { userID: this.userId
   };
   return Userapps.find(selector);
 });

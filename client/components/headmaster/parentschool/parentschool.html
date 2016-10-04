@@ -1,7 +1,7 @@
-<div ng-repeat="branch in branches" ng-show="$root.userLoggedInBranch == branch._id">
+<div ng-repeat="branch in branches" ng-show="$root.userLoggedInBranch == branch._id" layout="column" layout-align="center center" layout-fill>
 <h1 style="font-weight:normal; color:#555; margin-bottom: 0 !important;" >Parent School</h1>
 
-<md-expansion-panel md-component-id="panel">
+<md-expansion-panel md-component-id="panel" class="cardapp" layout-fill>
     <md-expansion-panel-collapsed layout="row" layout-align="center center" layout-fill>
       <div class="md-title">{{branch.branch_name}}</div>
       <div class="md-summary">{{branch.branches_address}}, {{branch.branches_city}}</div>

@@ -1,4 +1,5 @@
-<md-expansion-panel md-component-id="panelOne" ng-repeat="branch in branches" >
+<div flex layout="column" layout-align="center center">
+<md-expansion-panel md-component-id="panelOne" ng-repeat="branch in branches"  class="cardapp" layout-fill>
     <md-expansion-panel-collapsed layout="row" layout-align="center center" layout-fill>
       <div class="md-title">{{branch.branch_name}}</div>
       <div class="md-summary">View and manage school, security, and usage stats.</div>
@@ -34,3 +35,4 @@
       </md-expansion-panel-footer>
     </md-expansion-panel-expanded>
 </md-expansion-panel>
+</div>

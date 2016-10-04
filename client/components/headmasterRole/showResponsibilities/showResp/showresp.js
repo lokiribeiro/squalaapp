@@ -1,7 +1,5 @@
 import {app} from '/client/app.js';
 
-import '/imports/ui/loading.js';
-
 import Responsibilities from '/imports/models/responsibilities.js';
 
 class ShowrespCtrl{

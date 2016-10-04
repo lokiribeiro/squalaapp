@@ -26,9 +26,9 @@
 </md-toolbar>
 
 <div class="anim-slide-below-fade" data-anim-speed="500">
-<md-content flex layout-padding style="background-color:transparent !important;" layout="row" layout-align="center center">
+<md-content flex layout-padding style="background-color:transparent !important;" layout="row" layout-align="center center" layout-fill>
   <div layout="column" layout-align="center center" flex="100" flex-gt-sm="70" layout-padding >
-    <div layout="row" layout-wrap layout-fill ng-cloak style="padding: 16px 16px 16px 16px !important;">
+    <div layout="column" layout-align="center center" layout-fill ng-cloak style="padding: 16px 16px 16px 16px !important;">
 
       <md-card layout-wrap layout-fill>
         <md-toolbar class="md-table-toolbar md-primary" layout="row" layout-align="space-between stretch" layout-padding layout-fill>
@@ -44,7 +44,7 @@
             <md-tooltip md-direction="bottom">
               Delete branch
             </md-tooltip>
-            <md-icon md-svg-icon="../../assets/img/black_delete24.svg"></md-icon>
+            <md-icon md-svg-icon="../../assets/img/white_delete24.svg"></md-icon>
           </md-button>
           <md-button class="md-icon-button " aria-label="transfer" ng-click="addStaff($event, selected)" ng-show="$root.userLoggedInRole == 'superadmin'">
             <md-tooltip md-direction="bottom">
@@ -56,7 +56,7 @@
       </md-toolbar>
       </md-card>
 
-      <div layout-fill >
+      <div layout-fill>
       <schoolaccount></schoolaccount>
       </div>
 

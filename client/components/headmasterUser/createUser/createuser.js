@@ -40,6 +40,9 @@ class HeadmastercreateuserCtrl{
       $scope.createUser = function(details) {
         var detail = details;
         var pass = Random.hexString(8);
+        $scope.emailPass = pass;
+        $scope.emailUsername = detail.username;
+        $scope.email = detail.email;
         detail.password = pass;
         $scope.done = true;
         $scope.existing = false;
@@ -48,6 +51,7 @@ class HeadmastercreateuserCtrl{
 
         Meteor.call('createUserFromAdmin', detail.username, detail.email, detail.password, function(err, detail) {
               var detail = detail;
+              var newuserID = detail;
               console.log(detail);
                 if (err) {
                     //do something with the id : for ex create profile
@@ -58,7 +62,6 @@ class HeadmastercreateuserCtrl{
                     $scope.$apply();
                   },2000);
                } else {
-                 var newuserID = detail;
                  $scope.registered = details;
                  $scope.newUserID = newuserID;
                  //simulation purposes
@@ -94,7 +97,24 @@ class HeadmastercreateuserCtrl{
 
     $scope.createProfile = function (newUserID, profileDetails) {
           console.log(newUserID);
-          console.log(profileDetails);
+          //console.log(profileDetails.emails[0].address);
+          var metPass = $scope.emailPass;
+          var metUname = $scope.emailUsername;
+          var metEmail = $scope.email;
+          var newuserID = newUserID;
+          var email = metEmail;
+          console.log(email);          
+          var from = 'admin@tlplbinternational.com';
+          var subject = '[The Learning Place] Your web presence credentials';
+          var text = 'Welcome to Squala for The Learning Place! Your Headmaster username: ' + metUname + '        Password: ' + metPass + '. Access the app at http://www.tlplbinternational.com.';
+          Meteor.call('sendEmail', email, from, subject, text, function(err, detail) {
+            if (err) {
+                //do something with the id : for ex create profile
+                console.log('err');
+           } else {
+             console.log('suc');
+           }
+          });
           var userFirstname = profileDetails.firstname + ' ' + profileDetails.lastname;
           console.info('userFirstname', userFirstname);
 
