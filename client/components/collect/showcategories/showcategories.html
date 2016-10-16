@@ -1,0 +1,207 @@
+<div layout="row" layout-align="start start" layout-fill layout-wrap flex layout-padding class="inset">
+  <div flex-gt-md="20" flex="100" flex-gt-xs="100">
+    <md-card>
+    <md-list flex layout-fill >
+        <md-subheader >
+          <div layout-fill layout="row" layout-align="space-between center" >
+          <md-icon md-svg-icon="../../assets/img/black_roleadd24.svg"></md-icon>
+          <span flex>{{totalfees}} FEES</span>
+          <md-button ng-show="show" class="md-icon-button" aria-label="more" ng-click="null">
+            <md-icon ng-click="showMore()" md-svg-icon="../../assets/img/black_expandmore24.svg"></md-icon>
+          </md-button>
+          <md-button ng-hide="show" class="md-icon-button" aria-label="less" ng-click="null">
+            <md-icon ng-click="showMore()" md-svg-icon="../../assets/img/black_expandless24.svg"></md-icon>
+          </md-button>
+        </div>
+        </md-subheader>
+        <md-list-item class="md-2-line" ng-click="showRole(fee)" ng-repeat="fee in feescategories" ng-hide="show">
+          <div class="md-list-item-text" layout="column" ng-hide="fee.feesName == selected.feesName">
+            <h3>{{fee.feesName}}</h3>
+          </div>
+          <div class="md-list-item-text" layout="row" layout-align="start center" ng-show="fee.feesName == selected.feesName">
+            <h3><md-icon md-svg-icon="../../assets/img/indigo_check24.svg"></md-icon> {{fee.feesName}}</h3>
+          </div>
+        </md-list-item>
+    </md-list>
+    <md-list-item ng-hide="show">
+      <div class="md-toolbar-tools" layout="row" >
+        <span flex class="md-subhead">{{'page ' + page2 }}</span>
+        <md-button ng-hide="page2 == 1" class="md-icon-button" aria-label="prev" ng-click="navLeft()">
+          <md-tooltip md-direction="bottom">
+            Previous
+          </md-tooltip>
+          <md-icon md-svg-icon="../../assets/img/black_chevronleft24.svg"></md-icon>
+        </md-button>
+        <md-button ng-hide="last || (page2 == 1 && last) " class="md-icon-button" aria-label="next" ng-click="navRight()" >
+          <md-tooltip md-direction="bottom">
+            Next
+          </md-tooltip>
+          <md-icon ng-click="null" md-svg-icon="../../assets/img/black_chevronright24.svg"></md-icon>
+        </md-button>
+      </div>
+    </md-list-item>
+  </md-card>
+</div>
+
+
+<div flex-gt-md="80" flex="100" flex-gt-xs="100">
+  <md-card>
+    <md-toolbar class="md-table-toolbar md-default" flex ng-show="selected.feesName === ''">
+      <div class="md-toolbar-tools" layout-align="start center">
+          <p>No selected fee        </p>
+    </div>
+    </md-toolbar>
+
+  <md-toolbar class="md-table-toolbar md-primary" flex  ng-hide="selected.feesName === ''">
+  <div class="md-toolbar-tools">
+    <div ng-model="selected" flex>{{selected.feesName}}</div>
+    <md-button class="md-icon-button" aria-label="edit" ng-hide="selected.feesName == ''" ng-click="openProfile($event, selected)" >
+      <md-tooltip md-direction="bottom">
+        Edit Fee
+      </md-tooltip>
+      <md-icon md-svg-icon="../../assets/img/white_edit24.svg"></md-icon>
+    </md-button>
+    <md-button class="md-icon-button" aria-label="delete" ng-hide="selected.feesName == ''" ng-click="openDelete($event, selected)" >
+      <md-tooltip md-direction="bottom">
+        Delete
+      </md-tooltip>
+      <md-icon md-svg-icon="../../assets/img/white_delete24.svg"></md-icon>
+    </md-button>
+  </div>
+  </md-toolbar>
+
+
+  <md-tabs md-dynamic-height md-border-bottom  ng-hide="selected.feesName === ''">
+        <md-tab label="Students">
+            <!--<h2 class="md-display-2">No users yet.</h2>-->
+            <md-toolbar class="md-table-toolbar md-default" ng-hide="filter.show || selected2.length || selected.feesName === ''" flex>
+            <div class="md-toolbar-tools">
+              <md-button class="md-default md-raised" aria-label="create" ng-click="assignUser($event, selected)">
+                ASSIGN TO STUDENT
+              </md-button>
+              <div flex="" class="flex"></div>
+              <md-button class="md-icon-button" aria-label="Search" ng-click="filterShow()">
+                <md-icon md-svg-icon="../../assets/img/black_search24.svg"></md-icon>
+              </md-button>
+            </div>
+            </md-toolbar>
+            <md-toolbar class="md-table-toolbar md-default"  flex="100" ng-show="filter.show">
+            <div class="md-toolbar-tools">
+              <form name="filter.form" flex>
+                <md-input-container md-no-float class="md-block">
+                <md-icon md-svg-icon="../../assets/img/black_search24.svg"></md-icon>
+                <input type="text" ng-model="searchText" placeholder="search">
+                </md-input-container>
+              </form>
+              <md-button class="md-icon-button" aria-label="close" ng-click="closeFilter()">
+              <md-tooltip md-direction="bottom">
+                Close
+              </md-tooltip>
+              <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
+              </md-button>
+            </div>
+            </md-toolbar>
+            <md-toolbar class="md-table-toolbar md-primary md-hue-1 " flex="100" ng-show="selected2.length">
+            <div class="md-toolbar-tools">
+              <div ng-model="selected" flex>{{selected2[0].profiles_firstname}} {{selected2[0].profiles_lastname}} selected</div>
+              <md-button class="md-icon-button" aria-label="edit" ng-click="openProfile2(selected2)">
+                <md-tooltip md-direction="bottom">
+                  View Account
+                </md-tooltip>
+                <md-icon md-svg-icon="../../assets/img/white_launch24.svg"></md-icon>
+              </md-button>
+              <md-button class="md-primary md-hue-1 md-raised" aria-label="unassign" ng-click="unassignUser($event, selected2)">
+                UNASSIGN USER
+              </md-button>
+            </div>
+            </md-toolbar>
+            <md-table-container ng-hide="selected.feesName === ''">
+              <table md-table md-row-select ng-model="selected2" md-progress="promise" flex>
+                <thead md-head md-order="query.order" md-on-reorder="profiles" class="md-head">
+                  <tr md-row>
+                    <th md-column ><span></span></th>
+                    <th md-column md-order-by="profile.profiles_firstname" ng-click="changeSort()" ><span>Complete Name</span></th>
+                    <th md-column ><span>Email</span></th>
+                    <th md-column ><span>School Branch</span></th>
+                  </tr>
+                </thead>
+                <tbody md-body>
+                  <tr md-row md-select="profile" md-select-id="profile._id" md-auto-select ng-repeat="profile in profiles" ng-cloak>
+                    <td md-cell><img ng-src="{{profile.profiles_profilephoto}}" class="profile-pic2" alt="{{profile.profiles_firstname}}" /></td>
+                    <td md-cell>{{profile.profiles_firstname}} {{profile.profiles_lastname}}</td>
+                    <td md-cell>{{profile.profiles_email}}</td>
+                    <td md-cell>{{profile.profiles_branch}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </md-table-container>
+            <md-table-pagination layout-align = "start start" ng-hide="selected.feesName === ''" md-limit="perPage" md-page="page" md-total="{{totalProfiles}}" md-on-paginate="profiles" md-page-select></md-table-pagination>
+        </md-tab>
+        <md-tab label="Behavior" ng-hide="selected.feesName === ''">
+          <md-content class="md-padding">
+            <!-- <h1 class="md-display-2">Tab Two</h1>-->
+            <md-subheader class="md-no-sticky">View and modify fee category</md-subheader>
+              <md-list-item ng-click="null" ng-repeat="fee in feescategories track by $index" ng-if="fee.feesName == selected.feesName">
+                <p >  {{fee.description}}  </p>
+                <md-switch class="md-accent" ng-model="enabled[$index]" ng-change="switchResponsibility(responsibility, enabled[$index], selected._id)"></md-switch>
+              </md-list-item>
+          </md-content>
+        </md-tab>
+        <md-tab label="Link File" ng-hide="selected.feesName === ''">
+          <md-content class="md-padding">
+            <!-- <h1 class="md-display-2">Tab Two</h1>-->
+            <span layout="column" flex layout-fill  >
+
+                <span layout="column" layout-align="center center" layout-fill>
+                   <span layout="row" layout-align="space-between center" layout-fill>
+                     <md-input-container  class="md-block" layout-fill style="margin: 10px 0 !important;">
+                       <label> select fees statement category</label>
+                     <md-select ng-model="applicant.gender"  class="md-no-underline">
+                       <md-option ng-repeat="requirementdoc in requirementdocs" value="{{requirementdoc._id}}">{{requirementdoc.requirementName}}</md-option>
+                     </md-select>
+                   </md-input-container>
+                       <md-button class="md-fab md-default" ngf-select="uploadFiles($file, $invalidFiles, requirement._id, requirement.requirementName)" aria-label="transfer" ngf-max-height="1000">
+                         <md-tooltip md-direction="bottom">
+                           Upload
+                         </md-tooltip>
+                         <md-icon md-svg-icon="../../assets/img/white_upload24.svg"></md-icon>
+                       </md-button>
+                 </span>
+               </span>
+
+
+
+
+
+                   <md-subheader class="md-no-sticky">Bayad Center documents</md-subheader>
+
+                   <span  ng-repeat="fee in feescategories track by $index" layout-padding layout="row" layout-align="space-between center" layout-fill layout-wrap>
+                     <md-list-item class="md-3-line card-1" ng-repeat="document in fee.documents track by $index" layout-fill flex flex-gt-sm="45" style="margin: 4px 4px 4px 4px !important;">
+                       <md-icon md-svg-icon="../../assets/img/black_file24.svg"></md-icon>
+                       <div class="md-list-item-text" layout="column">
+                         <h3>{{ document.requirement}}</h3>
+                         <p>{{ document.filename}}</p>
+                       </div>
+                       <a target="_self" href="{{document.downloadUrl}}" download="{{applicant.applicantID}}">
+                         <md-button class="md-icon-button " aria-label="transfer">
+                           <md-tooltip md-direction="bottom">
+                             Download document
+                           </md-tooltip>
+                       <md-icon md-svg-icon="../../assets/img/black_download24.svg"></md-icon>
+                     </md-button>
+                       </a>
+                     </md-list-item>
+                </span>
+
+
+                  <div layout="row" layout-align = "center center" ng-show="doneSearching" layout-fill >
+                    <md-progress-circular md-mode="indeterminate"  ></md-progress-circular>
+                  </div>
+
+            </span>
+          </md-content>
+        </md-tab>
+      </md-tabs>
+</md-card>
+</div>
+</div>

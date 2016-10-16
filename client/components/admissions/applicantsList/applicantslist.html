@@ -67,15 +67,19 @@
     </span>
   </div>
 <md-expansion-panel md-component-id="{{applicant._id}}"  layout-fill class="cardapp" ng-cloak>
-    <md-expansion-panel-collapsed layout-fill ng-cloak>
-      <span layout="row" layout-fill layout-align="start center">
+    <md-expansion-panel-collapsed layout-fill ng-cloak >
+      <span layout="row" layout-fill >
 
       <div class="md-title" layout="row" layout-align="start center" layout-wrap hide-xs><img ng-src="{{applicant.photo}}" class="avatar-2" alt="{{applicant.firstname}}" /><span layout-padding hide-xs>App# {{applicant.applicationNum}}</span></div>
-      <div class="md-summary" layout="row" layout-align="start center" layout-wrap><img ng-src="{{applicant.photo}}" class="avatar-2" alt="{{applicant.firstname}}" show-xs hide-gt-xs/> <span layout-padding>{{applicant.firstname}} {{applicant.middlename}} {{applicant.lastname}}</span></div>
-    </span>
+      <div class="md-summary" layout="row" layout-align="start center" layout-wrap>
+        <img ng-src="{{applicant.photo}}" class="avatar-2" alt="{{applicant.firstname}}" show-xs hide-gt-xs/>
+        <span layout-padding flex>{{applicant.firstname}} {{applicant.middlename}} {{applicant.lastname}} </span>
+        <span>Admission progress: {{applicant.progress}} %</span>
+      </div>
+      </span>
       <md-expansion-panel-icon></md-expansion-panel-icon>
     </md-expansion-panel-collapsed>
-    <md-progress-linear md-mode="indeterminate" flex ng-show="doneagain" ></md-progress-linear>
+    <md-progress-linear md-mode="determinate" value="{{applicant.progress}}" ng-show="shownow"></md-progress-linear>
     <md-expansion-panel-expanded ng-cloak>
       <md-expansion-panel-header ng-click="$panel.collapse()">
         <span layout="row" layout-fill layout-align="start center" >
@@ -106,16 +110,27 @@
       </md-expansion-panel-header>
       <md-expansion-panel-content>
         <span layout="row" layout-align="end center" layout-fill layout-wrap >
-          Application date: {{applicant.createdAt | date: mediumDate}}
+          <md-subheader class="md-no-sticky">Application date: {{applicant.createdAt | date: mediumDate}}</md-subheader>
         </span>
       <span layout="row" layout-align="start start" layout-fill layout-wrap >
         <span flex="20">
-          <h4 style="color: #555;">User Type</h4>
+          <md-progress-circular md-mode="determinate" value="{{applicant.progress}}"></md-progress-circular>
+          <p>Progress: {{applicant.progress}} %</p>
         </span>
         <span flex="80">
           <span flex="80">
-            <p>Name: {{applicant.firstname}} {{applicant.middlename}} {{applicant.lastname}}</p>
-            <p>Email: </p>
+              <md-list-item ng-click="null" ng-repeat="list in progressList">
+                <span ng-if="applicant.progress >= list.value" layout="row" layout-fill>
+                <md-icon md-svg-icon="{{list.icon}}"></md-icon>
+                <p flex>  {{list.name}}</p>
+                <md-switch aria-label="yes" class="md-accent" ng-model="list.status" ng-change="markPaid(list)" ng-disabled="list.status"></md-switch>
+                </span>
+                <span ng-if="applicant.progress < list.value" layout="row" layout-fill>
+                <md-icon md-svg-icon="{{list.iconNo}}"></md-icon>
+                <p flex>  {{list.name}}</p>
+                <md-switch aria-label="no" class="md-accent" ng-model="list.statusNo" ng-change="markPaid(applicant._id, list.name, applicant)"></md-switch>
+                </span>
+              </md-list-item>
           </span>
         </span>
       </span>

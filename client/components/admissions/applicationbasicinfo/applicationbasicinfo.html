@@ -13,11 +13,12 @@
         <span layout="row" layout-fill layout-align="start center" >
 
         <div class="md-summary" layout="row" layout-align="start center" layout-wrap><span layout-padding >Basic information</span></div>
-      </span>    
+      </span>
         <md-expansion-panel-icon></md-expansion-panel-icon>
       </md-expansion-panel-header>
       <md-expansion-panel-content>
-        <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
+        <form name="basic" layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
+
         <!-- hide here -->
         <span layout="row" flex ng-hide="createdNow" >
           <md-input-container class="md-block" style="margin: 10px 0 !important;">
@@ -41,16 +42,17 @@
          <md-icon md-svg-icon="../../assets/img/black_email24.svg"></md-icon>
          <input ng-model="applicant.email" type="email"  >
         </md-input-container>
+      </span>
           <span layout="row" flex ng-hide="createdNow" layout-fill>
           <md-input-container layout-fill  class="md-block" style="margin: 10px 0 !important;">
             <label> cellphone number </label>
           <md-icon md-svg-icon="../../assets/img/black_phone24.svg"></md-icon>
-              <input ng-model="results.profiles_phone" aria-label="phone" type="text"  ng-required>
+              <input ng-model="applicant.mobileNo" aria-label="phone" type="text"  ng-required>
           </md-input-container>
           <md-input-container  layout-fill class="md-block" style="margin: 10px 0 !important;">
             <label> gender </label>
           <md-icon md-svg-icon="../../assets/img/black_gender24.svg"></md-icon>
-          <md-select ng-model="results.profiles_gender"  class="md-no-underline">
+          <md-select ng-model="applicant.gender"  class="md-no-underline">
             <md-option value="male">male</md-option>
             <md-option value="female">female</md-option>
           </md-select>
@@ -60,11 +62,11 @@
         <span layout="row" flex ng-hide="createdNow" >
           <md-input-container md-float class="md-block" style="margin: 10px 0 !important;">
             <label> nickname </label>
-              <input ng-model="moreinfo.nickname" aria-label="email" type="text" ng-required>
+              <input ng-model="applicant.nickname" aria-label="email" type="text" ng-required>
           </md-input-container>
           <md-input-container>
                 <label>Birth date</label>
-                <md-datepicker ng-model="moreinfo.birthdate" name="dateField" md-min-date="minDate"
+                <md-datepicker ng-model="applicant.birthdate" name="dateField" md-min-date="minDate"
                   md-max-date="maxDate"></md-datepicker>
 
                 <div ng-messages="myOtherForm.dateField.$error">
@@ -78,11 +80,11 @@
         <span layout="row" flex ng-hide="createdNow" layout-fill >
           <md-input-container flex="70" class="md-block" style="margin: 10px 0 !important;">
             <label> religion </label>
-              <input ng-model="moreinfo.religion" aria-label="email" type="text" ng-required>
+              <input ng-model="applicant.religion" aria-label="email" type="text" ng-required>
           </md-input-container>
           <md-input-container  layout-fill class="md-block" style="margin: 10px 0 !important;">
             <label> last grade completed </label>
-          <md-select ng-model="moreinfo.gradecompleted" class="md-no-underline">
+          <md-select ng-model="applicant.gradecompleted" class="md-no-underline">
             <md-option ng-repeat="item in items" value="{{item.value}}">{{item.name}}</md-option>
           </md-select>
         </md-input-container>
@@ -92,18 +94,23 @@
         <md-input-container  class="md-block" style="margin: 10px 0 !important;">
           <label> city / municipality </label>
          <!-- Use floating placeholder instead of label -->
-         <input ng-model="moreinfo.city" type="email" >
+         <input ng-model="applicant.city" type="email" >
         </md-input-container>
           <md-input-container layout-fill  class="md-block" style="margin: 10px 0 !important;">
             <label> address </label>
-              <input ng-model="more.address" aria-label="phone" type="text" ng-required>
+              <input ng-model="applicant.address" aria-label="phone" type="text" ng-required>
           </md-input-container>
         </span>
+        <span layout="row" layout-fill>
+          <span flex> </span>
+        <md-button md-no-ink class="md-primary md-hover" aria-label="forward" ng-click="updateBasic(applicant)" >
+          Update
+        </md-button>
+      </span>
 
 
 
 
-        </span>
 
         <!-- end here -->
         <!-- <md-toolbar ng-show="existing" class="md-primary" layout="row" layout-fill layout-padding layout-margin>
@@ -132,18 +139,13 @@
           Need to add student applications anytime, anywhere?
           Use Squala mobile app.
         </span>-->
-        </md-dialog-content>
+
+      </form>
       </md-expansion-panel-content>
       <md-expansion-panel-footer ng-cloak>
         <div class="md-default md-toolbar-tools" >
           <span flex>
             <h6 style="color: #555 !important;">Encoded by: {{applicant.encoderName}}</h6></span>
-          <md-button class="md-icon-button" aria-label="forward" ng-click="openDialog($event, selected)" >
-            <md-tooltip md-direction="bottom">
-              Change application status
-            </md-tooltip>
-            <md-icon md-svg-icon="../../assets/img/black_forward24.svg"></md-icon>
-          </md-button>
         </div>
       </md-expansion-panel-footer>
     </md-expansion-panel-expanded>

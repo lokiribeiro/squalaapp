@@ -39,7 +39,7 @@ Meteor.publish('users', function (searchText) {
   var selector = null;
   if(typeof searchText === 'string' && searchText.length){
       var searchString = {$regex: `.*${searchText}.*`, $options: 'i'}
-      selector = { name: searchString };
+      selector = { username: searchString };
       //return Meteor.users.find(selector);
   }else{
     selector = {};
@@ -65,6 +65,16 @@ Meteor.methods({
               }};
               var userUpsert = Meteor.users.upsert(selector, modifier);
               return userUpsert;
+            },
+            upsertUserFromAdmissions(userID, userFirstname, branchID, userRole){
+              var selector = {_id: userID};
+              var modifier = {$set: {
+                name: userFirstname,
+                branchId: branchID,
+                role: userRole
+              }};
+              var user2Upsert = Meteor.users.upsert(selector, modifier);
+              return user2Upsert;
             },
             upsertNewRoleFromAdmin(userID, userRole){
               var selector = {_id: userID};

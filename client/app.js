@@ -317,6 +317,22 @@ app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdT
                           $rootScope.stateHolder = $stateParams.stateHolder;
                       }
                   })
+                  .state('Bankpayment', {
+                        url:'/:stateHolder/BNKs/:userID',
+                        template: '<collectbank></collectbank>',
+                        resolve: {
+                            currentUser($q, $state) {
+                                if (!Meteor.userId()) {
+                                    return $q.reject('AUTH_REQUIRED');
+                                } else {
+                                    return $q.resolve();
+                                }
+                            }
+                        },
+                        onEnter: function($rootScope, $stateParams, $state) {
+                            $rootScope.stateHolder = $stateParams.stateHolder;
+                        }
+                    })
                   .state('Rapido', {
                         url:'/:stateHolder/ATTc/:userID',
                         template: '<rapido></rapido>',

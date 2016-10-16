@@ -9,7 +9,7 @@ import ngFileUpload from 'ng-file-upload';
 
 class ApplicationdocumentsCtrl{
 
-  constructor($rootScope, $scope, $timeout, $reactive, $mdSidenav, $log, $mdDialog, $state, Upload){
+  constructor($rootScope, $scope, $mdToast, $timeout, $reactive, $mdSidenav, $log, $mdDialog, $state, Upload){
       'ngInject';
 
       $scope.applicantID = $rootScope.applicantID;
@@ -18,6 +18,8 @@ class ApplicationdocumentsCtrl{
           return [$scope.getReactively('applicantID')];
       });
 
+      $scope.subscribe('requirementdocs');
+
       $scope.helpers({
         applicants(){
           var applicantID = $scope.getReactively('applicantID');
@@ -25,33 +27,129 @@ class ApplicationdocumentsCtrl{
           var applicants = Applicants.find(selector);
           var count = applicants.count();
           return applicants;
+        },
+        requirementdocs(){
+          //var sort = 1;
+          //var selector = {};
+          //var modifier= {sort: {profiles_firstname: sort}};
+          var selector = {};
+          var requirementdocs = Requirementdocs.find(selector);
+          var count = requirementdocs.count();
+          console.info('profiles', requirementdocs);
+          console.info('count', count);
+          return requirementdocs;
         }
+
       });//helpers
 
       Slingshot.fileRestrictions("myFileUploads", {
-  allowedFileTypes: ["image/png", "image/jpeg", "image/gif"],
-  maxSize: 10 * 1024 * 1024 // 10 MB (use null for unlimited).
-});
+      allowedFileTypes: null,
+      maxSize: 10 * 1024 * 1024 // 10 MB (use null for unlimited).
+      });
+
+      $scope.uploader = new Slingshot.Upload('myFileUploads');
+      $scope.uploadingNow = false;
+      $scope.uploaded = false;
+      $scope.doneSearching = false;
+
+      var last = {
+        bottom: true,
+        top: false,
+        left: true,
+        right: false
+      };
+
+      $scope.getToastPosition = function() {
+        sanitizePosition();
+
+        return Object.keys($scope.toastPosition)
+        .filter(function(pos) { return $scope.toastPosition[pos]; })
+        .join(' ');
+      };
+
+      $scope.toastPosition = angular.extend({},last);
+
+      function sanitizePosition() {
+        var current = $scope.toastPosition;
+
+        if ( current.bottom && last.top ) current.top = false;
+        if ( current.top && last.bottom ) current.bottom = false;
+        if ( current.right && last.left ) current.left = false;
+        if ( current.left && last.right ) current.right = false;
+
+        last = angular.extend({},current);
+      }
 
       //$scope.currentUpload = false;
-      $scope.uploadFiles = function(file, errFiles) {
+      $scope.uploadFiles = function(file, errFiles, reqID, reqName) {
         console.log('pasok');
         $scope.progress = 0;
+        $scope.uploadingNow = true;
         $scope.f = file;
         $scope.errFile = errFiles && errFiles[0];
+        $scope.fileHere = file.name;
+        var requirementname = reqName;
+        var requirementID = reqID;
+        $scope.doneSearching = true;
         if (file) {
           console.log(file);
-          var uploader = new Slingshot.Upload('myFileUploads');
 
-          uploader.send(file, function (error, downloadUrl) {
+
+          $scope.uploader.send(file, function (error, downloadUrl) {
             if (error) {
               // Log service detailed response.
-              console.error('Error uploading', uploader);
+              console.error('Error uploading', $scope.uploader);
               alert (error);
             }
             else {
-              //Meteor.users.update(Meteor.userId(), {$push: {"profile.files": downloadUrl}});
+              var filename = $scope.fileHere;
+              var applicantID = $scope.applicantID;
+              var selector = {_id: applicantID};
+              var modifier = {$push: {documents:
+                {
+                  downloadUrl: downloadUrl,
+                  filename: filename,
+                  requirement: requirementname,
+                  requirementID: requirementID
+                }
+              }};
+              Applicants.update(selector,modifier);
               console.log('success: ' + downloadUrl);
+              var progress = 60;
+              Meteor.call('upsertApplicantFromDocs', applicantID, progress, function(err, detail) {
+                  var detail = detail;
+                  console.log(detail);
+                    if (err) {
+                      var toasted = 'Error uploading file.';
+                      var pinTo = $scope.getToastPosition();
+                      $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(toasted)
+                        .position(pinTo )
+                        .hideDelay(3000)
+                        .theme('Admissions')
+                        .action('HIDE')
+                        .highlightAction(true)
+                        .highlightClass('md-accent')
+                      );
+                      $scope.doneSearching = false;
+                   } else {
+                     var toasted = 'New document uploaded.';
+                     var pinTo = $scope.getToastPosition();
+                     $mdToast.show(
+                       $mdToast.simple()
+                       .textContent(toasted)
+                       .position(pinTo )
+                       .hideDelay(3000)
+                       .theme('Admissions')
+                       .action('HIDE')
+                       .highlightAction(true)
+                       .highlightClass('md-accent')
+                     );
+                     $scope.doneSearching = false;
+
+                   }
+                });
             }
             });
             file.upload = Upload.upload({
@@ -105,6 +203,9 @@ class ApplicationdocumentsCtrl{
                 file.progress = Math.min(100, parseInt(100.0 *
                                          event.loaded / event.total));
                 $scope.progress = file.progress;
+                if ($scope.progress == 100) {
+                  $scope.uploadingNow = false;
+                }
                 console.log($scope.progress);
             });
 

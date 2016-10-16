@@ -54,9 +54,10 @@ class AdmissionsnewapplicationCtrl{
         $scope.done = true;
         $scope.existing = false;
         $scope.createdNow = !$scope.createdNow;
+        var progress = 10;
         //var status = createUserFromAdmin(details);
 
-        Meteor.call('createApplicantFromAdmin', detail.firstname, detail.middlename, detail.lastname, detail.email, detail.status, detail.application, detail.branch, detail.encodedBy, detail.photo, detail.encoderName, detail.createdAt, function(err, detail) {
+        Meteor.call('createApplicantFromAdmin', detail.firstname, detail.middlename, detail.lastname, detail.email, detail.status, detail.application, detail.branch, detail.encodedBy, detail.photo, detail.encoderName, detail.createdAt, progress, function(err, detail) {
               var detail = detail;
               console.log(detail);
                 if (err) {

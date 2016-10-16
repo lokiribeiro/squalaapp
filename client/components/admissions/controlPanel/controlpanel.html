@@ -14,49 +14,72 @@
 </md-toolbar>
 
 <div class="anim-slide-below-fade" data-anim-speed="500">
-<md-content flex layout-padding style="background-color:transparent !important;">
-  <div class="post">
-  		<div class="content">
-  				<div class="hover-content" >
-            <span>
-  						<p class="bold-caps">Offered By</p>
-  						<br>
-  						<p class="thin"></p>
-  					</span>
-  					<span>
-  				<p class="bold-caps">Size</p>
-  				<br>
-  				<p class="thin">10 mb</p>
-  			   </span>
-  				</div>
-  				<div class="rating">
-  						<i class="fa fa-star"></i>
-  						<i class="fa fa-star"></i>
-  						<i class="fa fa-star"></i>
-  						<i class="fa fa-star"></i>
-  						<i class="fa fa-star-half-o"></i>
-  				</div>
-  				<div class="post-content">
-  				<img class="avatar" src="../../assets/img/profiles/user.png">
-  				<p class="app-name"> Control Panel</p>
-  				</div>
-  		</div>
-  		<img src="http://3.bp.blogspot.com/-dXxdKFkVrdw/VKLa3bMmv2I/AAAAAAAAVjI/Lp0vf22tynE/s1600/sandiegodusk.png">
-  </div>
+  <md-content flex layout-padding style="background-color:transparent !important;"  layout="row" layout-align="center center">
+    <div layout="row" flex flex-gt-sm="80" layout-fill>
 
-  <main   layout="column" layout-align="start center"  layout-wrap layout-fill ng-repeat="profile in profiles" ng-cloak>
+  <md-card class="cardapp md-primary card-1" flex-gt-sm="50" flex-gt-md="30" layout-wrap layout-fill style="margin: 10px 10px 0 0; padding: 0px 0px 0px 0px !important;">
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Admissions Control Panel</span>
+        <span class="md-subhead">Modify settings for enrollment procedures and behavior.</span>
+      </md-card-title-text>
+      <md-card-title-media >
+        <div class="md-media-sm card-media" layout="row" layout-align="end center">
+        <img ng-src="{{userapp.appLoc}}" style="margin: auto 3px auto 0;" >
+      </div>
+      </md-card-title-media>
+    </md-card-title>
+  </md-card>
 
-  <div layout="column" layout-fill layout-wrap flex="50">
+  <md-card class="cardapp md-primary card-1"  flex-gt-sm="50" flex-gt-md="30" layout-wrap layout-fill style="margin: 10px 10px 15px 0;">
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">{{totalrequirementdocs}} Enrollment requirements</span>
+        <span class="md-subhead">Add required enrollment documents here.</span>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-actions >
+      <form name="enrollrequirements" layout="row" layout-align="end start" layout-fill>
+      <span layout="column" layout-fill>
+      <md-input-container flex="100"  md-float class="md-block" style="margin: 10px 0 !important;">
+          <input ng-model="requirementName" aria-label="text" type="text" placeholder="type of document" ng-required>
+      </md-input-container>
+      </span>
+      <md-button class="md-primary md-hover" md-no-ink aria-label="Apps" ng-click="createRequirement()">
+        Add
+      </md-button>
+    </form>
+    </md-card-actions>
+    <md-divider></md-divider>
+    <md-card-actions layout="row" layout-fill ng-repeat="requirementdoc in requirementdocs track by $index" layout-padding>
+      <span ng-hide="editMode[$index]">{{requirementdoc.requirementName}}</span>
+      <form ng-show="editMode[$index]" name="enrollmentedit" layout="row" layout-align="end start" layout-fill>
+      <span layout="column" layout-fill>
+      <md-input-container flex="100"  md-float class="md-block" style="margin: 10px 0 !important;">
+          <input ng-model="requirementdoc.requirementName" aria-label="text" type="text" placeholder="type of document" ng-required>
+      </md-input-container>
+      </span>
+      <md-button class="md-primary md-hover" md-no-ink aria-label="Apps" ng-click="editRequirement(requirementdoc, $index, editMode[$index])">
+        Submit
+      </md-button>
+    </form>
+    <span flex ng-hide="editMode[$index]"></span>
+      <md-button class="md-icon-button" aria-label="Apps" ng-hide="editMode[$index]" ng-click="editMode[$index] = !editMode[$index]">
+        <md-tooltip md-direction="top">
+          Edit
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/black_edit24.svg"></md-icon>
+      </md-button>
+      <md-button class="md-icon-button" aria-label="Apps" ng-hide="editMode[$index]">
+        <md-tooltip md-direction="top">
+          Delete
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/black_delete24.svg"></md-icon>
+      </md-button>
+    </md-card-actions>
+  </md-card>
 
-  <section class="card3 md-primary md-hue-2">
-    <h3 style="font-weight: normal !important;">Required documents settings</h3>
-  </section>
 
-  <section class="card3" layout-fill>
-    <h3 style="font-weight: normal !important;">Account Preferences</h3>
-  </section>
 </div>
-
-</main>
 </md-content>
 </div>

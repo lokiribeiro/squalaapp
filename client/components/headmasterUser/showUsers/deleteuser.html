@@ -14,7 +14,7 @@
     </div>
     <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
 
-    <span layout="column" layout-align="start start" flex ng-hide="deletedNow">
+    <span layout="column" layout-align="end center" flex ng-hide="deletedNow">
       <span layout="row">
       <p>
         {{selected}} Note: All data associated with this account will be deleted. All existing Vault data will also be deleted.
@@ -22,19 +22,23 @@
       </span>
     </span>
     </md-dialog-content>
-    <md-dialog-actions >
-      <span layout="row" layout-align="space-between center" layout-fill>
+    <md-dialog-actions  layout="row" layout-fill>
+
       <!-- hide these -->
     <md-button ng-hide="deletedNow" ng-click="cancelNow()">
       CANCEL
     </md-button>
-      <md-button type="submit" ng-click="removeuserNow(userDel)" ng-hide="deletedNow" class="md-primary">
+    <span flex ng-hide="deletedNow">
+    </span>
+    <md-button type="submit" ng-click="removeuserNow(userDel)" ng-hide="deletedNow" class="md-primary">
         DELETE ACCOUNT
-      </md-button>
+    </md-button>
+      <span flex ng-if="deletedNows">
+      </span>
       <!-- end hide -->
       <md-button ng-if="deletedNows" ng-click="cancelNow()" class="md-primary">
         DONE
       </md-button>
-      </span>
+
     </md-dialog-actions>
 </md-dialog>

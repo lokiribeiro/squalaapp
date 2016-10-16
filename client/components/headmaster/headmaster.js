@@ -48,7 +48,7 @@ class HeadmasterCtrl{
       });
 
       angular.element(document).ready(function () {
-        $window.loading_screen.finish();
+
 
         $scope.promise = $timeout(function(){
           var userDetails = Meteor.userId();
@@ -63,6 +63,8 @@ class HeadmasterCtrl{
             $scope.branchName = profileDetail.profiles_branch;
           });
 
+          $window.loading_screen.finish();
+
           var toasted = $scope.branchName + ': Hi ' + $scope.firstname + ' ' + $scope.lastname + '!';
           var pinTo = $scope.getToastPosition();
 
@@ -76,6 +78,7 @@ class HeadmasterCtrl{
             .highlightAction(true)
             .highlightClass('md-accent')
           );
+
         }, 2000);
       });
 

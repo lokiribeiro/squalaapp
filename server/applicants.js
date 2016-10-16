@@ -59,9 +59,47 @@ Meteor.publish('applicants', function (applicantID) {
 
 Meteor.methods({
 
-          createApplicantFromAdmin(firstname, middlename, lastname, email, status, applicationNum, branchId, encodedBy, photo, encoderName, createdAt){
-                var applicant = Applicants.insert({firstname:firstname, middlename:middlename, lastname:lastname, email:email, status:status, branchId: branchId, applicationNum: applicationNum, encodedBy: encodedBy, photo: photo, encoderName: encoderName, createdAt: createdAt });
+          createApplicantFromAdmin(firstname, middlename, lastname, email, status, applicationNum, branchId, encodedBy, photo, encoderName, createdAt, progress){
+                var applicant = Applicants.insert({firstname:firstname, middlename:middlename, lastname:lastname, email:email, status:status, branchId: branchId, applicationNum: applicationNum, encodedBy: encodedBy, photo: photo, encoderName: encoderName, createdAt: createdAt, progress: progress });
                 return applicant;
-            }
+            },
+          upsertApplicantFromBasic(detail){
+                var selector = {_id: detail._id};
+                var modifier = {$set: {
+                  city: detail.city,
+                  address: detail.address,
+                  birthdate: detail.birthdate,
+                  firstname: detail.firstname,
+                  gender: detail.gender,
+                  lastname: detail.lastname,
+                  middlename: detail.middlename,
+                  mobileNo: detail.mobileNo,
+                  nickname: detail.nickname,
+                  progress: detail.progress,
+                  religion: detail.religion
+                }};
+                var applicant = Applicants.upsert(selector, modifier);
+                return applicant;
+            },
+            upsertApplicantFromParent(detail){
+                  var selector = {_id: detail._id};
+                  var modifier = {$set: {
+                    parentname: detail.parentname,
+                    relation: detail.relation,
+                    parentnum: detail.parentnum,
+                    parentemail: detail.parentemail,
+                    progress: detail.progress
+                  }};
+                  var applicant = Applicants.upsert(selector, modifier);
+                  return applicant;
+              },
+              upsertApplicantFromDocs(applicantID, progress){
+                    var selector = {_id: applicantID};
+                    var modifier = {$set: {
+                      progress: progress
+                    }};
+                    var applicant = Applicants.upsert(selector, modifier);
+                    return applicant;
+                }
 
 })

@@ -31,9 +31,9 @@ class ShowuserCtrl{
       $scope.existing = false;
 
       $scope.subscribe('users', function () {
-          $scope.promise = $timeout(function(){
+        $scope.promise = $timeout(function(){
 
-          }, 2000);
+        }, 2000);      
           return [$scope.getReactively('searchText')];
       });
 

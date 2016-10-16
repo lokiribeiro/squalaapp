@@ -16,25 +16,24 @@ class NavbarCtrl{
       //$scope.stateHolder = null;
       $scope.stateHolder = $stateParams.stateHolder;
 
-      $scope.subscribe('userapps4');
+      $scope.subscribe('userapps4', function () {
+          return [$scope.getReactively('userId')];
+      });
 
       $scope.helpers({
           userappsMenu() {
-            var userID = $scope.userId;
-            console.info('userID', userID);
+            var userID = $scope.getReactively('userId');
             var sort  = $scope.sort;
             var selector = {userID: userID};
             var modifier = {sort: {appName: sort}};
             var userapps = Userapps.find(selector,modifier);
-            var counter = userapps.count();
             console.info('userapps', userapps);
-            console.info('counter', counter);
           return userapps;
         },
         totalApps(){
-            var userID =  $scope.userId;
-            var query = {userID: userID};
-            return Userapps.find(query).count();
+          var userID = $scope.getReactively('userId')
+          var query = {userID: userID};
+          return Userapps.find(query).count();
         }
       });//helpers
 

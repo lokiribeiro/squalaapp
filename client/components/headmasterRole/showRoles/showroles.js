@@ -724,6 +724,7 @@ class ShowrolesCtrl{
             $scope.rolesID = roleId;
             console.info($scope.rolesID );
             $scope.deletedNow = false;
+            $scope.deletedNows = false;
             $scope.existing = false;
             $scope.done = false;
 
@@ -753,15 +754,16 @@ class ShowrolesCtrl{
             if (!err) {
                 //do something with the id : for ex create profile
                 $scope.done = false;
-                $scope.deletedNow = !$scope.deletedNow;
-                $scope.existing = true;
+                $scope.deletedNows = false;
+                $scope.deletedNow = false;
                 console.log('daan');
                 window.setTimeout(function(){
                   $scope.$apply();
               },2000);
             } else {
              //simulation purposes
-               $scope.deletedNows = !$scope.deletedNows;
+               $scope.deletedNows = true;
+               $scope.deletedNow = true;
                console.info('deletednows', $scope.deletedNows );
                $scope.done = false;
                window.setTimeout(function(){

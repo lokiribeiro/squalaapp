@@ -81,12 +81,6 @@ class DashboardCtrl{
             var userID = Meteor.userId();
             var query = {userID: userID};
             return Userapps.find(query).count();
-        },
-        currentusers(){
-            var userID = Meteor.userId();
-            var query = {userID: userID};
-            var listahan = Userapps.findOne(query);
-            return Userapps.findOne(query);
         }
       });//helpers
 

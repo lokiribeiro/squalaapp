@@ -38,7 +38,7 @@
     <md-tooltip md-direction="bottom">
       Delete
     </md-tooltip>
-    <md-icon md-svg-icon="../../assets/img/black_delete24.svg"></md-icon>
+    <md-icon md-svg-icon="../../assets/img/white_delete24.svg"></md-icon>
   </md-button>
 </div>
 </md-toolbar>
@@ -53,7 +53,7 @@
     </tr>
   </thead>
   <tbody md-body>
-    <tr md-row md-select="branch" md-select-id="branch._id" md-auto-select ng-repeat="branch in branches" ng-hide="(($root.userLoggedInRole != 'superadmin' && branch.branches_type == 'parent') || ($root.userLoggedInRole != 'superadmin' && branch._id != $root.userLoggedInBranch))" ng-cloak>
+    <tr md-row md-select="branch" md-select-id="branch._id" md-auto-select ng-repeat="branch in branches" ng-hide="(($root.userLoggedInRole != 'superadmin' && branch.branches_type == 'parent') || ($root.userLoggedInRole != 'superadmin' && branch._id != $root.userLoggedInBranch) || ($root.userLoggedInRole == 'superadmin' && branch._id != $root.userLoggedInBranch && branch.branches_type == 'parent') )" ng-cloak>
       <td md-cell>{{branch.branch_name}}</td>
       <td md-cell>{{branch.branches_schooladminname == '' ? 'none' : branch.branches_schooladminname}}</td>
       <td md-cell>{{branch.branches_address}}</td>

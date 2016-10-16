@@ -149,6 +149,16 @@ Meteor.methods({
       return roleUpsert;
 
     },
+    upsertProfileFromRole(profileID, feesId, feesName){
+      var selector = {profiles_userID: profileID};
+      var modifier = {$set: {
+        profiles_feesID: feesId,
+        profile_feesName: feesName
+      }};
+      var roleUpsert = Profiles.upsert(selector, modifier);
+      return roleUpsert;
+
+    },
     unassignProfileFromRole(profileID, roleId){
       var selector = {_id: profileID};
       var modifier = {$set: {

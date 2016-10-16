@@ -65,7 +65,7 @@ class CollectCtrl{
       })//helpers
 
       angular.element(document).ready(function () {
-        //$window.loading_screen.finish();
+        $window.loading_screen.finish();
 
         $scope.promise = $timeout(function(){
           var userDetails = Meteor.userId();
@@ -111,6 +111,30 @@ class CollectCtrl{
         if ( current.left && last.right ) current.right = false;
 
         last = angular.extend({},current);
+      }
+
+      $scope.items = [
+        { name: "Add fees category", icon: "../../assets/img/white_roleadd24.svg", direction: "left" }
+      ];
+
+      $scope.openDialogs = function($event, item) {
+        // Show the dialog
+        $mdDialog.show({
+          clickOutsideToClose: false,
+          escapeToClose: true,
+          controller: function($mdDialog) {
+            // Save the clicked item
+            $scope.FABitem = item;
+            // Setup some handlers
+            $scope.close = function() {
+              $mdDialog.cancel();
+            };
+          },
+          controllerAs: 'collectcreatefees',
+          controller: CollectCtrl,
+          template: '<collectcreatefees></collectcreatefees>',
+          targetEvent: $event
+        });
       }
 
 

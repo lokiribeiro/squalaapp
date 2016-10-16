@@ -20,15 +20,53 @@
       <md-expansion-panel-content>
         <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
 
-          <span layout="column" flex layout-fill ng-hide="createdNow" >
+          <span layout="column" flex layout-fill  >
+
+              <span layout="column" layout-align="center center" layout-fill>
+                 <span layout="row" layout-align="space-between center" layout-fill>
+                   <md-input-container  class="md-block" layout-fill style="margin: 10px 0 !important;">
+                     <label> select requirement category</label>
+                   <md-select ng-model="applicant.gender"  class="md-no-underline">
+                     <md-option ng-repeat="requirementdoc in requirementdocs" value="{{requirementdoc._id}}">{{requirementdoc.requirementName}}</md-option>
+                   </md-select>
+                 </md-input-container>
+                     <md-button class="md-fab md-default" ngf-select="uploadFiles($file, $invalidFiles)" aria-label="transfer" ngf-max-height="1000">
+                       <md-tooltip md-direction="bottom">
+                         Upload
+                       </md-tooltip>
+                       <md-icon md-svg-icon="../../assets/img/white_upload24.svg"></md-icon>
+                     </md-button>
+               </span>
+             </span>
 
 
-                  <div>
-                  Uploading <b>{{file.name}}</b>:
-                </div>{{currentUpload}}
-                   <md-progress-linear md-mode="determinate" value="{{progress}}"></md-progress-linear>
-                   <input type="file" ngf-select="uploadFiles($file, $invalidFiles)" ngf-max-height="1000" class="md-icon-button" aria-label="forward" />
-              
+
+
+
+                 <md-subheader class="md-no-sticky">Applicant documents</md-subheader>
+
+                 <span  ng-repeat="applicant in applicants track by $index" layout-padding layout="row" layout-align="space-between center" layout-fill layout-wrap>
+                   <md-list-item class="md-3-line card-1" ng-repeat="document in applicant.documents track by $index" layout-fill flex flex-gt-sm="45" style="margin: 4px 4px 4px 4px !important;">
+                     <md-icon md-svg-icon="../../assets/img/black_file24.svg"></md-icon>
+                     <div class="md-list-item-text" layout="column">
+                       <h3>{{ document.requirement}}</h3>
+                       <p>{{ document.filename}}</p>
+                     </div>
+                     <a target="_self" href="{{document.downloadUrl}}" download="{{applicant.applicantID}}">
+                       <md-button class="md-icon-button " aria-label="transfer">
+                         <md-tooltip md-direction="bottom">
+                           Download document
+                         </md-tooltip>
+                     <md-icon md-svg-icon="../../assets/img/black_download24.svg"></md-icon>
+                   </md-button>
+                     </a>
+                   </md-list-item>
+              </span>
+
+
+                <div layout="row" layout-align = "center center" ng-show="doneSearching" layout-fill >
+                  <md-progress-circular md-mode="indeterminate"  ></md-progress-circular>
+                </div>
 
           </span>
 

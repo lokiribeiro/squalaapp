@@ -103,10 +103,10 @@ class HeadmastercreateuserCtrl{
           var metEmail = $scope.email;
           var newuserID = newUserID;
           var email = metEmail;
-          console.log(email);          
-          var from = 'admin@tlplbinternational.com';
-          var subject = '[The Learning Place] Your web presence credentials';
-          var text = 'Welcome to Squala for The Learning Place! Your Headmaster username: ' + metUname + '        Password: ' + metPass + '. Access the app at http://www.tlplbinternational.com.';
+          console.log(email);
+          var from = 'admin@apecschools.edu.ph';
+          var subject = '[Squala for APEC Schools] Your web presence credentials';
+          var text = 'Welcome to Squala for APEC Schools! Your username: ' + metUname + '        Password: ' + metPass + '. Access the app at https://www.squalaforapecschools.edu.ph.';
           Meteor.call('sendEmail', email, from, subject, text, function(err, detail) {
             if (err) {
                 //do something with the id : for ex create profile

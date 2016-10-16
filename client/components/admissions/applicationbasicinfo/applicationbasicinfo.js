@@ -5,7 +5,7 @@ import Applicants from '/imports/models/applicants.js';
 
 class ApplicationbasicinfoCtrl{
 
-  constructor($rootScope, $scope, $timeout, $mdSidenav, $log, $mdDialog, $state){
+  constructor($rootScope, $scope, $timeout, $mdToast, $mdSidenav, $log, $mdDialog, $state){
       'ngInject';
 
       $scope.applicantID = $rootScope.applicantID;
@@ -24,6 +24,9 @@ class ApplicationbasicinfoCtrl{
         }
       });//helpers
 
+      $scope.done = false;
+      $scope.hide = false;
+
       $scope.items = [
         {value: 'grade1', name: 'Grade 1'},
         {value: 'grade2', name: 'Grade 2'},
@@ -39,7 +42,68 @@ class ApplicationbasicinfoCtrl{
         {value: 'grade12', name: 'Grade 12'}
       ];
 
+      var last = {
+        bottom: true,
+        top: false,
+        left: true,
+        right: false
+      };
 
+      $scope.getToastPosition = function() {
+        sanitizePosition();
+
+        return Object.keys($scope.toastPosition)
+        .filter(function(pos) { return $scope.toastPosition[pos]; })
+        .join(' ');
+      };
+
+      $scope.toastPosition = angular.extend({},last);
+
+      function sanitizePosition() {
+        var current = $scope.toastPosition;
+
+        if ( current.bottom && last.top ) current.top = false;
+        if ( current.top && last.bottom ) current.bottom = false;
+        if ( current.right && last.left ) current.left = false;
+        if ( current.left && last.right ) current.right = false;
+
+        last = angular.extend({},current);
+      }
+
+      $scope.updateBasic = function(detail) {
+        console.log(detail);
+        detail.progress = 35;
+        $scope.done = true;
+        $scope.hide = true;
+        var toasted = 'Basic info updated.';
+        var pinTo = $scope.getToastPosition();
+
+
+        Meteor.call('upsertApplicantFromBasic', detail, function(err, detail) {
+            var detail = detail;
+            console.log(detail);
+              if (err) {
+                  //do something with the id : for ex create profile
+                  $scope.done = false;
+                  $scope.hide = false;
+                  $scope.$apply();
+             } else {
+               $scope.done = false;
+               $scope.hide = false;
+               $mdToast.show(
+                 $mdToast.simple()
+                 .textContent(toasted)
+                 .position(pinTo )
+                 .hideDelay(3000)
+                 .theme('Admissions')
+                 .action('HIDE')
+                 .highlightAction(true)
+                 .highlightClass('md-accent')
+               );
+
+             }
+          });
+      }
 
     }
 }

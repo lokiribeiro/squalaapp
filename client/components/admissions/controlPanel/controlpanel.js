@@ -1,8 +1,6 @@
 import {app} from '/client/app.js';
 
-import Profiles from '/imports/models/profiles.js';
-import Branches from '/imports/models/branches.js';
-import Roles from '/imports/models/roles.js';
+import Requirementdocs from '/imports/models/requirementdocs.js';
 
 
 class ControlpanelCtrl{
@@ -12,89 +10,46 @@ class ControlpanelCtrl{
 
       $scope.thisUser = Meteor.userId();
 
+
+
+      $scope.sort = 1;
+
+      $scope.subscribe('requirementdocs');
+
+      $scope.helpers({
+          requirementdocs(){
+            //var sort = 1;
+            //var selector = {};
+            //var modifier= {sort: {profiles_firstname: sort}};
+            var selector = {};
+            var requirementdocs = Requirementdocs.find(selector);
+            var count = requirementdocs.count();
+            console.info('profiles', requirementdocs);
+            console.info('count', count);
+            return requirementdocs;
+          },
+          totalrequirementdocs(){
+            var selector = {};
+            var requirementdocs = Requirementdocs.find(selector);
+            var count = requirementdocs.count();
+            $scope.count = count;
+            return count;
+          }
+      })//helpers
+
+      $scope.requirementName = '';
+      for(i=0;i<$scope.count;i++){
+        $scope.editMode[i] = false;
+      }
+
+      $scope.done = false;
+
       var last = {
         bottom: true,
         top: false,
         left: true,
         right: false
       };
-
-      $scope.sort = 1;
-
-      $scope.subscribe('profilesUser', function () {
-          return [$scope.getReactively('thisUser')];
-      });
-
-      $scope.subscribe('branchesProfile', function () {
-          return [$scope.getReactively('subBranchID')];
-      });
-
-      $scope.subscribe('roles2', function () {
-          return [$scope.getReactively('rolesID')];
-      });
-
-      $scope.helpers({
-          profiles(){
-            //var sort = 1;
-            //var selector = {};
-            //var modifier= {sort: {profiles_firstname: sort}};
-            var thisUser = $scope.getReactively('thisUser');
-            var selector = {profiles_userID: thisUser};
-            var profiles = Profiles.find(selector);
-            var count = profiles.count();
-            console.info('profiles', profiles);
-            console.info('count', count);
-            return profiles;
-          },
-          totalProfiles(){
-            var branchID = $scope.branchID;
-            var type = 'Parent';
-            var selector = {profiles_branchID: branchID, $and: [{profiles_type: type}]};
-            var profiles = Profiles.find(selector);
-            var count = profiles.count();
-            return count;
-          },
-          branches(){
-            var branchID = $scope.branchID;
-            var branches = Branches.find(branchID);
-            return branches;
-          },
-          roles() {
-            return Roles.find();
-          }
-
-      })//helpers
-
-      angular.element(document).ready(function () {
-        $scope.promise = $timeout(function(){
-
-
-        var userDetails = Meteor.userId();
-        console.info('userDetails', userDetails);
-        var selector = {profiles_userID: userDetails};
-        var profileDetails = Profiles.find(selector);
-        var count = profileDetails.count();
-        console.info('countdetails', count);
-        console.info('profileDetails', profileDetails);
-        profileDetails.forEach(function(profileDetail){
-          $scope.firstname = profileDetail.profiles_firstname;
-          $scope.lastname = profileDetail.profiles_lastname;
-          $scope.branchName = profileDetail.profiles_branch;
-        });
-
-        var toasted = $scope.branchName + ': Hi ' + $scope.firstname + ' ' + $scope.lastname + '!';
-
-        var pinTo = $scope.getToastPosition();
-
-        $mdToast.show(
-          $mdToast.simple()
-          .textContent(toasted)
-          .position(pinTo )
-          .hideDelay(3000)
-          .theme('Admissions')
-        );
-        }, 2000);
-    });
 
       $scope.getToastPosition = function() {
         sanitizePosition();
@@ -116,6 +71,114 @@ class ControlpanelCtrl{
 
         last = angular.extend({},current);
       }
+
+
+      $scope.createRequirement = function(){
+        $scope.done = true
+        var newReq = $scope.requirementName;
+        var selector = {requirementName: newReq}
+        var status = Requirementdocs.insert(selector);
+        if (status) {
+          var toasted = 'new requirement added';
+          var pinTo = $scope.getToastPosition();
+          $scope.done = false;
+          $mdToast.show(
+            $mdToast.simple()
+            .textContent(toasted)
+            .position(pinTo )
+            .hideDelay(3000)
+            .theme('Admissions')
+            .action('HIDE')
+            .highlightAction(true)
+            .highlightClass('md-accent')
+          );
+       } else {
+         var toasted = 'An error occured';
+         var pinTo = $scope.getToastPosition();
+         $scope.done = false;
+         $mdToast.show(
+           $mdToast.simple()
+           .textContent(toasted)
+           .position(pinTo )
+           .hideDelay(3000)
+           .theme('Admissions')
+           .action('HIDE')
+           .highlightAction(true)
+           .highlightClass('md-accent')
+         );
+       }
+      }
+
+      $scope.editRequirement = function(requirementdoc, index, mode){
+        $scope.done = true
+        console.log(index);
+        var i = parseInt(index);
+        console.log($scope.editMode);
+        $scope.editMode[i] = !mode;
+
+        var newReq = requirementdoc.requirementName;
+        var selector={_id: requirementdoc._id};
+        var modifier = {$set: {
+          requirementName: requirementdoc.requirementName
+        }};
+        var status = Requirementdocs.update(selector, modifier);
+        if (status) {
+          var toasted = 'requirement updated';
+          var pinTo = $scope.getToastPosition();
+          $scope.done = false;
+          $mdToast.show(
+            $mdToast.simple()
+            .textContent(toasted)
+            .position(pinTo )
+            .hideDelay(3000)
+            .theme('Admissions')
+            .action('HIDE')
+            .highlightAction(true)
+            .highlightClass('md-accent')
+          );
+       } else {
+         var toasted = 'An error occured';
+         var pinTo = $scope.getToastPosition();
+         $scope.done = false;
+         $mdToast.show(
+           $mdToast.simple()
+           .textContent(toasted)
+           .position(pinTo )
+           .hideDelay(3000)
+           .theme('Admissions')
+           .action('HIDE')
+           .highlightAction(true)
+           .highlightClass('md-accent')
+         );
+
+       }
+     }
+              /*Meteor.call('upsertRequirementdocs', detail, function(err, detail) {
+          var detail = detail;
+          console.log(detail);
+            if (err) {
+                //do something with the id : for ex create profile
+                $scope.done = false;
+                $scope.hide = false;
+                $scope.$apply();
+           } else {
+             $scope.done = false;
+             $scope.hide = false;
+             $mdToast.show(
+               $mdToast.simple()
+               .textContent(toasted)
+               .position(pinTo )
+               .hideDelay(3000)
+               .theme('Admissions')
+               .action('HIDE')
+               .highlightAction(true)
+               .highlightClass('md-accent')
+             );
+
+           }
+        });*/
+
+
 
 
     }

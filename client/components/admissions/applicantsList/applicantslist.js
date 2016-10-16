@@ -3,7 +3,9 @@ import {app} from '/client/app.js';
 import Applicants from '/imports/models/applicants.js';
 import Profiles from '/imports/models/profiles.js';
 import Branches from '/imports/models/branches.js';
-
+import Apps from '/imports/models/apps.js'
+import Userapps from '/imports/models/userapps.js'
+import Roles from '/imports/models/roles.js';
 
 
 class ApplicantslistCtrl{
@@ -75,7 +77,22 @@ class ApplicantslistCtrl{
           return [$scope.getReactively('thisUser')];
       });
 
+      $scope.subscribe('roles', function () {
+          return [$scope.getReactively('roleID')];
+      });
+
+      $scope.subscribe('apps');
+
       $scope.applicantID = [];
+
+      $scope.progressList = [
+        //{ name: "New applications", type: "New applications"},
+        { name: "Application form created", value: '10', status: true, statusNo: false, icon: "../../assets/img/amber_checkcircle24.svg", iconNo: "../../assets/img/black_checkcircle24.svg"},
+        { name: "Filled out application form", value: '35', status: true, statusNo: false, icon: "../../assets/img/amber_checkcircle24.svg", iconNo: "../../assets/img/black_checkcircle24.svg"},
+        { name: "Supporting documents submitted", value: '60', status: true, statusNo: false, icon: "../../assets/img/amber_checkcircle24.svg", iconNo: "../../assets/img/black_checkcircle24.svg"},
+        { name: "Settled reservation fee", value: '85', status: true, statusNo: false, icon: "../../assets/img/amber_checkcircle24.svg", iconNo: "../../assets/img/black_checkcircle24.svg"},
+        { name: "For class assignment", value: '100', status: true, statusNo: false,  icon: "../../assets/img/amber_checkcircle24.svg", iconNo: "../../assets/img/black_checkcircle24.svg"},
+      ];
       $scope.sort = -1;
 
       $scope.helpers({
@@ -426,7 +443,248 @@ class ApplicantslistCtrl{
              $state.go('AdmissionsApplicantProfile', {stateHolder : 'Admissions', userID : Meteor.userId(), applicantID : applicantID});
            }
 
+           $scope.canCreateProfile = false;
 
+           $scope.markPaid = function(applicantID, detail, applicantInfo){
+             console.log(detail);
+             if(detail == 'Settled reservation fee'){
+               var progress = 85;
+               Meteor.call('upsertApplicantFromDocs', applicantID, progress, function(err, detail) {
+                   var detail = detail;
+                   console.log(detail);
+                     if (err) {
+                       var toasted = 'Error updating application.';
+                       var pinTo = $scope.getToastPosition();
+                       $mdToast.show(
+                         $mdToast.simple()
+                         .textContent(toasted)
+                         .position(pinTo )
+                         .hideDelay(3000)
+                         .theme('Admissions')
+                         .action('HIDE')
+                         .highlightAction(true)
+                         .highlightClass('md-accent')
+                       );
+                       $scope.doneSearching = false;
+                    } else {
+                      var toasted = 'application status updated.';
+                      var pinTo = $scope.getToastPosition();
+                      $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(toasted)
+                        .position(pinTo )
+                        .hideDelay(3000)
+                        .theme('Admissions')
+                        .action('HIDE')
+                        .highlightAction(true)
+                        .highlightClass('md-accent')
+                      );
+                      $scope.doneSearching = false;
+
+                    }
+                 });
+
+             } else if (detail == 'For class assignment'){
+               var progress = 100;
+               var status = "Enrolled";
+               var selector = {_id: applicantID};
+               var modifier = {$set: {status: status}};
+               Applicants.update(selector,modifier);
+               Meteor.call('upsertApplicantFromDocs', applicantID, progress, function(err, detail) {
+                   var detail = detail;
+                   console.log(detail);
+                     if (err) {
+                       var toasted = 'Error enrolling student.';
+                       var pinTo = $scope.getToastPosition();
+                       $mdToast.show(
+                         $mdToast.simple()
+                         .textContent(toasted)
+                         .position(pinTo )
+                         .hideDelay(3000)
+                         .theme('Admissions')
+                         .action('HIDE')
+                         .highlightAction(true)
+                         .highlightClass('md-accent')
+                       );
+                       $scope.doneSearching = false;
+                    } else {
+                      var toasted = 'Student successfully enrolled.';
+                      var pinTo = $scope.getToastPosition();
+                      $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(toasted)
+                        .position(pinTo )
+                        .hideDelay(3000)
+                        .theme('Admissions')
+                        .action('HIDE')
+                        .highlightAction(true)
+                        .highlightClass('md-accent')
+                      );
+                      $scope.doneSearching = false;
+
+
+                      var pass = Random.hexString(8);
+                      var emailPass = pass;
+                      var emailUsername = applicantInfo.applicationNum;
+                      var email = applicantInfo.email;
+
+                      $scope.emailPassa = emailPass;
+                      $scope.emailUsernamea = emailUsername;
+                      $scope.emaila = email;
+                      $scope.brancha = applicantInfo.branchId;
+                      $scope.firstnamea = applicantInfo.firstname;
+                      $scope.middlename = applicantInfo.middlename;
+                      $scope.lastnamea = applicantInfo.lastname;
+                      $scope.mobileNoa = applicantInfo.mobileNo;
+                      $scope.birthdaya = applicantInfo.birthdate;
+                      $scope.gendera = applicantInfo.gender;
+
+
+                      $scope.done = true;
+                      $scope.existing = false;
+                      $scope.createdNow = !$scope.createdNow;
+                      //var status = createUserFromAdmin(details);
+
+                      Meteor.call('createUserFromAdmin', emailUsername, email, pass, function(err, newuserID) {
+                            console.log(detail);
+                              if (err) {
+                                  //do something with the id : for ex create profile
+                                  $scope.done = false;
+                                  $scope.createdNow = !$scope.createdNow;
+                                  $scope.existing = true;
+                                  window.setTimeout(function(){
+                                  $scope.$apply();
+                                },2000);
+                             } else {
+                               $scope.newUserID = newuserID;
+                               //simulation purposes
+                               window.setTimeout(function(){
+                               $scope.canCreateProfile = true
+                               $scope.$apply();
+                               if($scope.canCreateProfile){
+                               //create user profile
+                                   $scope.createProfile($scope.newUserID);
+                                 }
+                             },2000);
+                             }
+                          });
+
+
+
+                    }
+                 });
+
+             }
+           }
+
+
+           $scope.createProfile = function (newUserID) {
+                 console.log(newUserID);
+                 //console.log(profileDetails.emails[0].address);
+                 var userAppsHolder = {
+                   userID: '',
+                   appId: '',
+                   appName: '',
+                   appLoc: '',
+                   desc: ''
+                 };
+                 var metPass = $scope.emailPassa;
+                 var metPassa = $scope.emailPassa;
+                 var metUname = $scope.emailUsernamea;
+                 var metEmail = $scope.emaila;
+                 var newuserID = newUserID;
+                 var email = metEmail;
+                 console.log(email);
+                 var from = 'admin@apecschools.edu.ph';
+                 var subject = '[Squala for APEC Schools] Your web presence credentials';
+                 var text = 'Welcome to Squala for APEC Schools! Your username: ' + metUname + '        Password: ' + metPass + '. Access the app at https://www.squalaforapecschools.edu.ph.';
+                 Meteor.call('sendEmail', email, from, subject, text, function(err, detail) {
+                   if (err) {
+                       //do something with the id : for ex create profile
+                       console.log('err');
+                  } else {
+                    console.log('suc');
+                  }
+                 });
+                 var userFirstname =   $scope.firstnamea  + ' ' +   $scope.lastnamea;
+                 console.info('userFirstname', userFirstname);
+                 var branchIDD = $scope.brancha;
+                 console.info('brancha', branchIDD);
+                 var userRole = 'student';
+
+                 Meteor.call('upsertUserFromAdmissions', newUserID, userFirstname, branchIDD, userRole, function(err, detail) {
+                   if (err) {
+
+                       $scope.createdNow = !$scope.createdNow;
+
+                  } else {
+                    $scope.createdNows = !$scope.createdNows;
+
+                  }
+               });
+
+               var enrolledRole = 'student';
+
+               var selector = {_id: enrolledRole};
+               var getApps = Roles.find(selector);
+               var counter = getApps.count();
+               console.info('student from role', counter);
+               getApps.forEach(function(getApp){
+                 var instances = getApp.apps.length;
+                 for(i=0;i<instances;i++){
+                   var enrolledAppId = getApp.apps[i].appId;
+                   var selector = {_id: enrolledAppId};
+                   var fromApps = Apps.findOne(selector);
+
+                   userAppsHolder.userID = newUserID;
+                   userAppsHolder.appId = enrolledAppId;
+                   userAppsHolder.appName = fromApps.name;
+                   userAppsHolder.appLoc = fromApps.loc;
+                   userAppsHolder.desc = fromApps.desc;
+                   var status = Userapps.insert(userAppsHolder);
+                   if (status) {
+                     console.log('inserted user to userapps');
+
+                   } else {
+                     console.log('error inserting');
+                   }
+
+                 }
+               });
+
+                 var profile = [];
+
+                 profile.profiles_userID = newUserID;
+                 profile.profiles_firstname = $scope.firstnamea;
+                 profile.profiles_lastname = $scope.lastnamea;
+                 profile.profiles_email = $scope.emaila;
+                 profile.profiles_username = $scope.emailUsernamea;
+                 profile.profiles_profilephoto = '../../assets/img/profiles/user.png';
+                 profile.profiles_createdAt = new Date();
+                 profile.profiles_phone = $scope.mobileNoa;
+                 profile.profiles_birthday = $scope.birthdaya;
+                 profile.profiles_gender = $scope.gendera;
+                 profile.profiles_type = 'Student';
+                 profile.profiles_userroleID = 'student';
+                 profile.profiles_jobTitle = null;
+                 profile.profiles_branchID = $scope.brancha;
+                 profile.profiles_branch =   $scope.branchName;
+
+
+                 profile.profiles_apps = [];
+
+                 var profileID = Profiles.insert(profile);
+
+                 console.info('profileID', profileID);
+               /*party.ownerId = Meteor.userId();
+               party.ownerEmail = Meteor.user().emails[0].address;
+               party.createdAt = new Date();
+               party.invitedUsers = [];
+               party.location = null;
+               Parties.insert(party);
+               party.name = null;
+               party.description = null;*/
+           };
 
 
     }
