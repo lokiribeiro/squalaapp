@@ -1,0 +1,12 @@
+<div layout="row" layout-align="start start" layout-padding layout-wrap ng-hide="count">
+  <h3 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-hide="count">{{totalUserapps}} Squala Apps </h3>
+</div>
+
+<div layout = "row" layout-align="start start" layout-fill layout-wrap layout-padding>
+  <div flex="33" ng-repeat="userapp in userapps" layout="column" layout-align="start center">
+    <img ng-src="{{userapp.appLoc}}" style="margin: auto 3px auto 0;" >
+
+    <span class="md-subhead">{{userapp.appName}}</span>
+
+  </div>
+</div>

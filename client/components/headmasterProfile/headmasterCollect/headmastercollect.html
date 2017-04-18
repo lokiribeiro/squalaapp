@@ -1,0 +1,164 @@
+<md-toolbar class="md-primary md-hue-2" layout="row" layout-align="center center">
+  <div flex="100" flex-gt-sm="70" layout="column" layout-fill>
+    <div class="md-toolbar-tools">
+      <div ng-click="openSchool()" >
+      <md-tooltip md-direction="bottom">
+        Back
+      </md-tooltip>
+      <md-icon md-svg-icon="../../assets/img/white_backarrow24.svg"></md-icon>
+    </div>
+      <h2 class="md-flex" style="padding-left: 24px !important;">Fees Profile</h2>
+      <span flex></span>
+    </div>
+  </div>
+</md-toolbar>
+
+<div class="anim-slide-below-fade" data-anim-speed="500">
+<div flex layout-padding style="background-color:transparent !important;"  layout="row" layout-align="center center">
+  <div layout="column" flex flex-gt-sm="70" layout-fill>
+    <div layout="row" layout-align="center center" layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 10px;" ng-repeat="profile in profiles" ng-cloak>
+      <!-- <md-whiteframe class="md-whiteframe-2dp" flex="100" flex-gt-sm="60" layout="row" layout-align="start start" layout-padding layout-wrap layout-fill style="padding-left:30px;">-->
+      <md-card flex layout-fill  ng-repeat="feescategory in feescategories track by $index">
+            <md-card-header>
+              <md-card-avatar>
+                <img class="md-user-avatar" src="{{profile.profiles_profilephoto}}"/>
+              </md-card-avatar>
+              <md-card-header-text>
+                <span class="md-title">{{profile.profiles_firstname}}  {{profile.profiles_lastname}}</span>
+                <span class="md-subhead">{{profile.profiles_branch}}</span>
+              </md-card-header-text>
+            </md-card-header>
+            <!-- <img ng-src="../../assets/img/day.jpg" ng-if="selected.shift == 'AM'" class="md-card-image" alt="Washed Out">
+            <img ng-src="../../assets/img/afternoon.jpg" ng-if="selected.shift == 'PM'" class="md-card-image" alt="Washed Out"> -->
+            <md-card-title>
+              <md-card-title-text>
+                <span class="md-title">{{feescategory.feesName}}</span>
+                <span class="md-subhead" layout="column" layout-align="start start">
+                  <span>Tuition fee: {{feescategory.tuitionfee | currency : "Php " : 2}}</span>
+                  <span>Fee code: {{feescategory.code}}</span>
+                  <span>Region: {{feescategory.region}}</span>
+                  <span>Shift: {{feescategory.shift}}</span>
+                </span>
+              </md-card-title-text>
+            </md-card-title>
+            <md-card-actions layout="row" layout-align="end center">
+              <md-card-icon-actions layout="row" layout-align="end center">
+                <span ng-hide="showAll" class="md-subhead">more</span>
+                <span ng-show="showAll" class="md-subhead">less</span>
+              <md-button ng-hide="showAll" class="md-icon-button" aria-label="more" ng-click="null">
+                <md-tooltip md-direction="bottom">
+                  show more
+                </md-tooltip>
+                <md-icon ng-click="showMoreAll()" md-svg-icon="../../assets/img/black_expandmore24.svg"></md-icon>
+              </md-button>
+              <md-button ng-show="showAll" class="md-icon-button" aria-label="less" ng-click="null">
+                <md-tooltip md-direction="bottom">
+                  show less
+                </md-tooltip>
+                <md-icon ng-click="showMoreAll()" md-svg-icon="../../assets/img/black_expandless24.svg"></md-icon>
+              </md-button>
+            </md-card-icon-actions>
+          </md-card-actions>
+
+            <md-card-content  ng-if="showAll" layout="column" layout-align="end start" layout-fill>
+            <md-list layout-fill>
+            <md-subheader class="md-primary">Monthly breakdown</md-subheader>
+            <md-list-item class="md-2-line" ng-click="null">
+              <div class="md-list-item-text" layout="column">
+                <h4>{{ feescategory.june | currency : "P" : 2 }}</h4>
+                <p>JUNE</p>
+              </div>
+            </md-list-item>
+            <md-list-item class="md-2-line" ng-click="null">
+              <div class="md-list-item-text" layout="column">
+                <h4>{{ feescategory.july | currency : "P" : 2 }}</h4>
+                <p>JULY</p>
+              </div>
+            </md-list-item>
+            <md-list-item class="md-2-line" ng-click="null">
+              <div class="md-list-item-text" layout="column">
+                <h4>{{ feescategory.august | currency : "P" : 2 }}</h4>
+                <p>AUGUST</p>
+              </div>
+            </md-list-item>
+            <md-list-item class="md-2-line" ng-click="null">
+              <div class="md-list-item-text" layout="column">
+                <h4>{{ feescategory.september | currency : "P" : 2 }}</h4>
+                <p>SEPTEMBER</p>
+              </div>
+            </md-list-item>
+            <md-list-item class="md-2-line" ng-click="null">
+              <div class="md-list-item-text" layout="column">
+                <h4>{{ feescategory.october | currency : "P" : 2 }}</h4>
+                <p>OCTOBER</p>
+              </div>
+            </md-list-item>
+            <md-list-item class="md-2-line" ng-click="null">
+              <div class="md-list-item-text" layout="column">
+                <h4>{{ feescategory.november | currency : "P" : 2 }}</h4>
+                <p>NOVEMBER</p>
+              </div>
+            </md-list-item>
+            <md-list-item class="md-2-line" ng-click="null">
+              <div class="md-list-item-text" layout="column">
+                <h4>{{ feescategory.december | currency : "P" : 2 }}</h4>
+                <p>DECEMBER</p>
+              </div>
+            </md-list-item>
+            <md-list-item class="md-2-line" ng-click="null">
+              <div class="md-list-item-text" layout="column">
+                <h4>{{ feescategory.january | currency : "P" : 2 }}</h4>
+                <p>JANUARY</p>
+              </div>
+            </md-list-item>
+            <md-list-item class="md-2-line" ng-click="null">
+              <div class="md-list-item-text" layout="column">
+                <h4>{{ feescategory.february | currency : "P" : 2 }}</h4>
+                <p>FEBRUARY</p>
+              </div>
+            </md-list-item>
+            <md-list-item class="md-2-line" ng-click="null">
+              <div class="md-list-item-text" layout="column">
+                <h4>{{ feescategory.march | currency : "P" : 2 }}</h4>
+                <p>MARCH</p>
+              </div>
+            </md-list-item>
+            <md-list-item class="md-2-line" ng-click="null">
+              <div class="md-list-item-text" layout="column">
+                <h3>{{ feescategory.april | currency : "P" : 2 }}</h3>
+                <p>APRIL</p>
+              </div>
+            </md-list-item>
+            <md-list-item class="md-2-line" ng-click="null">
+              <div class="md-list-item-text" layout="column">
+                <h3>{{ feescategory.may | currency : "P" : 2 }}</h3>
+                <p>MAY</p>
+              </div>
+            </md-list-item>
+          </md-list>
+            </md-card-content>
+          </md-card>
+    </div>
+
+      <div layout="row" layout-align="center center" layout-wrap layout-fill ng-repeat="profile in profiles" ng-cloak>
+        <md-card flex layout-fill>
+        <md-tabs md-dynamic-height md-border-bottom>
+              <!-- <md-tab label="Due dates">
+                  <duedates></duedates>
+              </md-tab> -->
+              <md-tab label="Payment History" >
+                  <paymenthistory></paymenthistory>
+              </md-tab>
+              <md-tab label="Balance" >
+                  <balance></balance>
+              </md-tab>
+              <md-tab label="RC Generation" >
+                  <rcgeneration></rcgeneration>
+              </md-tab>
+            </md-tabs>
+        </md-card>
+      </div>
+
+    </div>
+  </div>
+</div>

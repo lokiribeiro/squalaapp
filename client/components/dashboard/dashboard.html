@@ -15,7 +15,8 @@
 <md-content flex layout-padding layout-fill style="background-color: transparent !important; overflow: hidden !important;">
   <div layout="column"  flex>
     <div layout="row" layout-align="center center" layout-padding layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 10px;" ng-cloak>
-
+      <h1 hide-xs style="font-weight: normal;" layout="row" layout-fill layout-align ="center center">Welcome Back! </h1>
+      <h3 hide-xs style="font-weight: normal;" layout="row" layout-fill layout-align ="center center">Ready to dive in? Select an app to get started. </h3>
       <md-card ng-click="redirect(userapp.appName)" class="card-1" ng-repeat="userapp in userapps" flex-gt-sm="50" flex-gt-md="30" layout-wrap layout-fill style="margin: 10px 10px 0 0;">
         <md-card-title>
           <md-card-title-text>
@@ -37,6 +38,12 @@
           </md-button>
         </md-card-actions>
       </md-card>
+      <!-- <md-card ng-click="redirect(userapp.appName)" class="card-1" ng-repeat="userapp in userapps" flex-gt-sm="50" flex-gt-md="25" layout-wrap layout-fill style="margin: 10px 10px 0 0;" layout-align="center center">
+        <img ng-src="{{userapp.appLoc}}" alt="{{userapp.appName}}" style="width: 48px !important; height: 48px !important;">
+        <md-card-actions layout="row" layout-align="end center">
+          <span class="md-headline">{{userapp.appName}}</span>
+        </md-card-actions>
+      </md-card> -->
     </div>
   </div>
 </md-content>

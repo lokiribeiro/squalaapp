@@ -65,7 +65,7 @@ class AssessmentCtrl{
       })//helpers
 
       angular.element(document).ready(function () {
-        //$window.loading_screen.finish();
+        $window.loading_screen.finish();
 
         $scope.promise = $timeout(function(){
           var userDetails = Meteor.userId();

@@ -48,6 +48,23 @@ Meteor.publish('users', function (searchText) {
   return Meteor.users.find(selector);
 });
 
+Meteor.publish('usersStudent', function (searchText) {
+  var selector = null;
+  var role = 'student';
+  if(typeof searchText === 'string' && searchText.length){
+      var searchString = {$regex: `.*${searchText}.*`, $options: 'i'}
+      selector = {role : role, $and  : [
+              {name: searchString}
+        //{ branchId : branchId },
+      ]};
+      //return Meteor.users.find(selector);
+  }else{
+    selector = {role: role};
+
+  }
+  return Meteor.users.find(selector);
+});
+
 
 Meteor.methods({
 
@@ -55,6 +72,10 @@ Meteor.methods({
                 var user = Accounts.createUser({email:email, username:username, password:password});
                 return user;
             },
+            createGuardianFromAdmin(username, password){
+                  var user = Accounts.createUser({username:username, password:password});
+                  return user;
+              },
             deleteUserFromAdmin(userDel){
               Meteor.users.remove({_id: userDel});
             },
@@ -91,6 +112,32 @@ Meteor.methods({
               }};
               var branchUpsert = Meteor.users.upsert(selector, modifier);
               return branchUpsert;
+            },
+            upsertTransactionFromCollect(userID, amount, balance, type, branch, date){
+              var selector = {username: userID};
+              var modifier = {$push: {transactions: {amount: amount, balance: balance, type: type, branch: branch, date: date  }}}
+              var userUpsert =  Meteor.users.update(selector, modifier);
+              return userUpsert;
+            },
+            upsertHistoryFromCollect(userID, amount, balance, type, branch, date, lastname, firstname, appliedToMonth, appliedToAmount){
+              var selector = {username: userID};
+              var modifier = {$push: {statements: {amount: amount, appliedToMonth: appliedToMonth, appliedtoamount: appliedToAmount, balance: balance, type: type, branch: branch, date: date  }}}
+              var userUpsert =  Meteor.users.update(selector, modifier);
+              return userUpsert;
+            },
+            upsertHistoryFromAdmissions(userID, amount, balance, type, branch, date, lastname, firstname, appliedToMonth, appliedToAmount){
+              var selector = {username: userID};
+              var modifier = {$push: {statements: {appliedToMonth: appliedToMonth, appliedtoamount: appliedToAmount, balance: balance, type: type, branch: branch, date: date  }}}
+              var userUpsert =  Meteor.users.update(selector, modifier);
+              return userUpsert;
+            },
+            upsertNewFeesFromCollect(userID, feesID){
+              var selector = {_id: userID};
+              var modifier = {$set: {
+                feesID: feesID
+              }};
+              var feesUpsert = Meteor.users.upsert(selector, modifier);
+              return feesUpsert;
             },
             /*sendVerificationLink(userID) {
               var userId = userID;

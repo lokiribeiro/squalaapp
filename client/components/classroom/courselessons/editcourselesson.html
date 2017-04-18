@@ -1,0 +1,47 @@
+<md-dialog style="opacity: 1 !important;" aria-label="Edit Account" >
+  <form name="res" layout="column" layout-align="start center" layout-padding layout-wrap layout-fill flex >
+    <md-dialog-content >
+    <div layout="row" flex >
+      <h2 style="font-weight:normal" ng-hide="updatedNow">Update lesson outline</h2>
+      <h2 style="font-weight:normal" ng-if="done">Updating lesson outline</h2>
+      <h2 style="font-weight:normal" ng-if="updatedNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon>{{results.lessonTitle}}</h2>
+    </div>
+
+    <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+
+    <!-- hide here -->
+
+    <span layout="column" flex ng-hide="updatedNow" layout-fill>
+    <md-input-container  layout-fill md-no-float class="md-block" style="margin: 10px 0 !important;">
+        <input ng-model="results.lessonTitle" aria-label="lessonTitle" type="text" placeholder="lesson title" ng-required>
+    </md-input-container>
+
+    <md-input-container layout-fill md-no-float class="md-block" style="margin: 10px 0 !important;">
+        <input ng-model="results.description" aria-label="description" type="text" placeholder="objectives"  ng-required>
+    </md-input-container>
+    <div class="md-list-item-text" layout="column" >
+      <md-button md-no-ink class="md-primary" ngf-select="uploadFiles($file, $invalidFiles)" aria-label="transfer" ngf-max-height="1000">
+        Upload File
+      </md-button>
+    </div>
+
+    </span>
+
+    
+    <!-- end here -->
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-align="space-between start" layout-fill>
+      <!-- hide these -->
+    <md-button ng-click="cancelNow()">
+      Cancel
+    </md-button>
+      <md-button type="submit" ng-click="updateInfo(results)" ng-hide="updatedNow" class="md-primary">
+        Update
+      </md-button>
+      <!-- end hide -->
+        <md-button ng-if="updatedNows" ng-click="cancelNow()" class="md-primary">
+          DONE
+        </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

@@ -1,0 +1,119 @@
+<md-toolbar class="md-table-toolbar md-default"  flex="100" ng-show="filter.show">
+<div class="md-toolbar-tools">
+  <form name="filter.form" flex>
+    <md-input-container md-no-float class="md-block">
+    <md-icon md-svg-icon="../../assets/img/black_search24.svg"></md-icon>
+    <input type="text" ng-model="searchText" placeholder="search">
+    </md-input-container>
+  </form>
+  <md-button class="md-icon-button" aria-label="close" ng-click="closeFilter()">
+  <md-tooltip md-direction="bottom">
+    Close
+  </md-tooltip>
+  <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
+  </md-button>
+</div>
+</md-toolbar>
+
+<md-toolbar class="md-table-toolbar md-primary md-hue-1" flex="100" ng-show="selected.length">
+<div class="md-toolbar-tools" layout-align="space-between center">
+  <div ng-model="selected" flex="80">selected</div>
+  <!--<md-button class="md-icon-button" aria-label="edit" ng-click="openProfile2(selected)">
+    <md-tooltip md-direction="bottom">
+      View Account
+    </md-tooltip>
+    <md-icon md-svg-icon="../../assets/img/white_launch24.svg"></md-icon>
+  </md-button>-->
+  <md-button md-no-ink class="md-primary md-raised" aria-label="unassign" ng-click="removeUser($event, selected)" ng-show="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
+    MARK
+  </md-button>
+</div>
+</md-toolbar>
+<md-divider></md-divider>
+<md-table-container>
+  <table md-table md-row-select ng-model="selected" md-progress="promise" flex>
+    <thead md-head md-order="query.order" md-on-reorder="feescategories" class="md-head">
+      <tr md-row>
+        <th md-column ><span></span></th>
+        <th md-column md-order-by="profile.profiles_firstname" ng-click="changeSort()" ><span>Month Due</span></th>
+        <th md-column ><span>Amount Due</span></th>
+        <th md-column ><span>Penalty</span></th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="feescategory in feescategories"  md-body>
+      <tr md-row md-select="feescategory" md-select-id="feescategory.june" md-auto-select ng-cloak>
+        <td md-cell></td>
+        <td md-cell>June</td>
+        <td md-cell>{{feescategory.june  | currency : 'P ' : 2}}</td>
+        <td md-cell>0 </td>
+      </tr>
+      <tr md-row md-select="feescategory" md-select-id="feescategory.july" md-auto-select ng-cloak>
+        <td md-cell></td>
+        <td md-cell>July</td>
+        <td md-cell>{{feescategory.july  | currency : 'P ' : 2}}</td>
+        <td md-cell>0 </td>
+      </tr>
+      <tr md-row md-select="feescategory" md-select-id="feescategory.august" md-auto-select ng-cloak>
+        <td md-cell></td>
+        <td md-cell>August</td>
+        <td md-cell>{{feescategory.august  | currency : 'P ' : 2}}</td>
+        <td md-cell>0 </td>
+      </tr>
+      <tr md-row md-select="feescategory" md-select-id="feescategory.september" md-auto-select ng-cloak>
+        <td md-cell></td>
+        <td md-cell>September</td>
+        <td md-cell>{{feescategory.september  | currency : 'P ' : 2}}</td>
+        <td md-cell>0 </td>
+      </tr>
+      <tr md-row md-select="feescategory" md-select-id="feescategory.october" md-auto-select ng-cloak>
+        <td md-cell></td>
+        <td md-cell>October</td>
+        <td md-cell>{{feescategory.october  | currency : 'P ' : 2}}</td>
+        <td md-cell>0 </td>
+      </tr>
+      <tr md-row md-select="feescategory" md-select-id="feescategory.november" md-auto-select ng-cloak>
+        <td md-cell></td>
+        <td md-cell>November</td>
+        <td md-cell>{{feescategory.november  | currency : 'P ' : 2}}</td>
+        <td md-cell>0 </td>
+      </tr>
+      <tr md-row md-select="feescategory" md-select-id="feescategory.december" md-auto-select ng-cloak>
+        <td md-cell></td>
+        <td md-cell>December</td>
+        <td md-cell>{{feescategory.december  | currency : 'P ' : 2}}</td>
+        <td md-cell>0 </td>
+      </tr>
+      <tr md-row md-select="feescategory" md-select-id="feescategory._id" md-auto-select ng-cloak>
+        <td md-cell></td>
+        <td md-cell>January</td>
+        <td md-cell>{{feescategory.january  | currency : 'P ' : 2}}</td>
+        <td md-cell>0 </td>
+      </tr>
+      <tr md-row md-select="feescategory" md-select-id="feescategory.february" md-auto-select ng-cloak>
+        <td md-cell></td>
+        <td md-cell>February</td>
+        <td md-cell>{{feescategory.february  | currency : 'P ' : 2}}</td>
+        <td md-cell>0 </td>
+      </tr>
+      <tr md-row md-select="feescategory" md-select-id="feescategory.march" md-auto-select ng-cloak>
+        <td md-cell></td>
+        <td md-cell>March</td>
+        <td md-cell>{{feescategory.march  | currency : 'P ' : 2}}</td>
+        <td md-cell>0 </td>
+      </tr>
+      <tr md-row md-select="feescategory" md-select-id="feescategory.april" md-auto-select ng-cloak>
+        <td md-cell></td>
+        <td md-cell>April</td>
+        <td md-cell>{{feescategory.april  | currency : 'P ' : 2}}</td>
+        <td md-cell>0 </td>
+      </tr>
+      <tr md-row md-select="feescategory" md-select-id="feescategory.may" md-auto-select ng-cloak>
+        <td md-cell></td>
+        <td md-cell>May</td>
+        <td md-cell>{{feescategory.may | currency : 'P ' : 2}}</td>
+        <td md-cell>0 </td>
+      </tr>
+    </tbody>
+  </table>
+</md-table-container>
+<md-table-pagination  md-limit="perPage" md-page="page" md-total="{{totalProfiles}}" md-on-paginate="profiles" md-page-select></md-table-pagination>

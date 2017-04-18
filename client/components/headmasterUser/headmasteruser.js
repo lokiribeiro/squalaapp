@@ -47,7 +47,24 @@ class HeadmasteruserCtrl{
             template: '<headmastercreateuser></headmastercreateuser>',
             targetEvent: $event
           });
-        }
+        } else if(item.name == "Add multiple user") {
+            $mdDialog.show({
+              clickOutsideToClose: false,
+              escapeToClose: true,
+              controller: function($mdDialog) {
+                // Save the clicked item
+                $scope.FABitem = item;
+                // Setup some handlers
+                $scope.close = function() {
+                  $mdDialog.cancel();
+                };
+              },
+              controllerAs: 'headmastercreateusers',
+              controller: HeadmasteruserCtrl,
+              template: '<headmastercreateusers></headmastercreateusers>',
+              targetEvent: $event
+            });
+          }
       }
 
       $scope.openSchool = function (selected) {

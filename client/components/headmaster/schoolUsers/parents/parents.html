@@ -3,9 +3,11 @@
   <md-button class="md-default md-raised" aria-label="create" ng-click="addStaff($event, selected)" ng-show="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
     ADD PARENT
   </md-button>
-  <h2 ng-hide="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">Search Parents</h2>
   <div flex="" class="flex"></div>
   <md-button class="md-icon-button" aria-label="Search" ng-click="filterShow()">
+    <md-tooltip md-direction="bottom">
+      Search
+    </md-tooltip>
     <md-icon md-svg-icon="../../assets/img/black_search24.svg"></md-icon>
   </md-button>
 </div>
@@ -28,15 +30,9 @@
 </md-toolbar>
 <md-toolbar class="md-table-toolbar md-primary md-hue-1 " flex="100" ng-show="selected5.length">
 <div class="md-toolbar-tools" layout-align="space-between center">
-  <div ng-model="selected" flex="80">{{selected5[0].profiles_firstname}} {{selected5[0].profiles_lastname}} selected</div>
-  <md-button class="md-icon-button" aria-label="edit" ng-click="openProfile2(selected5)">
-    <md-tooltip md-direction="bottom">
-      View parent
-    </md-tooltip>
-    <md-icon md-svg-icon="../../assets/img/white_launch24.svg"></md-icon>
-  </md-button>
-  <md-button class="md-primary md-raised" aria-label="unassign" ng-click="removeUser($event, selected5)" ng-show="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
-    REMOVE USER
+  <div ng-model="selected" flex="80">{{selected5[0].profiles_firstname}} {{selected5[0].profiles_lastname}}</div>
+  <md-button class="md-primary md-raised" aria-label="unassign" ng-click="openProfile2(selected5)" ng-show="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
+    VIEW USER
   </md-button>
 </div>
 </md-toolbar>
@@ -61,4 +57,11 @@
     </tbody>
   </table>
 </md-table-container>
-<md-table-pagination  md-limit="perPage" md-page="page" md-total="{{totalProfiles}}" md-on-paginate="profiles" md-page-select></md-table-pagination>
+<md-toolbar class="md-table-toolbar md-default " flex="100" ng-show="selected5.length">
+<div class="md-toolbar-tools" layout-align="space-between center">  
+  <md-button class="md-default md-raised" aria-label="unassign" ng-click="removeUser($event, selected5)" ng-show="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
+    REMOVE USER
+  </md-button>
+</div>
+</md-toolbar>
+<md-table-pagination ng-hide="filter.show || selected5.length" md-limit="perPage" md-page="page" md-total="{{totalProfiles}}" md-on-paginate="profiles" md-page-select></md-table-pagination>

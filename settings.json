@@ -1,7 +1,8 @@
 {
-  "galaxy.meteor.com": { 
-     "env": { 
-       "MONGO_URL": "mongodb://lokiribeiro:Accenture01@ds021166.mlab.com:21166/squalatlp" 
-     } 
+  "galaxy.meteor.com": {
+     "env": {
+       "MONGO_URL": "mongodb://lokijenner:squalaforapec@ds161169.mlab.com:61169/meteor"
+     }
    }
 }
+

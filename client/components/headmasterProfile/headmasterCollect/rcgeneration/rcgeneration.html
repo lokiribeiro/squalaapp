@@ -1,0 +1,91 @@
+<md-toolbar class="md-table-toolbar md-default"  flex="100" ng-show="filter.show">
+<div class="md-toolbar-tools">
+  <form name="filter.form" flex>
+    <md-input-container md-no-float class="md-block">
+    <md-icon md-svg-icon="../../assets/img/black_search24.svg"></md-icon>
+    <input type="text" ng-model="searchText" placeholder="search">
+    </md-input-container>
+  </form>
+  <md-button class="md-icon-button" aria-label="close" ng-click="closeFilter()">
+  <md-tooltip md-direction="bottom">
+    Close
+  </md-tooltip>
+  <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
+  </md-button>
+</div>
+</md-toolbar>
+
+<md-toolbar class="md-table-toolbar md-primary md-hue-1" flex="100" ng-show="selected.length">
+<div class="md-toolbar-tools" layout-align="space-between center">
+  <div ng-model="selected" flex="80">selected</div>
+  <!--<md-button class="md-icon-button" aria-label="edit" ng-click="openProfile2(selected)">
+    <md-tooltip md-direction="bottom">
+      View Account
+    </md-tooltip>
+    <md-icon md-svg-icon="../../assets/img/white_launch24.svg"></md-icon>
+  </md-button>-->
+  <md-button md-no-ink class="md-primary md-raised" aria-label="unassign" ng-click="removeUser($event, selected)" ng-show="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
+    MARK
+  </md-button>
+</div>
+</md-toolbar>
+<md-divider></md-divider>
+<div ng-repeat="profile in profiles">
+<md-card ng-repeat="user in users">
+  <md-card-header>
+    <md-card-avatar>
+      <img class="md-user-avatar" src="{{profile.profiles_profilephoto}}"/>
+    </md-card-avatar>
+    <md-card-header-text>
+      <span class="md-title">Report Card for {{user.name}}</span>
+      <span class="md-subhead">Report Card Details</span>
+    </md-card-header-text>
+    <md-menu md-position-mode="target-right target" md-offset="0 48">
+      <md-button class="md-icon-button" aria-label="Apps" ng-click="$mdOpenMenu($event)">
+        <md-tooltip md-direction="bottom">
+          more
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/black_more24.svg"></md-icon>
+      </md-button>
+      <md-menu-content width="2" >
+        <md-menu-item >
+          <md-button ng-click="openProfile(course)">
+              <div layout="row" flex>
+                <p flex>Details</p>
+                <!-- <md-icon md-svg-icon="../../assets/img/black_launch24.svg"></md-icon> -->
+              </div>
+          </md-button>
+        </md-menu-item>
+        <md-menu-item >
+          <md-button ng-click="openDelete($event, course)">
+              <div layout="row" flex>
+                <p flex>Delete</p>
+                <!-- <md-icon md-svg-icon="../../assets/img/black_delete24.svg"></md-icon>-->
+              </div>
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+  </md-card-header>
+  <md-card-title>
+    <md-card-title-text ng-repeat="statement in user.statements track by $index" ng-if="statement.appliedToMonth == currentMonth">
+      <span class="md-headline" >Status: Cleared for RC generation </span>
+      <span class="md-subhead" layout="column" layout-align="start start">
+        <a target="_self" href="{{user.downloadURL}}" download="{{user._id}}">
+        <md-button class="md-icon-button" aria-label="delete" ng-hide="selected.feesName == ''" ng-click="assignUser($event, selected)" >
+          <md-tooltip md-direction="bottom">
+            Download Report Card
+          </md-tooltip>
+          <md-icon md-svg-icon="../../assets/img/black_download24.svg"></md-icon>
+        </md-button>
+      </a>
+        <span>Download Report Card</span>
+      </span>
+      <!-- <span class="md-headline" ng-hide="notclearedForRC == 'yes'" >Status: unpaid</span>
+      <span class="md-subhead" ng-hide="notclearedForRC == 'yes'" layout="column" layout-align="start start">
+        <span ng-hide="notclearedForRC == 'yes'">Settle balance to continue with report card generation</span>
+      </span>-->
+    </md-card-title-text>
+  </md-card-title>
+</md-card>
+</div>

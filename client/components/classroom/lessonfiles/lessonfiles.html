@@ -1,0 +1,29 @@
+<div  layout="column"  layout-align="center center" layout-fill>
+  <h2 class="md-title" style="color:#555 !important;">View uploaded resources</h2>
+  <div  ng-repeat="lessonguide in lessonguides track by $index">
+    <md-card ng-repeat="resource in lessonguide.resources track by $index">
+      <md-toolbar class="md-table-toolbar md-default"  >
+        <div class="md-toolbar-tools" layout-wrap>
+          <h1>{{resource.filename}}</h1>
+          <span flex></span>
+          <a target="_self" href="{{resource.downloadUrl}}" download="{{lessonguide._id}}">
+          <md-button class="md-icon-button" aria-label="delete" ng-hide="selected.feesName == ''" ng-click="assignUser($event, selected)" >
+            <md-tooltip md-direction="bottom">
+              Download material
+            </md-tooltip>
+            <md-icon md-svg-icon="../../assets/img/black_download24.svg"></md-icon>
+          </md-button>
+        </a>
+          <md-button class="md-icon-button" aria-label="delete"  ng-click="openDelete($event, lessonguide, resource)" >
+            <md-tooltip md-direction="bottom">
+              Delete
+            </md-tooltip>
+            <md-icon md-svg-icon="../../assets/img/black_delete24.svg"></md-icon>
+          </md-button>
+        </div>
+      </md-toolbar>
+    </md-card>
+  </div>
+
+
+</div>

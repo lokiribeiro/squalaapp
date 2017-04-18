@@ -1,0 +1,49 @@
+<md-dialog style="opacity: 1 !important;" aria-label="Edit Account" >
+  <form name="res" layout="column" layout-align="start center" layout-padding layout-wrap layout-fill flex >
+    <md-dialog-content >
+    <div layout="row" flex >
+      <h2 style="font-weight:normal" ng-hide="updatedNow">Update course: {{results.coursename}}</h2>
+      <h2 style="font-weight:normal" ng-if="done">Updating course</h2>
+      <h2 style="font-weight:normal" ng-if="updatedNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Updated course {{results.coursename}}</h2>
+      <span flex></span>
+        <md-button class="md-icon-button" aria-label="Apps" ng-click="cancelNow()" style="position:absolute; top:0; right:0; !important" ng-hide="done">
+        <md-tooltip md-direction="bottom">
+          Close
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
+        </md-button>
+    </div>
+
+    <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+
+    <!-- hide here -->
+
+    <span layout="row" flex ng-hide="updatedNow" layout-fill>
+    <md-input-container  layout-fill md-no-float class="md-block" style="margin: 10px 0 !important;">
+    <md-icon md-svg-icon="../../assets/img/black_person24.svg"></md-icon>
+        <input ng-model="results.coursename" aria-label="firstname" type="text" ng-required>
+    </md-input-container>
+
+    <md-input-container layout-fill md-no-float class="md-block" style="margin: 10px 0 !important;">
+        <input ng-model="results.description" aria-label="lastname" type="text" ng-required>
+    </md-input-container>
+
+    </span>
+
+    <!-- end here -->
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-align="space-between start" layout-fill>
+      <!-- hide these -->
+    <md-button ng-click="cancelNow()">
+      Cancel
+    </md-button>
+      <md-button type="submit" ng-click="updateUser(results)" ng-hide="updatedNow" class="md-primary">
+        Update
+      </md-button>
+      <!-- end hide -->
+        <md-button ng-if="updatedNows" ng-click="cancelNow()" class="md-primary">
+          DONE
+        </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

@@ -20,10 +20,22 @@
             <p>Name: {{profile.profiles_firstname}} {{profile.profiles_lastname}}</p>
             <p>Email: {{profile.profiles_email}}</p>
             <p>Username: {{profile.profiles_username}}</p>
+            <p ng-if="$root.userLoggedInRole == 'superadmin'">Password: {{profile.profiles_textPassword}}</p>
             <p>Phone: {{profile.profiles_phone}}</p>
-            <p>Birthday: {{ profile.profiles_birthday | date :'medium'}} </p>
+            <p>Birthday: {{ profile.profiles_birthday | date :'mediumDate'}} </p>
             <p>Gender: {{profile.profiles_gender}}</p>
+            <p>Address: {{profile.profiles_address}}, {{profile.profiles_city}} {{profile.profiles_province}}</p>
           </span>
+      </span>
+      <span layout="row" layout-align="start start" layout-fill layout-wrap ng-if="profile.profiles_type == 'Student'">
+        <span flex="20">
+          <h4 style="color: #555;">Other Info</h4>
+        </span>
+        <span flex="80">
+          <p>Guardian: <b>{{profile.profiles_guardian}}</b></p>
+          <p>Grade Level: <b>{{profile.profiles_gradelevel}}</b></p>
+          <p>Section: <b>{{profile.profiles_section}}</b></p>
+        </span>
       </span>
       <span layout="row" layout-align="start start" layout-fill layout-wrap ng-if="$root.userLoggedInRole == 'superadmin'">
         <span flex="20">

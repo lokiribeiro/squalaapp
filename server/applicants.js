@@ -59,8 +59,8 @@ Meteor.publish('applicants', function (applicantID) {
 
 Meteor.methods({
 
-          createApplicantFromAdmin(firstname, middlename, lastname, email, status, applicationNum, branchId, encodedBy, photo, encoderName, createdAt, progress){
-                var applicant = Applicants.insert({firstname:firstname, middlename:middlename, lastname:lastname, email:email, status:status, branchId: branchId, applicationNum: applicationNum, encodedBy: encodedBy, photo: photo, encoderName: encoderName, createdAt: createdAt, progress: progress });
+          createApplicantFromAdmin(firstname, middlename, lastname, email, status, applicationNum, branchId, encodedBy, photo, encoderName, createdAt, gradelevel, branchname, gradelevelID, guardian, phone, progress){
+                var applicant = Applicants.insert({firstname:firstname, middlename:middlename, lastname:lastname, email:email, status:status, branchId: branchId, branchname: branchname, applicationNum: applicationNum, encodedBy: encodedBy, photo: photo, encoderName: encoderName, createdAt: createdAt, gradelevelid: gradelevelID, gradelevel: gradelevel, guardian: guardian, phone: phone, progress: progress });
                 return applicant;
             },
           upsertApplicantFromBasic(detail){
@@ -84,9 +84,9 @@ Meteor.methods({
             upsertApplicantFromParent(detail){
                   var selector = {_id: detail._id};
                   var modifier = {$set: {
-                    parentname: detail.parentname,
+                    guardian: detail.guardian,
                     relation: detail.relation,
-                    parentnum: detail.parentnum,
+                    phone: detail.phone,
                     parentemail: detail.parentemail,
                     progress: detail.progress
                   }};
@@ -100,6 +100,12 @@ Meteor.methods({
                     }};
                     var applicant = Applicants.upsert(selector, modifier);
                     return applicant;
-                }
+                },
+                upsertFeesFromAdmissions(applicantID, feesID){
+                  var selector = {_id: applicantID};
+                  var modifier = {$set: {feesid: feesID}};
+                  var userUpsert = Applicants.update(selector, modifier);
+                  return userUpsert;
+                },
 
 })

@@ -57,6 +57,7 @@ class HeadmastercreateuserCtrl{
                     //do something with the id : for ex create profile
                     $scope.done = false;
                     $scope.createdNow = !$scope.createdNow;
+                    console.info('err', err);
                     $scope.existing = true;
                     window.setTimeout(function(){
                     $scope.$apply();

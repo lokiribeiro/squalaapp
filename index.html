@@ -9,7 +9,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1">
-    <title>SQUALA for APEC Schools</title>
+  <meta name="google-signin-client_id" content="57325107522-apvu4tpechl0s5t0a973pjpq97m0l5ug.apps.googleusercontent.com">
+    <title>SQUALA School Management Platform</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
     <link rel="stylesheet" type="text/css" src="client/stylesheets/less/app.css">
@@ -22,15 +23,16 @@
     </style>
 </head>
 <body ng-app="squala" class="ng-cloak">
-    <div layout="row" layout-wrap class="md-primary">
+    <div layout="row" layout-wrap class="md-primary" style="padding-bottom: 80px !important;">
       <div class="app-header-fixed" flex="100">
-        <navbar class="app-header visible" ng-show="$root.userLoggedIn" ng-cloak></navbar>
+        <navbar class="app-header visible" ng-if="$root.userLoggedIn" ng-cloak></navbar>
         <md-progress-linear ng-if="loading" md-mode="indeterminate" class="md-primary md-hue-1"></md-progress-linear>
       </div>
       <div flex="100" class="fluids">
         <div ui-view class="anim-in-out anim-swap" data-anim-speed="300" ng-cloak></div>
       </div>
     </div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>
 <template name="loading">
 </template>

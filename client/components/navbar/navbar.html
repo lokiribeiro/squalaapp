@@ -34,11 +34,11 @@
           </md-menu-content>
         </md-menu>
         <md-menu md-position-mode="target-right target"  md-offset="0 30">
-          <md-card-avatar ng-click="$mdOpenMenu($event)">
+          <md-card-avatar ng-click="$mdOpenMenu($event)" >
             <md-tooltip md-direction="bottom">
               My Profile
             </md-tooltip>
-          <img class="avatar-2 img-responsive" src="../../assets/img/profiles/user.png">
+          <img ng-repeat="profile in profiles" class="avatar-2 img-responsive" ng-src="{{profile.profiles_profilephoto}}" >
           </md-card-avatar>
           <md-menu-content width="3" >
             <md-menu-item >

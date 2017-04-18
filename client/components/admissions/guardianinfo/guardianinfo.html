@@ -1,0 +1,60 @@
+<div  ng-repeat="applicant in applicants">
+<form name="updateGuardian" ng-submit="updateParent(applicant)">
+<div layout="row" layout-align="start start" layout-wrap >
+  <div layout="column" layout-align="start start"  flex-gt-md="50" flex="100" flex-gt-xs="100" layout-padding >
+
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="applicant.guardian" ng-hide="show">GUARDIAN NAME</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-if="applicant.guardian" ng-hide="show">{{applicant.guardian}}</h5>
+    <span layout="row" flex ng-if="show" layout-fill>
+    <md-input-container layout-fill  md-float class="md-block" style="margin: 10px 0 !important;">
+        <input ng-model="applicant.guardian" aria-label="phone" type="text" placeholder="GUARDIAN NAME" ng-required>
+    </md-input-container>
+  </span>
+
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="applicant.phone" ng-hide="show">CONTACT NUMBER</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-if="applicant.phone" ng-hide="show">{{applicant.phone}}</h5>
+    <span layout="row" flex ng-if="show" layout-fill>
+    <md-input-container layout-fill  md-float class="md-block" style="margin: 10px 0 !important;">
+        <input ng-model="applicant.phone" aria-label="phone" type="text" placeholder="CONTACT NUMBER" ng-required>
+    </md-input-container>
+  </span>
+  </div>
+  <div layout="column" layout-align="start start"  flex-gt-md="50" flex="100" flex-gt-xs="100" layout-padding>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="applicant.parentemail" ng-hide="show">EMAIL</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-if="applicant.parentemail" ng-hide="show">{{applicant.parentemail}}</h5>
+    <span layout="column" ng-if="show" layout-fill>
+    <md-input-container md-float class="md-block" style="margin: 10px 0 !important;">
+     <!-- Use floating placeholder instead of label -->
+     <input ng-model="applicant.parentemail" type="email" placeholder="EMAIL" >
+   </md-input-container>
+    </span>
+
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="applicant.relation" ng-hide="show">RELATIONSHIP WITH ENROLLEE</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-if="applicant.relation" ng-hide="show">{{applicant.relation}}</h5>
+    <span layout="column" ng-if="show" layout-fill>
+    <md-input-container md-float class="md-block" style="margin: 10px 0 !important;">
+     <!-- Use floating placeholder instead of label -->
+     <input ng-model="applicant.relation" type="text" placeholder="RELATIONSHIP WITH ENROLLEE" >
+   </md-input-container>
+    </span>
+  </div>
+</div>
+
+
+
+
+<div layout="row">
+  <md-button class="md-primary" md-no-ink aria-label="create" ng-click="editNow()" ng-hide="($root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin') && show">
+    Edit Guardian Info
+  </md-button>
+  <span flex></span>
+  <md-button class="md-default" md-no-ink aria-label="create" ng-click="editNow()" ng-if="show">
+    Cancel
+  </md-button>
+  <md-button class="md-primary" md-no-ink aria-label="create" type="submit"  ng-if="show">
+    Save
+  </md-button>
+</div>
+</form>
+</div>
+<!-- <md-divider></md-divider>-->

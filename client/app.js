@@ -12,12 +12,16 @@ import mdExpansionPanel from 'angular-material-expansion-panel';
 import mdDataTable from 'angular-material-data-table';
 import Navigations from '/imports/models/navigations.js';
 import '../imports/ui/anim-in-out.js';
-//import ngInfiniteScroll from 'ng-infinite-scroll';
+import ngInfiniteScroll from 'ng-infinite-scroll';
 import ngFileUpload from 'ng-file-upload';
 //import { FilesCollection } from 'meteor/ostrio:files';
+import '../imports/ui/papaparse.js';
+//import '../imports/ui/taggedInfiniteScroll.js';
+//'tagged.directives.infiniteScroll',
+
 
 export var app = angular.module('squala',
-    [angularMeteor, ngMaterial, uiRouter, 'accounts.ui', utilsPagination, ngAnimate, 'material.components.expansionPanels', mdDataTable, 'anim-in-out', ngFileUpload]);
+    [angularMeteor, ngMaterial, uiRouter, 'accounts.ui', utilsPagination, ngAnimate, 'material.components.expansionPanels', mdDataTable, 'anim-in-out', ngFileUpload, 'infinite-scroll']).value('THROTTLE_MILLISECONDS', 250);
 
 app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdThemingProvider, $mdIconProvider, $provide) {
     'ngInject';
@@ -155,6 +159,23 @@ app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdT
                     }
                 }
           })
+          .state('HeadmasterCollect', {
+                  url:'/:stateHolder/HCLt/:userID/:profileID',
+                  template: '<headmastercollect></headmastercollect>',
+                  onEnter: function($rootScope, $stateParams, $state) {
+                      $rootScope.stateHolder = $stateParams.stateHolder;
+                      $rootScope.profileID = $stateParams.profileID;
+                  },
+                  resolve: {
+                      currentUser($q, $state) {
+                          if (!Meteor.userId()) {
+                              return $q.reject('AUTH_REQUIRED');
+                          } else {
+                            return $q.resolve();
+                          };
+                      }
+                  }
+            })
           .state('Headmasterschool', {
                   url:'/:stateHolder/HSCb/:userID/:branchID',
                   template: '<headmasterschool></headmasterschool>',
@@ -269,6 +290,56 @@ app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdT
                       $rootScope.stateHolder = $stateParams.stateHolder;
                   }
               })
+              .state('AdmissionsEnroll', {
+                    url:'/:stateHolder/ENRl/:userID',
+                    template: '<enroll></enroll>',
+                    resolve: {
+                        currentUser($q, $state) {
+                            if (!Meteor.userId()) {
+                                return $q.reject('AUTH_REQUIRED');
+                            } else {
+                                return $q.resolve();
+                            }
+                        }
+                    },
+                    onEnter: function($rootScope, $stateParams, $state) {
+                        $rootScope.stateHolder = $stateParams.stateHolder;
+                    }
+                })
+                .state('AdmissionsApplicantform', {
+                      url:'/:stateHolder/APLf/:userID/:applicantID',
+                      template: '<applicationform></applicationform>',
+                      resolve: {
+                          currentUser($q, $state) {
+                              if (!Meteor.userId()) {
+                                  return $q.reject('AUTH_REQUIRED');
+                              } else {
+                                  return $q.resolve();
+                              }
+                          }
+                      },
+                      onEnter: function($rootScope, $stateParams, $state) {
+                          $rootScope.stateHolder = $stateParams.stateHolder;
+                          $rootScope.applicantID = $stateParams.applicantID;
+                      }
+                  })
+                  .state('BranchApplicants', {
+                        url:'/:stateHolder/BRAt/:userID/:branchID',
+                        template: '<branchapplicants></branchapplicants>',
+                        resolve: {
+                            currentUser($q, $state) {
+                                if (!Meteor.userId()) {
+                                    return $q.reject('AUTH_REQUIRED');
+                                } else {
+                                    return $q.resolve();
+                                }
+                            }
+                        },
+                        onEnter: function($rootScope, $stateParams, $state) {
+                            $rootScope.stateHolder = $stateParams.stateHolder;
+                            $rootScope.branchID = $stateParams.branchID;
+                        }
+                    })
             .state('Assessment', {
                   url:'/:stateHolder/ASMt/:userID',
                   template: '<assessment></assessment>',
@@ -300,6 +371,93 @@ app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdT
                     onEnter: function($rootScope, $stateParams, $state) {
                         $rootScope.stateHolder = $stateParams.stateHolder;
                     }
+                })
+                .state('ClassroomVirtual', {
+                      url:'/:stateHolder/CLVr/:userID/:classID/:courselinkID',
+                      template: '<virtualclassroom></virtualclassroom>',
+                      resolve: {
+                          currentUser($q, $state) {
+                              if (!Meteor.userId()) {
+                                  return $q.reject('AUTH_REQUIRED');
+                              } else {
+                                  return $q.resolve();
+                              }
+                          }
+                      },
+                      onEnter: function($rootScope, $stateParams, $state) {
+                          $rootScope.stateHolder = $stateParams.stateHolder;
+                          $rootScope.classID = $stateParams.classID;
+                          $rootScope.courselinkID = $stateParams.courselinkID;
+                      }
+                  })
+                  .state('ClassroomResources', {
+                        url:'/:stateHolder/CLRc/:userID/:classID/:courselinkID',
+                        template: '<classroomresources></classroomresources>',
+                        resolve: {
+                            currentUser($q, $state) {
+                                if (!Meteor.userId()) {
+                                    return $q.reject('AUTH_REQUIRED');
+                                } else {
+                                    return $q.resolve();
+                                }
+                            }
+                        },
+                        onEnter: function($rootScope, $stateParams, $state) {
+                            $rootScope.stateHolder = $stateParams.stateHolder;
+                            $rootScope.classID = $stateParams.classID;
+                            $rootScope.courselinkID = $stateParams.courselinkID;
+                        }
+                    })
+                  .state('ClassroomCourses', {
+                        url:'/:stateHolder/CRMr/:userID',
+                        template: '<classroomcourses></classroomcourses>',
+                        resolve: {
+                            currentUser($q, $state) {
+                                if (!Meteor.userId()) {
+                                    return $q.reject('AUTH_REQUIRED');
+                                } else {
+                                    return $q.resolve();
+                                }
+                            }
+                        },
+                        onEnter: function($rootScope, $stateParams, $state) {
+                            $rootScope.stateHolder = $stateParams.stateHolder;
+                        }
+                    })
+                  .state('ClassroomCoursePanel', {
+                          url:'/:stateHolder/CLCr/:userID/:courseID',
+                          template: '<classroomcoursepanel></classroomcoursepanel>',
+                          onEnter: function($rootScope, $stateParams, $state) {
+                              $rootScope.stateHolder = $stateParams.stateHolder;
+                              $rootScope.courseID = $stateParams.courseID;
+                          },
+                          resolve: {
+                              currentUser($q, $state) {
+                                  if (!Meteor.userId()) {
+                                      return $q.reject('AUTH_REQUIRED');
+                                  } else {
+                                    return $q.resolve();
+                                  };
+                              }
+                          }
+                    })
+                .state('ClassroomMaterials', {
+                            url:'/:stateHolder/CMAt/:userID/:courseID/:materialsID',
+                            template: '<lessonmaterials></lessonmaterials>',
+                            onEnter: function($rootScope, $stateParams, $state) {
+                                $rootScope.stateHolder = $stateParams.stateHolder;
+                                $rootScope.courseID = $stateParams.courseID;
+                                $rootScope.materialsID = $stateParams.materialsID;
+                            },
+                            resolve: {
+                                currentUser($q, $state) {
+                                    if (!Meteor.userId()) {
+                                        return $q.reject('AUTH_REQUIRED');
+                                    } else {
+                                      return $q.resolve();
+                                    };
+                                }
+                            }
                 })
                 .state('Collect', {
                       url:'/:stateHolder/FEEs/:userID',

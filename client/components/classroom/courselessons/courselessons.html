@@ -1,0 +1,43 @@
+<div  layout="column"  layout-align="center center" layout-fill>
+  <h2 class="md-title" style="color:#555 !important;">Teaching Guide and Materials</h2>
+<div layout-fill class="cardapp" flex ng-repeat="lessonguide in lessonguides track by $index"  >
+    <div class="md-toolbar-tools" layout-wrap>
+      <h6 style="font-weight: normal !important;">{{lessonguide.lessonTitle}}</h6>
+      <span flex></span>
+      <md-menu md-position-mode="target-right target" md-offset="0 48">
+        <md-button class="md-icon-button" aria-label="Apps" ng-click="$mdOpenMenu($event)">
+          <md-tooltip md-direction="bottom">
+            more
+          </md-tooltip>
+          <md-icon md-svg-icon="../../assets/img/black_more24.svg"></md-icon>
+        </md-button>
+        <md-menu-content width="2" >
+          <md-menu-item >
+            <md-button ng-click="openDetails($event, lessonguide)">
+                <div layout="row" flex>
+                  <p flex>Edit</p>
+                  <!-- <md-icon md-svg-icon="../../assets/img/black_launch24.svg"></md-icon> -->
+                </div>
+            </md-button>
+          </md-menu-item>
+          <md-menu-item >
+            <md-button ng-click="openMaterials(lessonguide)">
+                <div layout="row" flex>
+                  <p flex>View Materials</p>
+                  <!-- <md-icon md-svg-icon="../../assets/img/black_launch24.svg"></md-icon> -->
+                </div>
+            </md-button>
+          </md-menu-item>
+          <md-menu-item >
+            <md-button ng-click="openDelete($event, lessonguide)">
+                <div layout="row" flex>
+                  <p flex>Delete</p>
+                  <!-- <md-icon md-svg-icon="../../assets/img/black_delete24.svg"></md-icon>-->
+                </div>
+            </md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+    </div>
+</div>
+</div>

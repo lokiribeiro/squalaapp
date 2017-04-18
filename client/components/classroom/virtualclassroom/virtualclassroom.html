@@ -1,0 +1,73 @@
+<md-toolbar class="md-primary md-hue-2" layout="row" layout-align="center center">
+  <div flex="100" flex-gt-sm="70" layout="column" layout-fill>
+    <div class="md-toolbar-tools">
+      <a href="/Classroom/CLAs/{{$root.userID}}" >
+      <md-tooltip md-direction="bottom">
+        Back
+      </md-tooltip>
+      <md-icon md-svg-icon="../../assets/img/white_backarrow24.svg"></md-icon>
+      </a>
+      <h2 class="md-flex" style="padding-left: 24px !important; margin-right: 24px !important;">Class Stream</h2>
+      <span layout-padding flex>
+
+        <md-card layout="row" flex flex-gt-xs="70" style="background-color: #0288D1 !important; border-radius: 4px !important; box-shadow: none !important; margin: 0px !important;" >
+        <form name="filter.form" layout-fill  style="background-color: transparent !important;">
+
+          <div layout="row" >
+              <md-icon md-svg-icon="../../assets/img/white_search24.svg"></md-icon>
+              <input flex ng-model="searchText" type="search" placeholder="Search" style="border-radius: 4px !important; border-style: hidden !important; margin-left: 12px !important; background-color: transparent !important; color: #fff !important;" >
+              <md-button class="md-icon-button" aria-label="close" ng-click="closeFilter()" ng-hide="searchText == null" style="padding: 0px !important; margin: 0 !important; min-height: 24px !important; width: 24px !important; height: 24px !important;">
+              <md-tooltip md-direction="bottom">
+                Close
+              </md-tooltip>
+              <md-icon md-svg-icon="../../assets/img/white_close24.svg"></md-icon>
+              </md-button>
+          </div>
+        </form>
+        </md-card>
+
+
+
+      </span>
+      <md-button class="md-icon-button" aria-label="Apps" ng-click="openRole()" ng-show="$root.userLoggedInRole == 'superadmin'">
+        <md-tooltip md-direction="bottom">
+          Students
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/white_people24.svg"></md-icon>
+      </md-button>
+      <md-button class="md-icon-button" aria-label="Apps" ng-click="openResp()" ng-show="$root.userLoggedInRole == 'superadmin'">
+        <md-tooltip md-direction="bottom">
+          Resources
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/white_subjects24.svg"></md-icon>
+      </md-button>
+    </div>
+  </div>
+</md-toolbar>
+
+<div class="anim-slide-below-fade" data-anim-speed="500">
+<classstream ></classstream>
+</div>
+
+<md-fab-speed-dial ng-hide="demo.hidden" md-direction="up" md-scale md-open="demo.isOpen"
+                       class="md-scale md-fab-bottom-right" ng-class="{ 'md-hover-full': demo.hover }"
+                       ng-mouseenter="demo.isOpen=true" ng-mouseleave="demo.isOpen=false" ng-cloak style="position: fixed !important;">
+      <md-fab-trigger>
+        <md-button aria-label="menu" class="md-fab md-accent">
+          <md-tooltip md-direction="left" md-visible="tooltipVisible">Add</md-tooltip>
+          <md-icon md-svg-src="../../assets/img/white_add24.svg" aria-label="add"></md-icon>
+        </md-button>
+      </md-fab-trigger>
+      <md-fab-actions>
+        <div ng-repeat="item in items">
+          <md-button aria-label="{{item.name}}" class="md-fab md-raised md-mini md-accent"
+                     ng-click="openDialog($event, item)">
+            <md-tooltip md-direction="{{item.direction}}" md-visible="tooltipVisible"
+                        md-autohide="false">
+              {{item.name}}
+            </md-tooltip>
+            <md-icon md-svg-src="{{item.icon}}" aria-label="{{item.name}}"></md-icon>
+          </md-button>
+        </div>
+      </md-fab-actions>
+</md-fab-speed-dial>

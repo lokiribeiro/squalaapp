@@ -18,12 +18,15 @@ class HeadmasterCtrl{
         right: false
       };
 
+      $scope.sort = 1;
+      $scope.searchText = null;
+
       $scope.subscribe('profilesUser', function () {
           return [$scope.getReactively('thisUser')];
       });
 
-      $scope.subscribe('branchesProfile', function () {
-          return [$scope.getReactively('subBranchID')];
+      $scope.subscribe('branches', function () {
+          return [$scope.getReactively('searchText')];
       });
 
       $scope.subscribe('headmasters', function () {
@@ -36,7 +39,25 @@ class HeadmasterCtrl{
         headmasters() {
               var headmasters = Headmasters.find();
               return headmasters;
-            }
+            },
+        branches() {
+                  $scope.promise = $timeout(function(){
+
+                  }, 2000);
+                  //var limit = parseInt($scope.getReactively('perPage'));
+                  //var skip  = parseInt(( $scope.getReactively('page')-1 )* $scope.perPage);
+                  var sort  = $scope.getReactively('sort');
+                  var selector = {};
+                  var branches = Branches.find(
+                        selector, { sort: {branches_city: sort} }
+                    );
+                  return branches;
+                },
+        totalBranches(){
+                var branch = 'branch';
+                var selector = {branches_type: branch};
+                return Branches.find(selector).count();
+                }
         /*loggedInRole() {
               var userID = $scope.getReactively('thisUser');
               var selector = {_id: userID}
@@ -46,6 +67,11 @@ class HeadmasterCtrl{
               return loggedInRole;
         }*/
       });
+
+      $scope.closeFilter = function(){
+        $scope.searchText = null;
+      }
+
 
       angular.element(document).ready(function () {
 
@@ -104,6 +130,8 @@ class HeadmasterCtrl{
       }
 
       $scope.headmaster = [];
+
+      
 
       $scope.createSchool = function(schools) {
 

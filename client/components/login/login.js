@@ -12,6 +12,8 @@ class LoginCtrl {
 
     this.$state = $state;
 
+    $scope.loginerror = '';
+
     $reactive(this).attach($scope);
 
     this.credentials = {
@@ -27,14 +29,30 @@ class LoginCtrl {
     Meteor.loginWithPassword($log.username, $log.password,
       this.$bindToContext((err) => {
         if (err) {
-          this.error = err;
-              console.log('err: ' + err);
+          $scope.loginerror = err.reason;
+              console.info('err: ' ,   $scope.loginerror );
           } else {
             $state.go('Dashboard', { userID : Meteor.userId(), stateHolder : 'Dashboard' });
           }
         })
       );
     }
+
+    $scope.onSignIn = function (googleUser) {
+      var id_token = googleUser.getAuthResponse().id_token;
+      var profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      console.log('Name: ' + profile.getName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail());
+    };
+
+    $scope.signOut = function() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  };
 
   }
 }

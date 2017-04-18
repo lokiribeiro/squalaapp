@@ -5,12 +5,13 @@ import Roles from '/imports/models/roles.js';
 import Branches from '/imports/models/branches.js';
 import Userapps from '/imports/models/userapps.js';
 import Apps from '/imports/models/apps.js';
+import ngFileUpload from 'ng-file-upload';
 
 
 
 class HeadmasterprofileCtrl{
 
-  constructor($rootScope, $scope, $timeout, $mdSidenav, $log, $mdDialog, $state){
+  constructor($rootScope, $scope, $mdToast, $timeout, $mdSidenav, $log, $mdDialog, $state, Upload){
       'ngInject';
 
       $scope.profileID = $rootScope.profileID;
@@ -81,6 +82,166 @@ class HeadmasterprofileCtrl{
           return branchesList;
         }
       });//helpers
+
+      Slingshot.fileRestrictions("myFileUploads", {
+      allowedFileTypes: null,
+      maxSize: 10 * 1024 * 1024 // 10 MB (use null for unlimited).
+      });
+
+      $scope.uploader = new Slingshot.Upload('myFileUploads');
+      $scope.uploadingNow = false;
+      $scope.uploaded = false;
+      $scope.doneSearching = false;
+
+      var last = {
+        bottom: true,
+        top: false,
+        left: true,
+        right: false
+      };
+
+      $scope.getToastPosition = function() {
+        sanitizePosition();
+
+        return Object.keys($scope.toastPosition)
+        .filter(function(pos) { return $scope.toastPosition[pos]; })
+        .join(' ');
+      };
+
+      $scope.toastPosition = angular.extend({},last);
+
+      function sanitizePosition() {
+        var current = $scope.toastPosition;
+
+        if ( current.bottom && last.top ) current.top = false;
+        if ( current.top && last.bottom ) current.bottom = false;
+        if ( current.right && last.left ) current.left = false;
+        if ( current.left && last.right ) current.right = false;
+
+        last = angular.extend({},current);
+      }
+
+      $scope.uploadFiles = function(file, errFiles) {
+        console.info('pasok', file);
+        $scope.progress = 0;
+        $scope.uploadingNow = true;
+        $scope.f = file;
+        $scope.errFile = errFiles && errFiles[0];
+        $scope.fileHere = file.name;
+        var profileID = $scope.profileID;
+        $scope.doneSearching = true;
+        if (file) {
+          console.log(file);
+
+
+          $scope.uploader.send(file, function (error, downloadUrl) {
+            if (error) {
+              // Log service detailed response.
+              console.error('Error uploading', $scope.uploader);
+              alert (error);
+            }
+            else {
+              var filename = $scope.fileHere;
+              var profileID = $scope.profileID;
+
+              Meteor.call('upsertProfilePhoto', profileID, downloadUrl, function(err, result) {
+                    console.log(downloadUrl);
+              console.log('success: ' + downloadUrl)
+                    if (err) {
+
+                                           var toasted = 'Error uploading file.';
+                                           var pinTo = $scope.getToastPosition();
+                                           $mdToast.show(
+                                             $mdToast.simple()
+                                             .textContent(toasted)
+                                             .position(pinTo )
+                                             .hideDelay(3000)
+                                             .theme('Headmaster')
+                                             .action('HIDE')
+                                             .highlightAction(true)
+                                             .highlightClass('md-accent')
+                                           );
+                                           $scope.doneSearching = false;
+
+
+                   } else {
+                     var toasted = 'New profile photo uploaded.';
+                     var pinTo = $scope.getToastPosition();
+                     $mdToast.show(
+                       $mdToast.simple()
+                       .textContent(toasted)
+                       .position(pinTo )
+                       .hideDelay(3000)
+                       .theme('Headmaster')
+                       .action('HIDE')
+                       .highlightAction(true)
+                       .highlightClass('md-accent')
+                     );
+                     $scope.doneSearching = false;
+
+                   }
+                 });
+            }
+            });
+            file.upload = Upload.upload({
+                url: '/uploads',
+                data: {file: file}
+            });
+            var filename = file.name;
+            var path = '/uploads';
+            var type = file.type;
+            switch (type) {
+              case 'text':
+              //tODO Is this needed? If we're uploading content from file, yes, but if it's from an input/textarea I think not...
+              var method = 'readAsText';
+              var encoding = 'utf8';
+              break;
+              case 'binary':
+              var method = 'readAsBinaryString';
+              var encoding = 'binary';
+              break;
+              default:
+              var method = 'readAsBinaryString';
+              var encoding = 'binary';
+              break;
+            }
+            /*Meteor.call('uploadFileFromClient', filename, path, file, encoding, function(err) {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log('success maybe?');
+              }
+            });*/
+
+
+            file.upload.then(function (response) {
+                $timeout(function () {
+                  console.log(response);
+                    file.result = response.data;
+                    $scope.Fresult = response.config.data.file;
+
+                    var errs = 0;
+                    var Fresult = $scope.Fresult;
+                    console.info('$scope', Fresult);
+                });
+            }, function (response) {
+                if (response.status > 0)
+                    $scope.errorMsg = response.status + ': ' + response.data;
+                else {
+                  console.log('else pa');
+                }
+            }, function (event) {
+                file.progress = Math.min(100, parseInt(100.0 *
+                                         event.loaded / event.total));
+                $scope.progress = file.progress;
+                if ($scope.progress == 100) {
+                  $scope.uploadingNow = false;
+                }
+                console.log($scope.progress);
+            });
+
+        }
+    };
 
       this.openMenu = function($mdOpenMenu, ev) {
       originatorEv = ev;

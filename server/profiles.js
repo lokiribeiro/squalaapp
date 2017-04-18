@@ -17,11 +17,23 @@ Profiles.allow({
 });
 
 Meteor.publish('profiles', function (selector) {
-    if(selector === null){
+    if(selector === null || selector === ''){
       selector = {};
     } else if(typeof selector === 'string' && selector.length){
         var searchString = {$regex: `.*${selector}.*`, $options: 'i'}
-        selector = { profiles_firstname: searchString };
+        selector = {$or: [
+          {profiles_firstname: searchString},
+          { profiles_lastname: searchString},
+          { profiles_branch: searchString},
+          { profiles_type: searchString},
+          { profiles_userroleID: searchString},
+          { profiles_email: searchString},
+          { profiles_username: searchString},
+          { profiles_gender: searchString},
+          { profiles_gradelevel: searchString},
+          { profiles_section: searchString},
+          { profiles_city: searchString}
+        ]};
         //return Meteor.users.find(selector);
     } else {
       selector = {profiles_userID: selector};
@@ -140,6 +152,10 @@ Meteor.methods({
       var userUpsert = Profiles.upsert(selector, modifier);
       return userUpsert;
     },
+    deleteProfileFromAdmin(userDel){
+      var status = Profiles.remove({profiles_userID: userDel});
+      return status;
+    },
     upsertProfileFromRole(profileID, roleId){
       var selector = {profiles_userID: profileID};
       var modifier = {$set: {
@@ -149,7 +165,7 @@ Meteor.methods({
       return roleUpsert;
 
     },
-    upsertProfileFromRole(profileID, feesId, feesName){
+    upsertProfileFromFees(profileID, feesId, feesName){
       var selector = {profiles_userID: profileID};
       var modifier = {$set: {
         profiles_feesID: feesId,
@@ -183,6 +199,14 @@ Meteor.methods({
       }};
       var typeUpsert = Profiles.upsert(selector, modifier);
       return typeUpsert;
+    },
+    upsertProfilePhoto(profileID, downloadUrl){
+      var selector = {profiles_userID: profileID};
+      var modifier = {$set: {
+          profiles_profilephoto: downloadUrl
+        }};
+      var photoUpsert = Profiles.upsert(selector, modifier);
+      return photoUpsert;
     }
 
 

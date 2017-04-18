@@ -1,0 +1,46 @@
+<md-dialog style="opacity: 1 !important;" aria-label="Create a new user" layout="column" layout-align="start center" flex="100">
+  <form name="createuserForm">
+    <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
+    <div layout="row" flex>
+      <h2 style="font-weight:normal" ng-hide="createdNow">Add lesson guide </h2>
+      <h2 style="font-weight:normal" ng-if="done">Adding lesson guide</h2>
+      <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/blue_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Lesson guide successfully added</h2>
+      <span flex></span>
+    </div>
+    <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+
+    <!-- hide here -->
+    <span layout="column" ng-hide="createdNow" layout-fill>
+    <md-input-container flex="100"  md-no-float class="md-block" style="margin: 10px 0 !important;">
+        <input ng-model="create.register.lessonTitle" aria-label="lessonTitle" type="text" placeholder="Lesson Title" ng-required>
+    </md-input-container>
+    </span>
+    <!-- end here -->
+    <md-toolbar ng-show="existing" class="md-primary" layout="row" layout-fill layout-padding layout-margin>
+    <p class="md-body-1">lesson guide already registered</p>
+    </md-toolbar>
+    <span layout="column" layout-align="start start" flex ng-if="createdNows">
+      <span layout="row">
+      <p>
+        <b>{{create.register.lessonTitle}} </b> has been created
+      </p>
+      </span>
+    </span>
+    </md-dialog-content>
+    <md-dialog-actions >
+      <span layout="row" layout-align="space-between end" layout-fill>
+      <!-- hide these -->
+    <md-button ng-hide="createdNow" ng-click="closeDialog()">
+      CANCEL
+    </md-button>
+      <md-button type="submit" ng-click="createUser(create.register)" ng-hide="createdNow" class="md-primary">
+        CREATE
+      </md-button>
+      <!-- end hide -->
+        <md-button ng-if="createdNows" ng-click="closeDialog()" class="md-primary">
+          DONE
+        </md-button>
+      </span>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

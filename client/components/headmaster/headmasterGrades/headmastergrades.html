@@ -1,0 +1,125 @@
+<md-toolbar class="md-primary md-hue-2" layout="row" layout-align="center center">
+  <div flex="100" flex-gt-sm="70" layout="column" layout-fill>
+    <div class="md-toolbar-tools">
+      <div ng-click="openSchool()" >
+      <md-tooltip md-direction="bottom">
+        Back
+      </md-tooltip>
+      <md-icon md-svg-icon="../../assets/img/white_backarrow24.svg"></md-icon>
+    </div>
+      <h2 class="md-flex" style="padding-left: 24px !important;">View user</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="Apps" ng-click="openRole()" ng-if="$root.userLoggedInRole == 'superadmin'">
+        <md-tooltip md-direction="bottom">
+          View user roles
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/white_roleadd24.svg"></md-icon>
+      </md-button>
+      <md-button class="md-icon-button" aria-label="Apps" ng-click="openResp()" ng-if="$root.userLoggedInRole == 'superadmin'">
+        <md-tooltip md-direction="bottom">
+          View responsibilities
+        </md-tooltip>
+        <md-icon md-svg-icon="../../assets/img/white_respadd24.svg"></md-icon>
+      </md-button>
+    </div>
+  </div>
+</md-toolbar>
+
+<div class="anim-slide-below-fade" data-anim-speed="500">
+<md-content flex layout-padding style="background-color:transparent !important;"  layout="row" layout-align="center center">
+  <div layout="column" flex flex-gt-sm="70" layout-fill>
+    <div layout="row" layout-align="center center" layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 10px;" ng-repeat="profile in profiles" ng-cloak>
+      <!-- <md-whiteframe class="md-whiteframe-2dp" flex="100" flex-gt-sm="60" layout="row" layout-align="start start" layout-padding layout-wrap layout-fill style="padding-left:30px;">-->
+      <md-card layout-wrap layout-fill>
+        <md-toolbar class="md-table-toolbar md-primary" layout="row" layout-align="space-between stretch" layout-padding layout-fill>
+        <div layout="column" layout-align="center center" layout-wrap>
+          <img ng-src="{{profile.profiles_profilephoto}}" class="avatar-4" alt="photo"/>
+        </div>
+        <div class="md-list-item-text" flex="70" layout="column" layout-align="start start" layout-fill>
+          <span layout-fill class="md-headline">{{profile.profiles_firstname}} {{profile.profiles_lastname}}</span>
+            <p layout-fill >
+              <span class="md-subhead" ng-repeat="branch in branches">{{branch.branch_name }}</span>
+              <br />
+              <span class="md-subhead" ng-repeat="role in roles">{{role._id == profile.profiles_userroleID ? role.role : ''}}</span> |
+              <span class="md-subhead" >{{profile.profiles_type}}</span>
+            </p>
+        </div>
+        <div layout="row" layout-align="end start" flex="20" layout-fill hide-xs>
+          <md-menu md-position-mode="target-right target" ng-if="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'" >
+          <md-button class="md-icon-button " aria-label="transfer" ng-click="$mdOpenMenu($event)">
+            <md-tooltip md-direction="bottom">
+              Associate to role
+            </md-tooltip>
+            <md-icon md-svg-icon="../../assets/img/white_roleresp24.svg"></md-icon>
+          </md-button>
+          <md-menu-content width="4" >
+            <md-menu-item ng-repeat="role in roles" ng-hide="profiles_userroleID._id == role._id">
+              <md-button ng-click="associateRole($event, profile.profiles_firstname, profile.profiles_lastname, profile.profiles_userID, role._id, role.role)">
+                  <div layout="row" flex>
+                    <p flex>{{ profiles.profiles_userroleID == role._id ? '' :  role.role}}</p>
+                  </div>
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+          <md-menu md-position-mode="target-right target" ng-if="$root.userLoggedInRole == 'superadmin'">
+          <md-button class="md-icon-button " aria-label="transfer" ng-click="$mdOpenMenu($event)">
+            <md-tooltip md-direction="bottom">
+              Move user to another branch
+            </md-tooltip>
+            <md-icon md-svg-icon="../../assets/img/white_transferbranch24.svg"></md-icon>
+          </md-button>
+          <md-menu-content width="4" >
+            <md-menu-item ng-repeat="branch in branchesList" ng-hide="profile.profiles_branchID == branch._id">
+              <md-button ng-click="announceClick($event, branch, profile.profiles_firstname, profile.profiles_lastname, profile.profiles_userID, profile.profiles_type, profile.profiles_branchID)">
+                  <div layout="row" flex>
+                    <p flex>{{ profile.profiles_branchID == branch._id ? '' :  branch.branch_name}}</p>
+                  </div>
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+          <md-button class="md-icon-button " aria-label="reset" ng-click="null" ng-if="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
+            <md-tooltip md-direction="bottom">
+              Reset Password
+            </md-tooltip>
+            <md-icon md-svg-icon="../../assets/img/white_resetpass24.svg"></md-icon>
+          </md-button>
+        </div>
+        </md-toolbar>
+      </md-card>
+      <!-- </md-whiteframe>-->
+      <md-whiteframe class="md-whiteframe-2dp" flex layout="row" layout-align="start start" layout-padding layout-wrap layout-fill style="padding-left:30px;">
+          <div layout="column" flex="40">
+          <span class="md-headline">
+            <md-button class="md-fab md-default" ngf-select="uploadFiles($file, $invalidFiles)" aria-label="transfer" ngf-max-height="1000">
+              <md-tooltip md-direction="bottom">
+                Upload
+              </md-tooltip>
+              <md-icon md-svg-icon="../../assets/img/white_upload24.svg"></md-icon>
+            </md-button>
+          </span>
+          <span class="md-subhead">Upload profile photo</span>
+          </div>
+          <div layout="column" flex="60">
+          <span class="md-headline">1</span>
+          <span class="md-subhead">Docs owned</span>
+          </div>
+      </md-whiteframe>
+    </div>
+
+      <div flex flex-gt-sm="70" style="padding: 0 0 0 0 !important;">
+      <account></account>
+      </div>
+
+      <div flex flex-gt-sm="70" style="padding: 0 0 0 0 !important;">
+      <userapps></userapps>
+      </div>
+
+      <div flex flex-gt-sm="70" style="padding: 0 0 0 0 !important;">
+      <adminrole></adminrole>
+      </div>
+
+    </div>
+</md-content>
+</div>

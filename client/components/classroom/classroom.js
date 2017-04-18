@@ -3,6 +3,7 @@ import {app} from '/client/app.js';
 import Profiles from '/imports/models/profiles.js';
 import Branches from '/imports/models/branches.js';
 import Roles from '/imports/models/roles.js';
+import Classlists from '/imports/models/classlists.js';
 
 class ClassroomCtrl{
 
@@ -32,6 +33,8 @@ class ClassroomCtrl{
           return [$scope.getReactively('rolesID')];
       });
 
+      $scope.subscribe('classlists');
+
       $scope.helpers({
           profiles(){
             //var sort = 1;
@@ -60,12 +63,21 @@ class ClassroomCtrl{
           },
           roles() {
             return Roles.find();
-          }
+          },
+          classlists() {
+            var userID = $scope.getReactively('thisUser');
+            var sort  = $scope.sort;
+            var selector = {teacherID: userID};
+            var modifier = {sort: {classname: sort}};
+            var classlists = Classlists.find(selector,modifier);
+            console.info('classlists', classlists);
+            return classlists;
+        }
 
       })//helpers
 
       angular.element(document).ready(function () {
-        //$window.loading_screen.finish();
+        $window.loading_screen.finish();
 
         $scope.promise = $timeout(function(){
           var userDetails = Meteor.userId();
@@ -88,6 +100,9 @@ class ClassroomCtrl{
             .position(pinTo )
             .hideDelay(3000)
             .theme('Classroom')
+            .action('HIDE')
+            .highlightAction(true)
+            .highlightClass('md-accent')
           );
         }, 2000);
       });
@@ -112,6 +127,39 @@ class ClassroomCtrl{
 
         last = angular.extend({},current);
       }
+
+      $scope.items = [
+        { name: "Add class", icon: "../../assets/img/white_addclass24.svg", direction: "left" }
+      ];
+
+      $scope.openDialog = function($event, item) {
+        // Show the dialog
+        if(item.name == 'Add class'){
+        $mdDialog.show({
+          clickOutsideToClose: false,
+          escapeToClose: true,
+          controller: function($mdDialog) {
+            // Save the clicked item
+            $scope.FABitem = item;
+            // Setup some handlers
+            $scope.close = function() {
+              $mdDialog.cancel();
+            };
+          },
+          controllerAs: 'classroomcreateclass',
+          controller: ClassroomCtrl,
+          template: '<classroomcreateclass></classroomcreateclass>',
+          targetEvent: $event
+        });
+      }
+    }
+
+    $scope.openClass = function (selected) {
+      console.info('selected:', selected._id);
+      var classID = selected._id;
+      var courselinkID = selected.courselinkID;
+      $state.go('ClassroomVirtual', {stateHolder : 'Classroom', userID : Meteor.userId(), classID: classID, courselinkID: courselinkID});
+    }
 
 
     }

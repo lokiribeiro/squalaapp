@@ -2,9 +2,59 @@
     <div class="md-toolbar-tools">
       <img ng-src="../../assets/img/collect_icon.png" style="margin: auto 3px auto 0;" >
       <h2 class="md-flex">Collect</h2>
-      <md-icon md-svg-icon="../../assets/img/white_chevron24.svg"></md-icon>
-      <h2 class="md-flex">Fees Category</h2>
-      <span flex></span>
+      <h2 class="md-flex" style="border-left: 1px solid rgba(255,255,255,0.2) !important; margin-left: 24px !important; margin-right: 24px !important; padding-left: 24px !important;">Fees Category</h2>
+      <span layout-padding flex>
+
+        <md-card layout="row" flex flex-gt-xs="70" style="background-color: #d32f2f !important; border-radius: 4px !important; box-shadow: none !important; margin: 0px !important;" >
+        <form name="filter.form" layout-fill  style="background-color: transparent !important;">
+          <md-autocomplete
+          ng-disabled="isDisabled"
+          md-no-cache="noCache"
+          md-selected-item="selectedItem"
+          md-search-text-change="searchTextChange(searchText)"
+          md-search-text="searchText"
+          md-selected-item-change="selectedItemChange(feescategory)"
+          md-items="feescategory in feescategories"
+          md-item-text="feescategory.feesName"
+          md-min-length="0"
+          placeholder="Search Fees Categories"
+          md-menu-class="autocomplete-custom-template"
+          class="autocomplete-custom-template">
+        <md-item-template class="autocomplete-custom-template">
+          <span  class="item-title">
+            <md-icon md-svg-icon="../../assets/img/black_roleadd24.svg"></md-icon>
+            <span> {{feescategory.feesName}} </span>
+          </span>
+          <span class="item-metadata">
+            <span class="item-metastat">
+              <strong>{{feescategory.code}}</strong> Fee code
+            </span>
+            <span class="item-metastat">
+              <strong>{{feescategory.shift}}</strong> Shift
+            </span>
+          </span>
+        </md-item-template>
+        <md-not-found>
+          No matches found.
+        </md-not-found>
+      </md-autocomplete>
+
+          <!-- <div layout="row" >
+              <md-icon md-svg-icon="../../assets/img/white_search24.svg"></md-icon>
+              <input flex ng-model="searchText" type="search" placeholder="Search" style="border-radius: 4px !important; border-style: hidden !important; margin-left: 12px !important; background-color: transparent !important; color: #fff !important;" >
+              <md-button class="md-icon-button" aria-label="close" ng-click="closeFilter()" ng-hide="searchText == null" style="padding: 0px !important; margin: 0 !important; min-height: 24px !important; width: 24px !important; height: 24px !important;">
+              <md-tooltip md-direction="bottom">
+                Close
+              </md-tooltip>
+              <md-icon md-svg-icon="../../assets/img/white_close24.svg"></md-icon>
+              </md-button>
+          </div> -->
+        </form>
+        </md-card>
+
+
+
+      </span>
       <md-button class="md-icon-button" aria-label="Apps" ng-click="$mdOpenMenu($event)">
         <md-tooltip md-direction="bottom">
           Help
@@ -16,7 +66,7 @@
 
 
 <div class="anim-slide-below-fade" data-anim-speed="500">
-<showcategories></showcategories>
+      <showcategories></showcategories>    
 </div>
 
 <div ng-cloak>

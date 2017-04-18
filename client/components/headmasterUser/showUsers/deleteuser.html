@@ -4,13 +4,7 @@
       <h2 style="font-weight:normal" ng-hide="deletedNow">Delete user account</h2>
       <h2 style="font-weight:normal" ng-if="done">Deleting account</h2>
       <h2 style="font-weight:normal" ng-if="deletedNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Account Deleted</h2>
-      <span flex></span>
-        <md-button class="md-icon-button" aria-label="Close" ng-click="cancelNow()" style="position:absolute; top:0; right:0; !important" ng-hide="done">
-        <md-tooltip md-direction="bottom">
-          Close
-        </md-tooltip>
-        <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
-        </md-button>
+      <span flex></span>        
     </div>
     <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
 

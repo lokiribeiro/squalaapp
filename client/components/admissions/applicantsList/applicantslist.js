@@ -538,6 +538,7 @@ class ApplicantslistCtrl{
                       $scope.mobileNoa = applicantInfo.mobileNo;
                       $scope.birthdaya = applicantInfo.birthdate;
                       $scope.gendera = applicantInfo.gender;
+                      $scope.feesida = applicantInfo.feesid;
 
 
                       $scope.done = true;
@@ -674,6 +675,48 @@ class ApplicantslistCtrl{
                  profile.profiles_apps = [];
 
                  var profileID = Profiles.insert(profile);
+
+                 var userPhoto = '../../assets/img/profiles/user.png';
+                 var userBranch = $scope.branchName;
+                 var userBranchID = $scope.brancha;
+                 var userName = $scope.firstnamea + ' ' + $scope.lastnamea;
+                 var feesID = $scope.feesida;
+                 var lastnameNew = $scope.lastnamea;
+                 var firstnameNew = $scope.firstnamea;
+                 var usernameNow = $scope.emailUsernamea;;
+                 var amount = 500;
+                 var balance = 0;
+                 var paytype = 'cash';
+                 var dateNow = new Date();
+                 var appliedToMonth = 'December';
+                 var appliedToAmount = amount;
+                 console.info('usernameNow', usernameNow);
+
+                 Meteor.call('upsertNewFeesFromCollect', newUserID, feesID, function(err, detail) {
+                   if (err) {
+                       //do something with the id : for ex create profile
+                       console.log('error in fees creation');
+                  } else {
+                    Meteor.call('upsertStudentToFees', newUserID, userPhoto, userBranch, userBranchID, userName, feesID, function(err, stats) {
+                      if (err) {
+                        console.log('error upsert role to meteor.user');
+                   }else {
+                     Meteor.call('upsertHistoryFromAdmissions', usernameNow, amount, balance, paytype, userBranchID, dateNow, lastnameNew, firstnameNew, appliedToMonth, appliedToAmount, function(err, newID) {
+                           console.log(detail);
+                           var newID = newID;
+                           console.info('newID', newID);
+                             if (err) {
+                                 //do something with the id : for ex create profile
+                                 console.info('error', err);
+                            } else {
+                              console.info('success', err);
+                            }
+                         });
+                    }
+                  });
+                   }
+                 });
+
 
                  console.info('profileID', profileID);
                /*party.ownerId = Meteor.userId();

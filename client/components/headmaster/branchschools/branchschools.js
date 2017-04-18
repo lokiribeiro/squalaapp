@@ -74,39 +74,8 @@ class BranchschoolsCtrl{
         $scope.searchText = '';
       }
 
-      $scope.removeUser = function(userDel) {
-        console.info('userid', $scope.selected);
-        if(userDel){
-          var idNow = $scope.selected[0]._id;
-          Meteor.users.remove({_id: idNow});
-          $scope.deletedNow = false;
-          $scope.deletedNows = false;
-          $scope.done = false;
-          $scope.existing = false;
-        }
-        else{
-
-          console.info('2', userDel);
-        }
-
-        }
-
-      $scope.$watch('searchText', function (newValue, oldValue) {
-        if(!oldValue) {
-          bookmark = $scope.page;
-        }
-
-        if(newValue !== oldValue) {
-          $scope.page = 1;
-        }
-
-        if(!newValue) {
-          $scope.page = bookmark;
-        }
-      });
-
-      $scope.openDialog = function ($event, selected) {
-          $scope.userDel = selected[0]._id;
+      $scope.openDelete = function ($event, selected) {
+          $scope.userDel = selected._id;
           console.info('userid', $scope.userDel );
           var userDel = $scope.userDel;
           $mdDialog.show({
@@ -127,6 +96,8 @@ class BranchschoolsCtrl{
             $scope.done = true;
             $scope.deletedNow = !$scope.deletedNow;
 
+            console.info('branchID', userDel);
+
             Meteor.call('deleteSchoolFromAdmin', userDel, function(err, userDel) {
                       if (err) {
                           //do something with the id : for ex create profile
@@ -144,7 +115,7 @@ class BranchschoolsCtrl{
                          $scope.deletedNows = !$scope.deletedNows;
                          $scope.done = false;
                          window.setTimeout(function(){
-                         $scope.$apply();                        
+                         $scope.$apply();
                        },2000);
                      }
                   });
@@ -170,8 +141,8 @@ class BranchschoolsCtrl{
         };
 
         $scope.openSchool = function (selected) {
-          console.info('selected:', selected[0]._id);
-          var branchID = selected[0]._id;
+          console.info('selected:', selected._id);
+          var branchID = selected._id;
           $state.go('Headmasterschool', {stateHolder : 'Headmaster', userID : Meteor.userId(), branchID : branchID});
         }
 

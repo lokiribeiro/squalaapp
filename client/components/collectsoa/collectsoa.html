@@ -1,0 +1,38 @@
+<div layout-fill layout="column" layout-align="center center" layout-padding>
+<md-expansion-panel md-component-id="panelOne" ng-repeat="profile in profiles" class="cardapp" layout-fill>
+    <md-expansion-panel-collapsed layout="row" layout-align="center center" layout-fill>
+      <div class="md-title">Fees Profile</div>
+      <div class="md-summary">View student fees details</div>
+      <md-expansion-panel-icon></md-expansion-panel-icon>
+    </md-expansion-panel-collapsed>
+    <md-expansion-panel-expanded>
+      <md-expansion-panel-header ng-click="$panel.collapse()" >
+        <div class="md-title">Fees Profile</div>
+        <div class="md-summary"></div>
+        <md-expansion-panel-icon></md-expansion-panel-icon>
+      </md-expansion-panel-header>
+      <md-expansion-panel-content>
+        <span layout="row" layout-align="start start" layout-fill layout-wrap >
+          <span flex="20">
+            <h4 style="color: #555;">Tuition fee info</h4>
+          </span>
+          <span flex="80" ng-repeat="feescategory in feescategories">
+            <p>Fee Category: {{feescategory.feesName}}</p>
+            <p>Fee Code: {{feescategory.code}}</p>
+            <p>Tuition Fee: {{feescategory.tuitionfee | currency : 'P' : 2}}</p>
+            <p>Class shift: {{feescategory.shift}}</p>
+            <p>Region: {{feescategory.region}} </p>
+          </span>
+      </span>
+      </md-expansion-panel-content>
+      <md-expansion-panel-footer ng-if="$root.userLoggedInRole == 'superadmin'">
+        <div class="md-default md-toolbar-tools" >
+          <span flex></span>
+          <md-button ng-click="openCollect()" md-no-ink class="md-accent">
+            VIEW MORE
+          </md-button>
+        </div>
+      </md-expansion-panel-footer>
+    </md-expansion-panel-expanded>
+</md-expansion-panel>
+</div>

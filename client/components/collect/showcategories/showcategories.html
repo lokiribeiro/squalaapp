@@ -1,6 +1,7 @@
-<div layout="row" layout-align="start start" layout-fill layout-wrap flex layout-padding class="inset">
-  <div flex-gt-md="20" flex="100" flex-gt-xs="100">
-    <md-card>
+<div layout="row" layout-align="center start" layout-wrap layout-fill>
+  <div flex layout="row" flex-gt-xs="80" layout-wrap layout-fill layout-padding >
+  <div flex-gt-md="30" flex="100" flex-gt-xs="100" layout="column">
+    <md-card style="margin: 0 0 0 0 !important;">
     <md-list flex layout-fill >
         <md-subheader >
           <div layout-fill layout="row" layout-align="space-between center" >
@@ -15,11 +16,11 @@
         </div>
         </md-subheader>
         <md-list-item class="md-2-line" ng-click="showRole(fee)" ng-repeat="fee in feescategories" ng-hide="show">
-          <div class="md-list-item-text" layout="column" ng-hide="fee.feesName == selected.feesName">
-            <h3>{{fee.feesName}}</h3>
+          <div class="md-list-item-text" layout="column" ng-hide="fee.code == selected.code">
+            <h3>{{fee.code}}</h3>
           </div>
-          <div class="md-list-item-text" layout="row" layout-align="start center" ng-show="fee.feesName == selected.feesName">
-            <h3><md-icon md-svg-icon="../../assets/img/indigo_check24.svg"></md-icon> {{fee.feesName}}</h3>
+          <div class="md-list-item-text" layout="row" layout-align="start center" ng-show="fee.code == selected.code">
+            <h3><md-icon md-svg-icon="../../assets/img/red_check24.svg"></md-icon> {{fee.code}}</h3>
           </div>
         </md-list-item>
     </md-list>
@@ -44,164 +45,189 @@
 </div>
 
 
-<div flex-gt-md="80" flex="100" flex-gt-xs="100">
-  <md-card>
-    <md-toolbar class="md-table-toolbar md-default" flex ng-show="selected.feesName === ''">
-      <div class="md-toolbar-tools" layout-align="start center">
-          <p>No selected fee        </p>
-    </div>
-    </md-toolbar>
+<div flex-gt-md="70" flex="100" flex-gt-xs="100">
+  <div layout-wrap layout="row">
+  <h2 ng-show="selected.feesName === ''" class="md-title" style="color:#555 !important;">No selected fee category</h2>
 
-  <md-toolbar class="md-table-toolbar md-primary" flex  ng-hide="selected.feesName === ''">
-  <div class="md-toolbar-tools">
-    <div ng-model="selected" flex>{{selected.feesName}}</div>
-    <md-button class="md-icon-button" aria-label="edit" ng-hide="selected.feesName == ''" ng-click="openProfile($event, selected)" >
-      <md-tooltip md-direction="bottom">
-        Edit Fee
-      </md-tooltip>
-      <md-icon md-svg-icon="../../assets/img/white_edit24.svg"></md-icon>
-    </md-button>
-    <md-button class="md-icon-button" aria-label="delete" ng-hide="selected.feesName == ''" ng-click="openDelete($event, selected)" >
-      <md-tooltip md-direction="bottom">
-        Delete
-      </md-tooltip>
-      <md-icon md-svg-icon="../../assets/img/white_delete24.svg"></md-icon>
-    </md-button>
-  </div>
-  </md-toolbar>
-
-
-  <md-tabs md-dynamic-height md-border-bottom  ng-hide="selected.feesName === ''">
-        <md-tab label="Students">
-            <!--<h2 class="md-display-2">No users yet.</h2>-->
-            <md-toolbar class="md-table-toolbar md-default" ng-hide="filter.show || selected2.length || selected.feesName === ''" flex>
-            <div class="md-toolbar-tools">
-              <md-button class="md-default md-raised" aria-label="create" ng-click="assignUser($event, selected)">
-                ASSIGN TO STUDENT
-              </md-button>
-              <div flex="" class="flex"></div>
-              <md-button class="md-icon-button" aria-label="Search" ng-click="filterShow()">
-                <md-icon md-svg-icon="../../assets/img/black_search24.svg"></md-icon>
-              </md-button>
-            </div>
-            </md-toolbar>
-            <md-toolbar class="md-table-toolbar md-default"  flex="100" ng-show="filter.show">
-            <div class="md-toolbar-tools">
-              <form name="filter.form" flex>
-                <md-input-container md-no-float class="md-block">
-                <md-icon md-svg-icon="../../assets/img/black_search24.svg"></md-icon>
-                <input type="text" ng-model="searchText" placeholder="search">
-                </md-input-container>
-              </form>
-              <md-button class="md-icon-button" aria-label="close" ng-click="closeFilter()">
-              <md-tooltip md-direction="bottom">
-                Close
-              </md-tooltip>
-              <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
-              </md-button>
-            </div>
-            </md-toolbar>
-            <md-toolbar class="md-table-toolbar md-primary md-hue-1 " flex="100" ng-show="selected2.length">
-            <div class="md-toolbar-tools">
-              <div ng-model="selected" flex>{{selected2[0].profiles_firstname}} {{selected2[0].profiles_lastname}} selected</div>
-              <md-button class="md-icon-button" aria-label="edit" ng-click="openProfile2(selected2)">
-                <md-tooltip md-direction="bottom">
-                  View Account
-                </md-tooltip>
-                <md-icon md-svg-icon="../../assets/img/white_launch24.svg"></md-icon>
-              </md-button>
-              <md-button class="md-primary md-hue-1 md-raised" aria-label="unassign" ng-click="unassignUser($event, selected2)">
-                UNASSIGN USER
-              </md-button>
-            </div>
-            </md-toolbar>
-            <md-table-container ng-hide="selected.feesName === ''">
-              <table md-table md-row-select ng-model="selected2" md-progress="promise" flex>
-                <thead md-head md-order="query.order" md-on-reorder="profiles" class="md-head">
-                  <tr md-row>
-                    <th md-column ><span></span></th>
-                    <th md-column md-order-by="profile.profiles_firstname" ng-click="changeSort()" ><span>Complete Name</span></th>
-                    <th md-column ><span>Email</span></th>
-                    <th md-column ><span>School Branch</span></th>
-                  </tr>
-                </thead>
-                <tbody md-body>
-                  <tr md-row md-select="profile" md-select-id="profile._id" md-auto-select ng-repeat="profile in profiles" ng-cloak>
-                    <td md-cell><img ng-src="{{profile.profiles_profilephoto}}" class="profile-pic2" alt="{{profile.profiles_firstname}}" /></td>
-                    <td md-cell>{{profile.profiles_firstname}} {{profile.profiles_lastname}}</td>
-                    <td md-cell>{{profile.profiles_email}}</td>
-                    <td md-cell>{{profile.profiles_branch}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </md-table-container>
-            <md-table-pagination layout-align = "start start" ng-hide="selected.feesName === ''" md-limit="perPage" md-page="page" md-total="{{totalProfiles}}" md-on-paginate="profiles" md-page-select></md-table-pagination>
-        </md-tab>
-        <md-tab label="Behavior" ng-hide="selected.feesName === ''">
-          <md-content class="md-padding">
-            <!-- <h1 class="md-display-2">Tab Two</h1>-->
-            <md-subheader class="md-no-sticky">View and modify fee category</md-subheader>
-              <md-list-item ng-click="null" ng-repeat="fee in feescategories track by $index" ng-if="fee.feesName == selected.feesName">
-                <p >  {{fee.description}}  </p>
-                <md-switch class="md-accent" ng-model="enabled[$index]" ng-change="switchResponsibility(responsibility, enabled[$index], selected._id)"></md-switch>
-              </md-list-item>
-          </md-content>
-        </md-tab>
-        <md-tab label="Link File" ng-hide="selected.feesName === ''">
-          <md-content class="md-padding">
-            <!-- <h1 class="md-display-2">Tab Two</h1>-->
-            <span layout="column" flex layout-fill  >
-
-                <span layout="column" layout-align="center center" layout-fill>
-                   <span layout="row" layout-align="space-between center" layout-fill>
-                     <md-input-container  class="md-block" layout-fill style="margin: 10px 0 !important;">
-                       <label> select fees statement category</label>
-                     <md-select ng-model="applicant.gender"  class="md-no-underline">
-                       <md-option ng-repeat="requirementdoc in requirementdocs" value="{{requirementdoc._id}}">{{requirementdoc.requirementName}}</md-option>
-                     </md-select>
-                   </md-input-container>
-                       <md-button class="md-fab md-default" ngf-select="uploadFiles($file, $invalidFiles, requirement._id, requirement.requirementName)" aria-label="transfer" ngf-max-height="1000">
-                         <md-tooltip md-direction="bottom">
-                           Upload
-                         </md-tooltip>
-                         <md-icon md-svg-icon="../../assets/img/white_upload24.svg"></md-icon>
-                       </md-button>
-                 </span>
-               </span>
-
-
-
-
-
-                   <md-subheader class="md-no-sticky">Bayad Center documents</md-subheader>
-
-                   <span  ng-repeat="fee in feescategories track by $index" layout-padding layout="row" layout-align="space-between center" layout-fill layout-wrap>
-                     <md-list-item class="md-3-line card-1" ng-repeat="document in fee.documents track by $index" layout-fill flex flex-gt-sm="45" style="margin: 4px 4px 4px 4px !important;">
-                       <md-icon md-svg-icon="../../assets/img/black_file24.svg"></md-icon>
-                       <div class="md-list-item-text" layout="column">
-                         <h3>{{ document.requirement}}</h3>
-                         <p>{{ document.filename}}</p>
-                       </div>
-                       <a target="_self" href="{{document.downloadUrl}}" download="{{applicant.applicantID}}">
-                         <md-button class="md-icon-button " aria-label="transfer">
-                           <md-tooltip md-direction="bottom">
-                             Download document
-                           </md-tooltip>
-                       <md-icon md-svg-icon="../../assets/img/black_download24.svg"></md-icon>
-                     </md-button>
-                       </a>
-                     </md-list-item>
-                </span>
-
-
-                  <div layout="row" layout-align = "center center" ng-show="doneSearching" layout-fill >
-                    <md-progress-circular md-mode="indeterminate"  ></md-progress-circular>
-                  </div>
-
+  <md-card ng-hide="selected.feesName === ''" flex layout-fill style="margin:0 8px 0 8px !important;">
+        <md-card-header>
+          <md-card-avatar>
+            <img class="md-user-avatar" src="../../assets/img/wallet.png"/>
+          </md-card-avatar>
+          <md-card-header-text>
+            <span class="md-title">{{selected.feesName}}</span>
+            <span class="md-subhead">{{selected.code}}</span>
+          </md-card-header-text>
+          <md-button ng-hide="selected.code === ''" class="md-icon-button" aria-label="delete" ng-click="assignUser($event, selected)" >
+            <md-tooltip md-direction="bottom">
+              Assign student
+            </md-tooltip>
+            <md-icon md-svg-icon="../../assets/img/black_addperson24.svg"></md-icon>
+          </md-button>
+          <!-- <md-button class="md-icon-button" aria-label="edit" ng-hide="selected.code == ''" ng-click="openProfile($event, selected)" >
+            <md-tooltip md-direction="bottom">
+              Edit Fee
+            </md-tooltip>
+            <md-icon md-svg-icon="../../assets/img/black_edit24.svg"></md-icon>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="delete" ng-hide="selected.code == ''" ng-click="openDelete($event, selected)" >
+            <md-tooltip md-direction="bottom">
+              Delete
+            </md-tooltip>
+            <md-icon md-svg-icon="../../assets/img/black_delete24.svg"></md-icon>
+          </md-button> -->
+        </md-card-header>
+        <!-- <img ng-src="../../assets/img/day.jpg" ng-if="selected.shift == 'AM'" class="md-card-image" alt="Washed Out">
+        <img ng-src="../../assets/img/afternoon.jpg" ng-if="selected.shift == 'PM'" class="md-card-image" alt="Washed Out"> -->
+        <md-card-title>
+          <md-card-title-text>
+            <!-- <span class="md-headline">71 students</span> -->
+            <span class="md-subhead" layout="column" layout-align="start start">
+              <span>Tuition fee: {{selected.tuitionfee | currency : "Php " : 2}}</span>
+              <span>Fee code: {{selected.code}}</span>
+              <span>Region: {{selected.region}}</span>
+              <span>Shift: {{selected.shift}}</span>
             </span>
-          </md-content>
-        </md-tab>
-      </md-tabs>
-</md-card>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-card-icon-actions layout="row" layout-align="end center">
+            <span ng-hide="showAll" class="md-subhead">more</span>
+            <span ng-show="showAll" class="md-subhead">less</span>
+          <md-button ng-hide="showAll" class="md-icon-button" aria-label="more" ng-click="null">
+            <md-tooltip md-direction="bottom">
+              show more
+            </md-tooltip>
+            <md-icon ng-click="showMoreAll()" md-svg-icon="../../assets/img/black_expandmore24.svg"></md-icon>
+          </md-button>
+          <md-button ng-show="showAll" class="md-icon-button" aria-label="less" ng-click="null">
+            <md-tooltip md-direction="bottom">
+              show less
+            </md-tooltip>
+            <md-icon ng-click="showMoreAll()" md-svg-icon="../../assets/img/black_expandless24.svg"></md-icon>
+          </md-button>
+        </md-card-icon-actions>
+      </md-card-actions>
+
+        <md-card-content  ng-if="showAll" layout="column" layout-align="end start" layout-fill>
+        <md-list layout-fill>
+        <md-subheader class="md-primary">Monthly breakdown</md-subheader>
+        <md-list-item class="md-2-line" ng-click="null">
+          <div class="md-list-item-text" layout="column">
+            <h4>{{ selected.june | currency : "P" : 2 }}</h4>
+            <p>JUNE</p>
+          </div>
+        </md-list-item>
+        <md-list-item class="md-2-line" ng-click="null">
+          <div class="md-list-item-text" layout="column">
+            <h4>{{ selected.july | currency : "P" : 2 }}</h4>
+            <p>JULY</p>
+          </div>
+        </md-list-item>
+        <md-list-item class="md-2-line" ng-click="null">
+          <div class="md-list-item-text" layout="column">
+            <h4>{{ selected.august | currency : "P" : 2 }}</h4>
+            <p>AUGUST</p>
+          </div>
+        </md-list-item>
+        <md-list-item class="md-2-line" ng-click="null">
+          <div class="md-list-item-text" layout="column">
+            <h4>{{ selected.september | currency : "P" : 2 }}</h4>
+            <p>SEPTEMBER</p>
+          </div>
+        </md-list-item>
+        <md-list-item class="md-2-line" ng-click="null">
+          <div class="md-list-item-text" layout="column">
+            <h4>{{ selected.october | currency : "P" : 2 }}</h4>
+            <p>OCTOBER</p>
+          </div>
+        </md-list-item>
+        <md-list-item class="md-2-line" ng-click="null">
+          <div class="md-list-item-text" layout="column">
+            <h4>{{ selected.november | currency : "P" : 2 }}</h4>
+            <p>NOVEMBER</p>
+          </div>
+        </md-list-item>
+        <md-list-item class="md-2-line" ng-click="null">
+          <div class="md-list-item-text" layout="column">
+            <h4>{{ selected.december | currency : "P" : 2 }}</h4>
+            <p>DECEMBER</p>
+          </div>
+        </md-list-item>
+        <md-list-item class="md-2-line" ng-click="null">
+          <div class="md-list-item-text" layout="column">
+            <h4>{{ selected.january | currency : "P" : 2 }}</h4>
+            <p>JANUARY</p>
+          </div>
+        </md-list-item>
+        <md-list-item class="md-2-line" ng-click="null">
+          <div class="md-list-item-text" layout="column">
+            <h4>{{ selected.february | currency : "P" : 2 }}</h4>
+            <p>FEBRUARY</p>
+          </div>
+        </md-list-item>
+        <md-list-item class="md-2-line" ng-click="null">
+          <div class="md-list-item-text" layout="column">
+            <h4>{{ selected.march | currency : "P" : 2 }}</h4>
+            <p>MARCH</p>
+          </div>
+        </md-list-item>
+        <md-list-item class="md-2-line" ng-click="null">
+          <div class="md-list-item-text" layout="column">
+            <h3>{{ selected.april | currency : "P" : 2 }}</h3>
+            <p>APRIL</p>
+          </div>
+        </md-list-item>
+        <md-list-item class="md-2-line" ng-click="null">
+          <div class="md-list-item-text" layout="column">
+            <h3>{{ selected.may | currency : "P" : 2 }}</h3>
+            <p>MAY</p>
+          </div>
+        </md-list-item>
+      </md-list>
+        </md-card-content>
+      </md-card>
+</div>
+
+<div ng-repeat="feescategory in feescategories track by $index" ng-hide="selected.code === '' || selected.code != feescategory.code" layout-wrap >
+  <md-card ng-repeat="student in feescategory.students track by $index">
+    <md-card-header>
+      <md-card-avatar>
+        <img class="md-user-avatar" src="{{student.userPhoto}}"/>
+      </md-card-avatar>
+      <md-card-header-text>
+        <span class="md-title">{{student.studentName}}</span>
+        <span class="md-subhead">{{student.userBranch}}</span>
+      </md-card-header-text>
+      <md-menu md-position-mode="target-right target" md-offset="0 48">
+        <md-button class="md-icon-button" aria-label="Apps" ng-click="$mdOpenMenu($event)">
+          <md-tooltip md-direction="bottom">
+            more
+          </md-tooltip>
+          <md-icon md-svg-icon="../../assets/img/black_more24.svg"></md-icon>
+        </md-button>
+        <md-menu-content width="2" >
+          <md-menu-item >
+            <md-button ng-click="openProfile(course)">
+                <div layout="row" flex>
+                  <p flex>Details</p>
+                  <!-- <md-icon md-svg-icon="../../assets/img/black_launch24.svg"></md-icon> -->
+                </div>
+            </md-button>
+          </md-menu-item>
+          <md-menu-item >
+            <md-button ng-click="openDelete($event, course)">
+                <div layout="row" flex>
+                  <p flex>Delete</p>
+                  <!-- <md-icon md-svg-icon="../../assets/img/black_delete24.svg"></md-icon>-->
+                </div>
+            </md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+    </md-card-header>
+  </md-card>
+</div>
+</div>
 </div>
 </div>

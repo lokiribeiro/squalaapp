@@ -1,0 +1,61 @@
+<md-dialog style="opacity: 1 !important;" aria-label="Create a new user" layout="column" layout-align="start center" flex="100">
+  <form name="createuserForm">
+    <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
+    <div layout="row" flex>
+      <h2 style="font-weight:normal" ng-hide="createdNow">Create multiple users</h2>
+      <h2 style="font-weight:normal" ng-if="done">Creating new users</h2>
+      <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Created new users</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="Apps" ng-click="closeDialog()" style="position:absolute; top:0; right:0; !important" ng-hide="done">
+      <md-tooltip md-direction="bottom">
+        Close
+      </md-tooltip>
+      <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
+      </md-button>
+    </div>
+    <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+
+    <!-- hide here -->
+    <span layout="row" flex ng-hide="createdNow" >
+      <md-button md-no-ink class="md-primary" ngf-select="uploadFiles($file, $invalidFiles)" aria-label="transfer" ngf-max-height="1000">
+        Upload CSV template
+      </md-button>
+
+    </span>
+    <!-- end here -->
+    <md-toolbar ng-show="existing" class="md-primary" layout="row" layout-fill layout-padding layout-margin>
+    <p class="md-body-1">User already registered</p>
+    </md-toolbar>
+    <span layout="column" layout-align="start start" flex ng-if="createdNows">
+      <span layout="row">
+      <p>
+        File successfully parsed
+      </p>
+      </span>
+      <span layout="row">
+      <p>
+        Sign in to Squala for APEC Schools services at
+        https://www.squalaforapecschools.com
+      </p>
+      </span>
+    </span>
+    <span layout="row" style="background-color: #fafafa;" flex="100" ng-if="createdNows" layout-fill>
+      <img ng-src="../../assets/img/headmaster_icon.png" style="margin: auto 3px auto 0;" >
+      Need to add user anytime, anywhere?
+      Use Squala mobile app.
+    </span>
+    </md-dialog-content>
+    <md-dialog-actions >
+      <span layout="row" layout-align="space-between start" layout-fill>
+      <!-- hide these -->
+      <!-- end hide -->
+      <md-button ng-if="createdNows" ng-click="createAnother()">
+        CREATE ANOTHER USER
+      </md-button>
+        <md-button ng-if="createdNows" ng-click="closeDialog()" class="md-primary">
+          DONE
+        </md-button>
+      </span>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

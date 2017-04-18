@@ -1,38 +1,32 @@
 <md-dialog style="opacity: 1 !important;" aria-label="Create a new user" layout="column" layout-align="start center" flex="100">
-  <form name="createuserForm">
+  <form name="createuserForm" ng-submit="createUser(create.register)">
     <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
     <div layout="row" flex>
       <h2 style="font-weight:normal" ng-hide="createdNow">Create a new user</h2>
       <h2 style="font-weight:normal" ng-if="done">Creating new user</h2>
       <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Created new user</h2>
       <span flex></span>
-        <md-button class="md-icon-button" aria-label="Apps" ng-click="closeDialog()" style="position:absolute; top:0; right:0; !important" ng-hide="done">
-        <md-tooltip md-direction="bottom">
-          Close
-        </md-tooltip>
-        <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
-        </md-button>
     </div>
     <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
 
     <!-- hide here -->
     <span layout="row" flex ng-hide="createdNow" >
     <md-input-container  md-no-float class="md-block" style="margin: 10px 0 !important;">
-        <input ng-model="create.register.firstname" aria-label="firstname" type="text" placeholder="First Name" ng-required>
+        <input ng-model="create.register.firstname" aria-label="firstname" type="text" placeholder="First Name" required>
     </md-input-container>
     <md-input-container md-no-float class="md-block" style="margin: 10px 0 !important;">
-        <input ng-model="create.register.lastname" aria-label="lastname" type="text" placeholder="Last Name" ng-required>
+        <input ng-model="create.register.lastname" aria-label="lastname" type="text" placeholder="Last Name" required>
     </md-input-container>
     </span>
     <span layout="column" ng-hide="createdNow" layout-fill>
     <md-input-container flex="100"  md-no-float class="md-block" style="margin: 10px 0 !important;">
       <md-icon md-svg-icon="../../assets/img/black_person24.svg"></md-icon>
-        <input ng-model="create.register.username" aria-label="email" type="text" placeholder="Username" ng-required>
+        <input ng-model="create.register.username" aria-label="email" type="text" placeholder="Username" required>
     </md-input-container>
     <md-input-container md-no-float class="md-block" style="margin: 10px 0 !important;">
      <!-- Use floating placeholder instead of label -->
      <md-icon md-svg-icon="../../assets/img/black_email24.svg"></md-icon>
-     <input ng-model="create.register.email" type="email" placeholder="Primary Email" >
+     <input ng-model="create.register.email" type="email" placeholder="Primary Email" required >
    </md-input-container>
     </span>
     <span layout="row" ng-hide="createdNow">
@@ -40,7 +34,7 @@
     </span>
     <!-- end here -->
     <md-toolbar ng-show="existing" class="md-primary" layout="row" layout-fill layout-padding layout-margin>
-    <p class="md-body-1">User already registered</p>
+    <p class="md-body-1">Failed to process request</p>
     </md-toolbar>
     <span layout="column" layout-align="start start" flex ng-if="createdNows">
       <span layout="row">
@@ -76,7 +70,7 @@
     <md-button ng-hide="createdNow" ng-click="closeDialog()">
       Cancel
     </md-button>
-      <md-button type="submit" ng-click="createUser(create.register)" ng-hide="createdNow" class="md-primary">
+      <md-button type="submit" ng-hide="createdNow" class="md-primary">
         Create
       </md-button>
       <!-- end hide -->

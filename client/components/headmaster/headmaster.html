@@ -3,131 +3,43 @@
     <div class="md-toolbar-tools">
       <img ng-src="../../assets/img/headmaster_icon.png" style="margin: auto 3px auto 0;" >
       <h2 class="md-flex" hide-xs>Headmaster</h2>
-      <h2 class="md-flex" style="border-left: 1px solid rgba(255,255,255,0.2) !important; margin-left: 24px !important; padding-left: 24px !important;">School Profile</h2>
-      <span flex></span>
-      <md-button class="md-icon-button" aria-label="Apps" ng-click="openRole()" ng-show="$root.userLoggedInRole == 'superadmin'">
-        <md-tooltip md-direction="bottom">
-          View user roles
-        </md-tooltip>
-        <md-icon md-svg-icon="../../assets/img/white_roleadd24.svg"></md-icon>
-      </md-button>
-      <md-button class="md-icon-button" aria-label="Apps" ng-click="openResp()" ng-show="$root.userLoggedInRole == 'superadmin'">
-        <md-tooltip md-direction="bottom">
-          View responsibilities
-        </md-tooltip>
-        <md-icon md-svg-icon="../../assets/img/white_respadd24.svg"></md-icon>
-      </md-button>
+      <h2 class="md-flex" style="border-left: 1px solid rgba(255,255,255,0.2) !important; margin-left: 24px !important; padding-left: 24px !important; padding-right: 24px !important;">School Profile</h2>
+      <span layout-padding flex>
+
+        <md-card layout="row" flex flex-gt-xs="70" style="background-color: #303F9F !important; border-radius: 4px !important; box-shadow: none !important; margin: 0px !important;" >
+        <form name="filter.form" layout-fill  style="background-color: transparent !important;">
+
+          <div layout="row" >
+              <md-icon md-svg-icon="../../assets/img/white_search24.svg"></md-icon>
+              <input flex ng-model="searchText" type="search" placeholder="Search" style="border-radius: 4px !important; border-style: hidden !important; margin-left: 12px !important; background-color: transparent !important; color: #fff !important;" >
+              <md-button class="md-icon-button" aria-label="close" ng-click="closeFilter()" ng-hide="searchText == null" style="padding: 0px !important; margin: 0 !important; min-height: 24px !important; width: 24px !important; height: 24px !important;">
+              <md-tooltip md-direction="bottom">
+                Close
+              </md-tooltip>
+              <md-icon md-svg-icon="../../assets/img/white_close24.svg"></md-icon>
+              </md-button>
+          </div>
+        </form>
+        </md-card>
+
+
+
+      </span>
     </div>
   </div>
 </md-toolbar>
 
 <div class="anim-slide-below-fade" data-anim-speed="500">
 <md-content layout="row" layout-align="center center" layout-padding style="background-color:transparent !important;" layout-fill>
-  <div layout="column" flex="100" flex-gt-sm="70" layout-align="center center" layout-padding layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 10px;"  ng-cloak>
-      <div flex="100" flex-gt-sm="60" layout-padding layout-fill ng-show="$root.userLoggedInRole == 'superadmin'">
-        <div layout="column"  layout-align="center center">
-          <md-expansion-panel class="cardapp" md-component-id="panelOne" layout-fill style="padding: 0 !important;" ng-repeat="headmaster in headmasters" >
-          <md-expansion-panel-collapsed layout="row" layout-align="center center" layout-fill>
-            <div class="md-title">Profile</div>
-            <div class="md-summary">Edit general and other organization-wide details.</div>
-            <md-expansion-panel-icon></md-expansion-panel-icon>
-          </md-expansion-panel-collapsed>
-          <md-expansion-panel-expanded>
-            <md-expansion-panel-header ng-click="$panel.collapse()" >
-              <div class="md-title">School Profile</div>
-              <div class="md-summary"></div>
-              <md-expansion-panel-icon></md-expansion-panel-icon>
-            </md-expansion-panel-header>
-            <md-expansion-panel-content>
-              <form name="createuserForm">
-              <md-content layout="row" layout-align="start start" layout-wrap flex style="overflow: hidden;">
-                <span layout="column" flex="20"><h4>Organization Name</h4></span>
-                <span layout="column" flex>
-                <md-input-container  class="md-block">
-                  <label>Name</label>
-                    <input ng-model="headmaster.name" type="text" disabled>
-                </md-input-container>
-                </span>
-              </md-content>
-              <md-content layout="row" layout-align="start start" layout-wrap flex style="overflow: hidden;">
-                <span layout="column" flex="20"><h4>Organization Type</h4></span>
-                <span layout="column" flex>
-                  <md-input-container class="md-block">
-                    <label>Org Type</label>
-                    <md-select ng-model="headmaster.orgType" placeholder="Select Type" class="md-no-underline" disabled>
-                         <md-option value="primary">Primary/Secondary Education</md-option>
-                         <md-option value="higher">Higher Education</md-option>
-                         <md-option value="nonprofit">Not for Profit</md-option>
-                     </md-select>
-                  </md-input-container>
-                </span>
-              </md-content>
-              <md-content layout="row" layout-align="start start" layout-wrap flex style="overflow: hidden;">
-                <span layout="column" flex="20"><h4>Contact Information</h4></span>
-                <span layout="column" flex>
-                  <p> Designate contact email addresses for service communications, payment notifications and any email subscriptions.
-                  </p>
-                  <md-input-container class="md-block">
-                    <label>Primary administrator account</label>
-                    <input required type="email" name="clientEmail" disabled ng-model="headmaster.primaryEmail"
-                      minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
-                    <div ng-messages="projectForm.clientEmail.$error" role="alert">
-                      <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
-                        Your email must be between 10 and 100 characters long and look like an e-mail address.
-                      </div>
-                    </div>
-                  </md-input-container>
-                  <md-input-container class="md-block">
-                    <label>Secondary email address</label>
-                    <input required type="email" name="clientEmail" disabled ng-model="headmaster.secondaryEmail"
-                      minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
-                    <div ng-messages="projectForm.clientEmail.$error" role="alert">
-                      <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
-                        Your email must be between 10 and 100 characters long and look like an e-mail address.
-                      </div>
-                    </div>
-                  </md-input-container>
-                  <p> Note: To reset an administrator password, use the password recovery options.
-                  </p>
-                </span>
-              </md-content>
-              <md-content layout="row" layout-align="start start" layout-wrap flex style="overflow: hidden;">
-                <span layout="column" flex="20"><h4>Support Message</h4></span>
-                <span layout="column" flex>
-                  <p> Provide support contact information in case users need help
-                  </p>
-                  <md-input-container class="md-block">
-                    <label>Support account</label>
-                    <input required type="email" name="clientEmail" disabled ng-model="headmaster.supportEmail"
-                      minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
-                    <div ng-messages="projectForm.clientEmail.$error" role="alert">
-                      <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
-                        Your email must be between 10 and 100 characters long and look like an e-mail address.
-                      </div>
-                    </div>
-                  </md-input-container>
-                </span>
-              </md-content>
-              </form>
-            </md-expansion-panel-content>
-            <md-expansion-panel-footer ng-hide="true">
-              <md-toolbar class="md-accent" layout="row" layout-align="end center">
-                <!-- <md-button ng-click="createSchool(school)" class="md-accent md-raised">
-                  Edit
-                </md-button> -->
-              </md-toolbar>
-            </md-expansion-panel-footer>
-          </md-expansion-panel-expanded>
-          </md-expansion-panel>
-        </div>
-      </div>
-      <div  flex flex-gt-sm="60" layout-fill layout-padding>
+  <div layout="column" flex="100" flex-gt-sm="70" layout-align="center center" layout-padding layout-wrap layout-fill style="padding-bottom: 32px;"  ng-cloak>
+      <div  flex flex-gt-sm="60" layout-fill >
         <parentschool></parentschool>
       </div>
   <!-- Branch Schools Table -->
 
-      <div flex="100" flex-gt-sm="60" layout="column"  layout-fill layout-padding>
+      <div flex flex-gt-sm="60"  layout-fill >
         <branchschools></branchschools>
+
       </div>
 
 

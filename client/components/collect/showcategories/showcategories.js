@@ -51,6 +51,8 @@ class ShowcategoriesCtrl{
           }, 2000);
           return [$scope.getReactively('searchText')];
       });
+      $scope.subscribe('usersStudent');
+
 
       $scope.helpers({
           feescategories() {
@@ -59,67 +61,38 @@ class ShowcategoriesCtrl{
                 var sort  = $scope.getReactively('sort3');
                 var selector = {};
                 var fees = Feescategories.find(
-                      selector, { limit: limit, skip: skip, sort: {feesName: sort} }
+                      selector, { limit: limit, skip: skip, sort: {code: sort} }
                   );
                 return fees;
         },
         totalfees(){
             return Feescategories.find().count();
-        },
-
-          profiles(){
-            var limit = parseInt($scope.getReactively('perPage'));
-            var skip  = parseInt(( $scope.getReactively('page')-1 )* $scope.perPage);
-            var sort  = $scope.getReactively('sort');
-            var selector = {};
-            var sort = 1;
-            var fees = $scope.getReactively('selected._id');
-            console.info('fees', fees);
-            var selector = {profiles_feescategories: fees};
-
-            var modifier= { limit: limit, skip: skip, sort: {profiles_firstname: sort}};
-            var profiles = null;
-            if(fees != undefined)
-             {
-               var profiles = Profiles.find(selector, modifier);
-             }
-            console.info('profiles', profiles);
-            return profiles;
-          },
-          totalProfiles(){
-            var fees = $scope.getReactively('selected._id');
-            console.info('role', fees);
-            var selector = {profiles_feescategories: fees};
-             var totalProfiles = null;
-            if(fees != undefined)
-             {
-               var totalProfiles = Profiles.find(selector).count();
-             }
-            console.info('profiles', totalProfiles);
-            return totalProfiles;
-
-          },
-          requirementdocs(){
-            //var sort = 1;
-            //var selector = {};
-            //var modifier= {sort: {profiles_firstname: sort}};
-            var selector = {};
-            var requirementdocs = Requirementdocs.find(selector);
-            var count = requirementdocs.count();
-            console.info('profiles', requirementdocs);
-            console.info('count', count);
-            return requirementdocs;
-          }
+        },      
+          users(){
+                var sort  = 1;
+                var selector = {role: 'student'};
+                var users = Meteor.users.find(
+                      selector, { sort: {name: sort} }
+                  );
+                  console.info('users', users);
+                var count = users.count();
+                console.info('count', count);
+                return users;
+            },
+            feescats(){
+              var sort = 1;
+              var fees = $scope.getReactively('selected._id');
+              var selector = {_id: fees};
+              console.info('fees', fees);
+              var modifier = {sort: {feesName: sort}};
+              var feescats = Feescategories.findOne(selector, modifier);
+              console.info('feescats', feescats);
+              return feescats;
+            }
       })//helpers
-      Slingshot.fileRestrictions("myFileUploads", {
-      allowedFileTypes: null,
-      maxSize: 10 * 1024 * 1024 // 10 MB (use null for unlimited).
-      });
 
-      $scope.uploader = new Slingshot.Upload('myFileUploads');
-      $scope.uploadingNow = false;
-      $scope.uploaded = false;
       $scope.doneSearching = false;
+      $scope.showAll = false;
 
       var last = {
         bottom: true,
@@ -134,156 +107,6 @@ class ShowcategoriesCtrl{
         console.info('selected:', selected2[0].profiles_userID);
         var profileID = selected2[0].profiles_userID;
         $state.go('Headmasterprofile', {stateHolder : 'Headmaster', userID : Meteor.userId(), profileID : profileID});
-      }
-
-      $scope.switchResponsibility = function(responsibility, enabled, role) {
-        console.info('toggle', responsibility._id);
-        console.info('switch', enabled);
-        console.info('role', role);
-        var respID = responsibility._id;
-
-        if(enabled){
-          var selector = {_id: role};
-          var modifier = {$push: {responsibilities: {responsibilitiesID: respID }}}
-          Roles.update(selector,modifier);
-          var toasted = 'Responsibility added';
-        }
-        else{
-          var selector = {_id: role};
-          var modifier = {$pull: {responsibilities: {responsibilitiesID: respID }}}
-          Roles.update(selector,modifier);
-          var toasted = 'Responsibility removed';
-        }
-
-        var pinTo = $scope.getToastPosition();
-
-        $mdToast.show(
-          $mdToast.simple()
-          .textContent(toasted)
-          .position(pinTo )
-          .hideDelay(3000)
-          .theme('Headmaster')
-        );
-      }
-
-      $scope.switchApp = function(app, installed, role) {
-        console.info('appID', app._id);
-        console.info('switch', installed);
-        console.info('role', role);
-        var appID = app._id;
-        var sort = 1;
-        var appInstalled = null;
-        var found = null;
-        var userAppsHolder = {
-          userID: '',
-          appId: '',
-          appName: '',
-          appLoc: '',
-          desc: ''
-        };
-
-        var selector = {_id: appID};
-        var fromApps = Apps.findOne(selector);
-
-        if(installed){
-          var selector = {_id: role};
-          var modifier = {$push: {apps: {appId: appID }}}
-          Roles.update(selector,modifier);
-          var toasted = 'App added';
-          selector = {profiles_userroleID: role};
-          modifier = {sort: {profiles_firstname: sort}};
-          var userInRoles = Profiles.find(selector,modifier);
-          var userInRoleNum = userInRoles.count();
-          userInRoles.forEach(function(userInRole) {
-            found = false;
-            selector = {userID: userInRole.profiles_userID};
-            modifier = {sort: {appName: sort}};
-            var userApps = Userapps.find(selector, modifier);
-            var userAppsNum = userApps.count();
-            console.info('userAppsNum', userAppsNum);
-            if(userAppsNum > 0){
-              userApps.forEach(function(userapp){
-                if((userapp.appName == appID) || (found == true)){
-                  console.info('appname', userapp.appName );
-                  appInstalled = true;
-                  found = true;
-                }
-                else if((userapp.appName == appID) && (found == false)){
-                  appInstalled = true;
-                  found = true;
-                }
-                else {
-                  appInstalled = false;
-                }
-              });
-            } else {
-              appInstalled = false;
-            }
-            if(appInstalled == false){
-              console.info('fromApps', fromApps);
-              userAppsHolder.userID = userInRole.profiles_userID;
-              userAppsHolder.appId = appID;
-              userAppsHolder.appName = fromApps.name;
-              userAppsHolder.appLoc = fromApps.loc;
-              userAppsHolder.desc = fromApps.desc;
-              var status = Userapps.insert(userAppsHolder);
-              if (status) {
-                console.log('inserted user to userapps');
-
-              } else {
-                console.log('error inserting');
-              }
-              }
-            });
-          }
-        else{
-          var selector = {_id: role};
-          var modifier = {$pull: {apps: {appId: appID }}}
-          Roles.update(selector,modifier);
-          var toasted = 'App removed';
-          console.info('enter else', appID);
-          selector = {profiles_userroleID: role};
-          modifier = {sort: {profiles_firstname: sort}};
-          var userInRoles = Profiles.find(selector,modifier);
-          var userInRoleNum = userInRoles.count();
-          userInRoles.forEach(function(userInRole) {
-            console.info('enter userrole loop', userInRole.profiles_userID);
-              var fromAppsID = appID
-              var profileUser = userInRole.profiles_userID;
-              console.info('profileUser', profileUser);
-              selector = {
-                $and: [
-                  {userID: profileUser},
-                  {appId: appID}
-                ]
-              };
-              var toRemove = Userapps.find(selector);
-              //var toRemoveID = toRemove._id;
-              console.info('toRemove', toRemove);
-              toRemove.forEach(function(toRem){
-                var removeID = toRem._id;
-                selector = {_id: removeID};
-                console.info('toremid', removeID);
-                var status = Userapps.remove(selector);
-                if (status) {
-                  console.log('inserted user to userapps');
-
-                } else {
-                  console.log('error inserting', status);
-                }
-              });
-            });
-        }
-
-        var pinTo = $scope.getToastPosition();
-
-        $mdToast.show(
-          $mdToast.simple()
-          .textContent(toasted)
-          .position(pinTo )
-          .hideDelay(3000)
-          .theme('Headmaster')
-        );
       }
 
 
@@ -314,141 +137,10 @@ class ShowcategoriesCtrl{
           $scope.show = !$scope.show;
       };
 
-      $scope.uploadFiles = function(file, errFiles, reqID, reqName) {
-        console.log('pasok');
-        $scope.progress = 0;
-        $scope.uploadingNow = true;
-        $scope.f = file;
-        $scope.errFile = errFiles && errFiles[0];
-        $scope.fileHere = file.name;
-        var requirementname = reqName;
-        var requirementID = reqID;
-        $scope.doneSearching = true;
-        if (file) {
-          console.log(file);
-
-
-          $scope.uploader.send(file, function (error, downloadUrl) {
-            if (error) {
-              // Log service detailed response.
-              console.error('Error uploading', $scope.uploader);
-              alert (error);
-            }
-            else {
-              var filename = 'Bayad Center files';
-              var applicantID = 'qZa2KrWWtXamocGA3';
-              var selector = {_id: applicantID};
-              var modifier = {$push: {documents:
-                {
-                  downloadUrl: downloadUrl,
-                  filename: filename,
-                  requirement: requirementname,
-                  requirementID: requirementID
-                }
-              }};
-              Feescategories.update(selector,modifier);
-              console.log('success: ' + downloadUrl);
-              var progress = 60;
-              Meteor.call('upsertApplicantFromDocs', applicantID, progress, function(err, detail) {
-                  var detail = detail;
-                  console.log(detail);
-                    if (err) {
-                      var toasted = 'Error uploading file.';
-                      var pinTo = $scope.getToastPosition();
-                      $mdToast.show(
-                        $mdToast.simple()
-                        .textContent(toasted)
-                        .position(pinTo )
-                        .hideDelay(3000)
-                        .theme('Admissions')
-                        .action('HIDE')
-                        .highlightAction(true)
-                        .highlightClass('md-accent')
-                      );
-                      $scope.doneSearching = false;
-                   } else {
-                     var toasted = 'New document uploaded.';
-                     var pinTo = $scope.getToastPosition();
-                     $mdToast.show(
-                       $mdToast.simple()
-                       .textContent(toasted)
-                       .position(pinTo )
-                       .hideDelay(3000)
-                       .theme('Admissions')
-                       .action('HIDE')
-                       .highlightAction(true)
-                       .highlightClass('md-accent')
-                     );
-                     $scope.doneSearching = false;
-
-                   }
-                });
-            }
-            });
-            file.upload = Upload.upload({
-                url: '/uploads',
-                data: {file: file}
-            });
-            var filename = file.name;
-            var path = '/uploads';
-            var type = file.type;
-            switch (type) {
-              case 'text':
-              //tODO Is this needed? If we're uploading content from file, yes, but if it's from an input/textarea I think not...
-              var method = 'readAsText';
-              var encoding = 'utf8';
-              break;
-              case 'binary':
-              var method = 'readAsBinaryString';
-              var encoding = 'binary';
-              break;
-              default:
-              var method = 'readAsBinaryString';
-              var encoding = 'binary';
-              break;
-            }
-            /*Meteor.call('uploadFileFromClient', filename, path, file, encoding, function(err) {
-              if (err) {
-                console.log(err);
-              } else {
-                console.log('success maybe?');
-              }
-            });*/
-
-
-            file.upload.then(function (response) {
-                $timeout(function () {
-                  console.log(response);
-                    file.result = response.data;
-                    $scope.Fresult = response.config.data.file;
-
-                    var errs = 0;
-                    var Fresult = $scope.Fresult;
-                    console.info('$scope', Fresult);
-                });
-            }, function (response) {
-                if (response.status > 0)
-                    $scope.errorMsg = response.status + ': ' + response.data;
-                else {
-                  console.log('else pa');
-                }
-            }, function (event) {
-                file.progress = Math.min(100, parseInt(100.0 *
-                                         event.loaded / event.total));
-                $scope.progress = file.progress;
-                if ($scope.progress == 100) {
-                  $scope.uploadingNow = false;
-                }
-                console.log($scope.progress);
-            });
-
-        }
-    };
-
 
       $scope.navRight = function () {
           $scope.page2 = $scope.page2 + 1;
-          var totalroles = Roles.find().count();
+          var totalroles = Feescategories.find().count();
           console.info('total', totalroles);
           var lastPage = totalroles / 5;
           console.info('lastpage', lastPage);
@@ -464,7 +156,7 @@ class ShowcategoriesCtrl{
 
       $scope.navLeft = function () {
           $scope.page2 = $scope.page2 - 1;
-          var totalroles = Roles.find().count();
+          var totalroles = Feescategories.find().count();
           console.info('total', totalroles);
           var lastPage = totalroles / 5;
           console.info('lastpage', lastPage);
@@ -476,6 +168,10 @@ class ShowcategoriesCtrl{
           else{
             $scope.last = true;
           }
+      };
+
+      $scope.showMoreAll = function () {
+          $scope.showAll = !$scope.showAll;
       };
 
       $scope.showRole = function (selectedRole) {
@@ -522,16 +218,36 @@ class ShowcategoriesCtrl{
           },
           transclude: true,
           controller: function($mdDialog, passedId, passedRole,$scope) {
-              $scope.subscribe('users');
+              $scope.subscribe('usersStudent');
+              $scope.subscribe('profilesStudent', function () {
+                  return [$scope.getReactively('searchText')];
+              });
+
               $scope.helpers({
                 users(){
                       var sort  = 1;
-                      var selector = {};
+                      var selector = {role: 'student'};
                       var users = Meteor.users.find(
                             selector, { sort: {name: sort} }
                         );
+                        console.info('users', users);
+                      var count = users.count();
+                      console.info('count', count);
                       return users;
+                  },
+               profiles(){
+                    //var sort = 1;
+                    //var selector = {};
+                    //var modifier= {sort: {profiles_firstname: sort}};
+                    var type = 'Student';
+                    var selector = {profiles_type: type};
+                    var profiles = Profiles.find(selector);
+                    var count = profiles.count();
+                    console.info('profiles', profiles);
+                    console.info('count', count);
+                    return profiles;
                   }
+
               });
 
 
@@ -539,108 +255,68 @@ class ShowcategoriesCtrl{
             $scope.passed = passedRole;
             $scope.passedId = passedId;
 
-            $scope.createRole = function(details) {
+            $scope.createFees = function(details) {
               var userID = details.user._id;
-              var userID2 = details.user._id;
-              var passedID = $scope.passedId ;
-
-              var userAppsHolder = {
-                userID: '',
-                appId: '',
-                appName: '',
-                appLoc: '',
-                desc: ''
-              };
+              var userName = details.user.name;
+              var passedID = $scope.passedId;
+              console.info('feesid', userID);
+              var selector = {profiles_userID: userID};
+              var profiles = Profiles.findOne(selector);
+              var userPhoto = profiles.profiles_profilephoto;
+              var userBranch = profiles.profiles_branch;
+              var userBranchID = profiles.profiles_branchID;
+              console.info('photo', userBranch);
 
               $scope.done = true;
               $scope.existing = false;
               $scope.createdNow = !$scope.createdNow;
+              $scope.upserted = false;
 
 
-              Meteor.call('upsertNewRoleFromAdmin', userID, passedID, function(err, stats) {
+              Meteor.call('upsertStudentToFees', userID, userPhoto, userBranch, userBranchID, userName, passedID, function(err, stats) {
                 if (err) {
                   console.log('error upsert role to meteor.user');
-               }
-              });
-
-              //var status = createUserFromAdmin(details);
-              $scope.register = Meteor.call('upsertProfileFromRole', userID, passedID, function(err, userID) {
-              if (err) {
-                $scope.done = false;
-                $scope.createdNow = !$scope.createdNow;
-                $scope.existing = true;
-                window.setTimeout(function(){
-                  $scope.$apply();
-                },2000);
-                  //do something with the id : for ex create profile
-             } else {
-                $scope.registered = details;
-                $scope.createdNows = !$scope.createdNows;
-                $scope.done = false;
-                //simulation purposes
-
-                //delete old apps
-                var selector = {userID: userID2};
-                var oldApps = Userapps.find(selector);
-                var oldAppsCount = oldApps.count();
-                console.info('oldappscount', oldAppsCount);
-                oldApps.forEach(function(oldApp){
-                  var oldAppId = oldApp._id;
-                  selector = {_id: oldAppId}
-                  var status = Userapps.remove(selector);
-                  if(status){
-                    console.info('success deleting app', oldAppId);
-                  }
-                  else{
-                    console.info('error deleting app', oldAppId);
-                  }
-                })
-
-                //get role apps
-                selector = {_id: passedID};
-                var newRoleApps = Roles.find(selector);
-                var newRoleAppsCount = newRoleApps.count();
-                console.info('newRoleAppsCount', newRoleAppsCount);
-                newRoleApps.forEach(function(newRoleApp){
-                  var newRoleAppsLength = newRoleApp.apps.length;
-                  console.info('newRoleAppsLength', newRoleAppsLength);
-
-                  for(i=0;i<newRoleAppsLength;i++){
-                    var appID = newRoleApp.apps[i].appId;
-                    selector = {_id: appID};
-                    var fromApps = Apps.findOne(selector);
-
-                    userAppsHolder.userID = userID2;
-                    userAppsHolder.appId = appID;
-                    userAppsHolder.appName = fromApps.name;
-                    userAppsHolder.appLoc = fromApps.loc;
-                    userAppsHolder.desc = fromApps.desc;
-
-                    var status = Userapps.insert(userAppsHolder);
-                    if (status) {
-                      console.log('inserted user to userapps');
-
-                    } else {
-                      console.log('error inserting');
-                    }
-                    }
-
-                  })
-
+                  $scope.done = false;
+                  $scope.createdNow = !$scope.createdNow;
+                  $scope.existing = true;
+                  $scope.upserted = false;
                   window.setTimeout(function(){
                     $scope.$apply();
                   },2000);
-                }
+             }else {
+               Meteor.call('upsertNewFeesFromCollect', userID, passedID, function(err, stats) {
+                 if (err) {
+                   console.log('error upsert role to meteor.user');
+                   $scope.done = false;
+                   $scope.createdNow = !$scope.createdNow;
+                   $scope.existing = true;
+                   window.setTimeout(function(){
+                     $scope.$apply();
+                   },2000);
+              }else {
+                $scope.registered = details;
+                $scope.createdNows = !$scope.createdNows;
+                $scope.done = false;
+                window.setTimeout(function(){
+                  $scope.$apply();
+                },2000);
+              }
+             });
+             }
            });
 
-         }
+
+          }
+
+
+
 
 
             $scope.closeDialog = function() {
               $mdDialog.cancel();
             };
           },
-          templateUrl: 'client/components/collect/showcategories/showcategories.html',
+          templateUrl: 'client/components/collect/showcategories/assignstudent.html',
           targetEvent: $event
         });
       }

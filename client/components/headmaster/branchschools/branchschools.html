@@ -1,10 +1,10 @@
-<md-card flex>
+<!-- <md-card flex>
 <md-toolbar class="md-table-toolbar md-primary" ng-hide="filter.show || selected.length" flex>
 <div class="md-toolbar-tools">
-  <h2 ng-show="$root.userLoggedInRole == 'superadmin'" class="md-title">{{totalBranches}} Homeschools</h2>
+  <h2 ng-show="$root.userLoggedInRole == 'superadmin'" class="md-title">{{totalBranches}} Branches</h2>
   <h2 ng-show="$root.userLoggedInRole != 'superadmin'" class="md-title">Hello!</h2>
-  <div flex="" class="flex"></div>
-  <md-button class="md-icon-button" aria-label="Search" ng-click="filterShow()" ng-show="$root.userLoggedInRole == 'superadmin'">
+  <div flex></div>
+  <md-button class="md-icon-button" aria-label="Search" ng-click="filterShow()" ng-if="$root.userLoggedInRole == 'superadmin'">
     <md-icon md-svg-icon="../../assets/img/white_search24.svg"></md-icon>
   </md-button>
 </div>
@@ -57,14 +57,56 @@
       <td md-cell>{{branch.branch_name}}</td>
       <td md-cell>{{branch.branches_schooladminname == '' ? 'none' : branch.branches_schooladminname}}</td>
       <td md-cell>{{branch.branches_address}}</td>
-      <td md-cell>{{branch.branches_city}}</td>
+      <td md-cell>{{branch.branches_city}}</td> -->
       <!-- <td md-cell>{{user.name}}</td>
       <td md-cell>{{user.username}}</td>
       <td md-cell>{{user.emails[0].address}}</td>
       <td md-cell>{{user.createdAt | date :'medium'}}</td> -->
-    </tr>
+    <!-- </tr>
   </tbody>
 </table>
 </md-table-container>
-<md-table-pagination ng-show="$root.userLoggedInRole == 'superadmin'" md-limit="perPage" md-limit-options="[5, 10, 15]" md-page="page" md-total="{{totalBranches}}" md-on-paginate="branches" md-page-select></md-table-pagination>
-</md-card>
+<md-table-pagination ng-show="$root.userLoggedInRole == 'superadmin'" md-limit="perPage" md-limit-options="[5, 10, 15]" md-page="page" md-total="{{totalBranches}}" md-on-paginate="branches" md-page-select></md-table-pagination ng-hide="branch.branches_type == 'parent'">
+</md-card> -->
+<h2 style="font-weight:normal; color:#555; margin-bottom: 0 !important; margin-top: 0 !important;" >Branch School{{totalBranches > 1 ? 's' : ''}}</h2>
+
+  <md-card ng-repeat="branch in branches"  style="margin-bottom: 1px !important; margin-top: 0 !important;" ng-hide="(($root.userLoggedInRole != 'superadmin' && branch.branches_type == 'parent') || ($root.userLoggedInRole != 'superadmin' && branch._id != $root.userLoggedInBranch) || ($root.userLoggedInRole == 'superadmin' && branch._id != $root.userLoggedInBranch && branch.branches_type == 'parent') || (branch.branches_type == 'parent'))" >
+    <md-card-header>
+      <md-card-avatar>
+        <md-tooltip md-direction="bottom">
+          {{branch.branches_schooladminname}}
+        </md-tooltip>
+        <img class="md-user-avatar" src="{{branch.userpic}}"/>
+      </md-card-avatar>
+      <md-card-header-text>
+        <span class="md-title">{{branch.branch_name}}</span>
+        <span class="md-subhead">{{branch.branches_address}}, {{branch.branches_city}}</span>
+      </md-card-header-text>
+      <md-menu md-position-mode="target-right target" md-offset="0 48">
+        <md-button class="md-icon-button" aria-label="Apps" ng-click="$mdOpenMenu($event)">
+          <md-tooltip md-direction="bottom">
+            more
+          </md-tooltip>
+          <md-icon md-svg-icon="../../assets/img/black_more24.svg"></md-icon>
+        </md-button>
+        <md-menu-content width="2" >
+          <md-menu-item >
+            <md-button ng-click="openSchool(branch)">
+                <div layout="row" flex>
+                  <p flex>View school</p>
+                  <!-- <md-icon md-svg-icon="../../assets/img/black_launch24.svg"></md-icon> -->
+                </div>
+            </md-button>
+          </md-menu-item>
+          <md-menu-item >
+            <md-button ng-click="openDelete($event, branch)">
+                <div layout="row" flex>
+                  <p flex>Delete</p>
+                  <!-- <md-icon md-svg-icon="../../assets/img/black_delete24.svg"></md-icon>-->
+                </div>
+            </md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+    </md-card-header>
+  </md-card>

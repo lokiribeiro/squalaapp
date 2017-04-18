@@ -22,7 +22,7 @@ class SchoolstudentsCtrl{
       $scope.perPage = 10;
       $scope.page = 1;
       $scope.page2 = 1;
-      $scope.sort = 1;
+      $scope.sort = -1;
       $scope.searchText = null;
       $scope.searchText2 = null;
       $scope.partyID = null;
@@ -53,10 +53,15 @@ class SchoolstudentsCtrl{
             //var sort = 1;
             //var selector = {};
             //var modifier= {sort: {profiles_firstname: sort}};
+            var limit = parseInt($scope.getReactively('perPage'));
+            var skip  = parseInt(( $scope.getReactively('page')-1 )* $scope.perPage);
+            var sort  = $scope.getReactively('sort');
             var branchID = $scope.branchID;
             var type = 'Student';
             var selector = {profiles_branchID: branchID, $and: [{profiles_type: type}]};
-            var profiles = Profiles.find(selector);
+            var profiles = Profiles.find(
+              selector,  { limit: limit, skip: skip, sort: {profiles_lastname: sort} }
+            );
             var count = profiles.count();
             console.info('profiles', profiles);
             console.info('count', count);

@@ -1,0 +1,51 @@
+<md-toolbar class="md-table-toolbar md-default"  flex="100" ng-show="filter.show">
+<div class="md-toolbar-tools">
+  <form name="filter.form" flex>
+    <md-input-container md-no-float class="md-block">
+    <md-icon md-svg-icon="../../assets/img/black_search24.svg"></md-icon>
+    <input type="text" ng-model="searchText" placeholder="search">
+    </md-input-container>
+  </form>
+  <md-button class="md-icon-button" aria-label="close" ng-click="closeFilter()">
+  <md-tooltip md-direction="bottom">
+    Close
+  </md-tooltip>
+  <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
+  </md-button>
+</div>
+</md-toolbar>
+
+<!-- <md-toolbar class="md-table-toolbar md-primary md-hue-1" flex="100" ng-show="selected.length">
+<div class="md-toolbar-tools" layout-align="space-between center">
+  <div ng-model="selected" flex="80">selected</div> -->
+  <!--<md-button class="md-icon-button" aria-label="edit" ng-click="openProfile2(selected)">
+    <md-tooltip md-direction="bottom">
+      View Account
+    </md-tooltip>
+    <md-icon md-svg-icon="../../assets/img/white_launch24.svg"></md-icon>
+  </md-button>-->
+  <!-- <md-button md-no-ink class="md-primary md-raised" aria-label="unassign" ng-click="removeUser($event, selected)" ng-show="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
+    MARK
+  </md-button>
+</div>
+</md-toolbar> -->
+<md-divider></md-divider>
+<md-table-container>
+  <table md-table md-row-select ng-model="selected" md-progress="promise" flex>
+    <thead md-head md-order="query.order" md-on-reorder="feescategories" class="md-head">
+      <tr md-row>
+        <th md-column md-order-by="profile.profiles_firstname" ng-click="changeSort()" ><span>Date</span></th>
+        <th md-column ><span>Amount Paid</span></th>
+        <th md-column ><span>Applied To</span></th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="user in users track by $index"  md-body>
+      <tr md-row md-select="feescategory" md-select-id="statement.appledToMonth" ng-repeat="statement in user.statements track by $index" md-auto-select ng-cloak>
+        <td md-cell>{{statement.date | date :'medium'}}</td>
+        <td md-cell>{{statement.amount  | currency : 'P ' : 2}}</td>
+        <td md-cell>Tuition and Fees: {{statement.appliedToMonth}} </td>
+      </tr>
+    </tbody>
+  </table>
+</md-table-container>
+<md-table-pagination  md-limit="perPage" md-page="page" md-total="{{totalProfiles}}" md-on-paginate="profiles" md-page-select></md-table-pagination>

@@ -1,0 +1,38 @@
+<md-dialog aria-label="Delete user" layout="column" layout-align="start start" flex="40">
+    <md-dialog-content  layout-wrap layout-fill layout-padding flex>
+    <div layout="row" flex>
+      <h2 style="font-weight:normal" ng-hide="deletedNow">Delete lesson</h2>
+      <h2 style="font-weight:normal" ng-if="done">Deleting lesson</h2>
+      <h2 style="font-weight:normal" ng-if="deletedNows"><md-icon md-svg-icon="../../assets/img/blue_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Lesson Deleted</h2>
+      <span flex></span>
+    </div>
+    <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+
+    <span layout="column" layout-align="end center" flex ng-hide="deletedNow">
+      <span layout="row">
+      <p>
+        Note: All data associated with this lesson will be deleted. All existing Vault data will also be deleted.
+      </p>
+      </span>
+    </span>
+    </md-dialog-content>
+    <md-dialog-actions  layout="row" layout-fill>
+
+      <!-- hide these -->
+    <md-button ng-hide="deletedNow" ng-click="cancelNow()">
+      CANCEL
+    </md-button>
+    <span flex ng-hide="deletedNow">
+    </span>
+    <md-button type="submit" ng-click="removeuserNow(userDel)" ng-hide="deletedNow" class="md-primary">
+        DELETE LESSON
+    </md-button>
+      <span flex ng-if="deletedNows">
+      </span>
+      <!-- end hide -->
+      <md-button ng-if="deletedNows" ng-click="cancelNow()" class="md-primary">
+        DONE
+      </md-button>
+
+    </md-dialog-actions>
+</md-dialog>

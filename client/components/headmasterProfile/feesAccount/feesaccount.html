@@ -1,0 +1,43 @@
+
+<div layout="row" layout-align="start start" layout-wrap ng-repeat="feescategory in feescategories">
+  <div layout="column" layout-align="start start"  flex-gt-md="50" flex="100" flex-gt-xs="100" layout-padding >
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="feescategory.feesName">FEES CATEGORY</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-if="feescategory.feesName">{{feescategory.feesName}}</h5>
+
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="feescategory.code">FEE CODE</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-if="feescategory.code" ng-hide="show">{{feescategory.code}}</h5>
+
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="feescategory.region">REGION</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-if="feescategory.region" ng-hide="show">{{feescategory.region}}</h5>
+
+  </div>
+  <div layout="column" layout-align="start start"  flex-gt-md="50" flex="100" flex-gt-xs="100" layout-padding>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="feescategory.tuitionfee">TUITION FEE</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-if="feescategory.tuitionfee" ng-hide="show">{{feescategory.tuitionfee | currency : "Php " : 2}}</h5>
+
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="feescategory.shift">SHIFT</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-if="feescategory.shift" ng-hide="show">{{feescategory.shift}}</h5>
+
+  </div>
+</div>
+<div layout="row" layout-align="start start" layout-padding layout-wrap ng-hide="count">
+  <h3 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-hide="count">No fees profile yet. </h3>
+</div>
+
+
+
+
+<div layout="row" ng-repeat="feescategory in feescategories">
+  <md-button class="md-primary" md-no-ink aria-label="create" ng-click="openCollect()" ng-hide="($root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin') && show">
+    view more
+  </md-button>
+  <span flex></span>
+  <md-button class="md-default" md-no-ink aria-label="create" ng-click="editNow()" ng-if="show">
+    Cancel
+  </md-button>
+  <md-button class="md-primary" md-no-ink aria-label="create" ng-click="editNow()" ng-if="show">
+    Save
+  </md-button>
+</div>
+
+<!-- <md-divider></md-divider>-->

@@ -1,0 +1,69 @@
+<div layout="row" layout-align="start start" layout-fill layout-wrap flex layout-padding class="inset">
+  <div flex-gt-md="20" flex="100" flex-gt-xs="100">
+    <md-card>
+    <md-list flex layout-fill >
+        <md-subheader >
+          <div layout-fill layout="row" layout-align="space-between center" >
+          <md-icon md-svg-icon="../../assets/img/black_gears24.svg"></md-icon>
+          <span flex> Control Panel</span>
+        </div>
+        </md-subheader>
+        <md-list-item class="md-2-line" ng-hide="show">
+          <div class="md-list-item-text" layout="column" >
+            <md-button md-no-ink class="md-primary" ngf-select="uploadFiles($file, $invalidFiles)" aria-label="transfer" ngf-max-height="1000">
+              Upload File
+            </md-button>
+          </div>
+        </md-list-item>
+    </md-list>
+  </md-card>
+</div>
+
+
+<div flex-gt-md="80" flex="100" flex-gt-xs="100">
+  <md-card>
+    <md-toolbar class="md-table-toolbar md-default" flex ng-show="selected.feesName === ''">
+      <div class="md-toolbar-tools" layout-align="start center">
+          <p>No selected fee        </p>
+    </div>
+    </md-toolbar>
+
+    <md-toolbar class="md-table-toolbar md-default" flex ng-repeat="feesupload in feesuploads">
+      <div class="md-toolbar-tools" >
+        <md-icon md-svg-icon="../../assets/img/black_file24.svg"></md-icon>
+          <h3 flex>{{ feesupload.filename}}</h3>
+          <h6 >{{ feesupload.date | date :'medium'}}</h6>
+          <a target="_self" href="{{feesupload.downloadUrl}}" download="{{feesupload._id}}">
+            <md-button class="md-icon-button " aria-label="transfer">
+              <md-tooltip md-direction="bottom">
+                Download material
+              </md-tooltip>
+          <md-icon md-svg-icon="../../assets/img/black_download24.svg"></md-icon>
+        </md-button>
+          </a>
+    </div>
+    </md-toolbar>
+
+    <md-list-item class="md-3-line card-1" layout-fill flex flex-gt-sm="45" ng-repeat="resource in lessonguide.resources track by $index" style="margin: 4px 4px 4px 4px !important;">
+      <md-icon md-svg-icon="../../assets/img/black_file24.svg"></md-icon>
+      <div class="md-list-item-text" layout="column">
+        <h3>{{ resource.requirement}}</h3>
+        <p>{{ resource.filename}}</p>
+      </div>
+      <a target="_self" href="{{resource.downloadUrl}}" download="{{lessonguide._id}}">
+        <md-button class="md-icon-button " aria-label="transfer">
+          <md-tooltip md-direction="bottom">
+            Download material
+          </md-tooltip>
+      <md-icon md-svg-icon="../../assets/img/black_download24.svg"></md-icon>
+    </md-button>
+      </a>
+    </md-list-item>
+
+
+    <div layout="row" layout-align = "center center" ng-show="doneSearching" layout-fill >
+      <md-progress-circular md-mode="indeterminate"  ></md-progress-circular>
+    </div>
+</md-card>
+</div>
+</div>

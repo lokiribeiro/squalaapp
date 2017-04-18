@@ -1,6 +1,7 @@
 import {app} from '/client/app.js';
 
 import Userapps from '/imports/models/userapps.js';
+import Profiles from '/imports/models/profiles.js';
 
 class NavbarCtrl{
 
@@ -8,6 +9,7 @@ class NavbarCtrl{
       'ngInject';
 
       $scope.userId = Meteor.userId();
+      $scope.profileID = $scope.userId;
 
 
       console.info('thisid', $scope.userId);
@@ -16,13 +18,28 @@ class NavbarCtrl{
       //$scope.stateHolder = null;
       $scope.stateHolder = $stateParams.stateHolder;
 
-      $scope.subscribe('userapps4', function () {
+      $scope.subscribe('userapps4');
+
+      $scope.subscribe('profiles2', function () {
           return [$scope.getReactively('userId')];
       });
 
       $scope.helpers({
+        profiles() {
+              var profileID = $scope.getReactively('userId');
+              var selector = {profiles_userID : profileID};
+              var profiles = Profiles.find(selector);
+              var roleName = '';
+              console.info('profiles', profiles);
+              profiles.forEach(function(profile) {
+                $scope.rolesID = profile.profiles_userroleID;
+              });
+              var count = profiles.count();
+              console.log(count);
+              return profiles;
+      },
           userappsMenu() {
-            var userID = $scope.getReactively('userId');
+            var userID = $scope.userId;
             var sort  = $scope.sort;
             var selector = {userID: userID};
             var modifier = {sort: {appName: sort}};

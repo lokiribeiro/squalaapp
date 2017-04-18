@@ -76,6 +76,9 @@ class headmastercreateschoolCtrl{
         branch.branches_schooladminname = details.schooladmin.name;
         branch.branches_type = details.schooltype;
 
+        //branch.userpic = details.schooladmin.userpic;
+        branch.userpic = '../../assets/img/profiles/user.png';
+
         var profilesID = details.schooladmin._id;
 
         console.info('profilesID', profilesID);
@@ -91,32 +94,39 @@ class headmastercreateschoolCtrl{
         console.info('status', branchID);
         console.info('branchname', branchName);
 
-        Meteor.call('upsertNewBranchFromAdmin', profileID, branchID, function(err, detailss) {
+        if(branch.branches_schooladminname && branch.branches_type){
+          Meteor.call('upsertNewBranchFromAdmin', profileID, branchID, function(err, detailss) {
+            if (err) {
+                //do something with the id : for ex create profile
+              console.log('error upserting branch to meteor.user()');
+           }
+          });
+
+          Meteor.call('upsertProfileFromAdmin', profileID, branchID, branchName, userType, function(err, detail) {
           if (err) {
               //do something with the id : for ex create profile
-            console.log('error upserting branch to meteor.user()');
+              $scope.done = false;
+              $scope.createdNow = !$scope.createdNow;
+              $scope.existing = true;
+              window.setTimeout(function(){
+              $scope.$apply();
+            },2000);
+         } else {
+           $scope.registered = details;
+           $scope.createdNows = !$scope.createdNows;
+           $scope.done = false;
+           //simulation purposes
+           window.setTimeout(function(){
+           $scope.$apply();
+         },2000);
          }
-        });
+       });
+        } else {
+          $scope.loginerror = 'Fields cannot be empty';
+              console.info('err: ' ,   $scope.loginerror );
+        }
 
-        Meteor.call('upsertProfileFromAdmin', profileID, branchID, branchName, userType, function(err, detail) {
-        if (err) {
-            //do something with the id : for ex create profile
-            $scope.done = false;
-            $scope.createdNow = !$scope.createdNow;
-            $scope.existing = true;
-            window.setTimeout(function(){
-            $scope.$apply();
-          },2000);
-       } else {
-         $scope.registered = details;
-         $scope.createdNows = !$scope.createdNows;
-         $scope.done = false;
-         //simulation purposes
-         window.setTimeout(function(){
-         $scope.$apply();
-       },2000);
-       }
-     });
+
 
     }
 

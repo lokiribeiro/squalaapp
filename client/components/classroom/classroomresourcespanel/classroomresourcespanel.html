@@ -1,0 +1,71 @@
+<md-expansion-panel-group md-component-id="lesseonguide.createdAt" >
+<div  ng-repeat="lessonguide in lessonguides track by $index" layout="column" layout-align="center center">
+<md-expansion-panel md-component-id="{{lessonguide._id}}" class="cardapp" layout-fill>
+    <md-expansion-panel-collapsed layout="row" layout-align="center center" layout-fill>
+      <div class="md-title">Lesson Outline</div>
+      <div class="md-summary">{{lessonguide.lessonTitle}}</div>
+      <md-expansion-panel-icon></md-expansion-panel-icon>
+    </md-expansion-panel-collapsed>
+    <md-expansion-panel-expanded>
+      <md-expansion-panel-header ng-click="$panel.collapse()" >
+        <div class="md-title">Lesson Outline</div>
+        <div class="md-summary"></div>
+        <md-expansion-panel-icon></md-expansion-panel-icon>
+      </md-expansion-panel-header>
+      <md-expansion-panel-content>
+        <span layout="row" layout-align="start start" layout-fill layout-wrap >
+          <span flex="20">
+            <h4 style="color: #555;">Basic info</h4>
+          </span>
+          <span flex="80">
+            <p>Name: {{lessonguide.lessonTitle}}</p>
+            <p>Objectives: {{lessonguide.lessonDescription}}</p>
+          </span>
+        </span>
+        <span layout="row" layout-align="start start" layout-fill layout-wrap >
+          <span flex="20">
+            <h4 style="color: #555;">Resources</h4>
+          </span>
+          <span flex="80">
+            <span  layout-padding layout="row" layout-align="space-between center" layout-fill layout-wrap>
+              <md-list-item class="md-3-line card-1" layout-fill flex flex-gt-sm="45" ng-repeat="resource in lessonguide.resources track by $index" style="margin: 4px 4px 4px 4px !important;">
+                <md-icon md-svg-icon="../../assets/img/black_file24.svg"></md-icon>
+                <div class="md-list-item-text" layout="column">
+                  <h3>{{ resource.requirement}}</h3>
+                  <p>{{ resource.filename}}</p>
+                </div>
+                <a target="_self" href="{{resource.downloadUrl}}" download="{{lessonguide._id}}">
+                  <md-button class="md-icon-button " aria-label="transfer">
+                    <md-tooltip md-direction="bottom">
+                      Download material
+                    </md-tooltip>
+                <md-icon md-svg-icon="../../assets/img/black_download24.svg"></md-icon>
+              </md-button>
+                </a>
+              </md-list-item>
+         </span>
+         <div layout="row" layout-align = "center center" ng-show="doneSearching" layout-fill >
+           <md-progress-circular md-mode="indeterminate"  ></md-progress-circular>
+         </div>
+
+          </span>
+        </span>
+      </md-expansion-panel-content>
+      <md-expansion-panel-footer ng-if="$root.userLoggedInRole == 'superadmin'">
+        <div class="md-default md-toolbar-tools" >
+          <span flex></span>
+          <md-button class="md-fab md-default" ngf-select="uploadFiles($file, $invalidFiles, lessonguide)" aria-label="transfer" ngf-max-height="1000">
+            <md-tooltip md-direction="bottom">
+              Upload
+            </md-tooltip>
+            <md-icon md-svg-icon="../../assets/img/white_upload24.svg"></md-icon>
+          </md-button>
+          <md-button ng-click="openDialog($event, lessonguide)" md-no-ink class="md-accent">
+            Edit
+          </md-button>
+        </div>
+      </md-expansion-panel-footer>
+    </md-expansion-panel-expanded>
+</md-expansion-panel>
+</div>
+</md-expansion-panel-group>

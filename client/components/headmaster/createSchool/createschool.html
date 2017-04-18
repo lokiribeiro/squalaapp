@@ -1,28 +1,22 @@
 <md-dialog style="opacity: 1 !important;" aria-label="Create a new user" layout="column" layout-align="start center" flex="100">
-  <form name="createuserForm">
+  <form name="createuserForm" ng-submit="createSchool(create.register)">
     <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
     <div layout="row" flex>
       <h2 style="font-weight:normal" ng-hide="createdNow">Add school </h2>
       <h2 style="font-weight:normal" ng-if="done">Creating school</h2>
       <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Created new school</h2>
       <span flex></span>
-        <md-button class="md-icon-button" aria-label="Apps" ng-click="closeDialog()" style="position:absolute; top:0; right:0; !important" ng-hide="done">
-        <md-tooltip md-direction="bottom">
-          Close
-        </md-tooltip>
-        <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
-        </md-button>
     </div>
     <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
 
     <!-- hide here -->
     <span layout="column" ng-hide="createdNow" layout-fill>
     <md-input-container flex="100"  md-no-float class="md-block" style="margin: 10px 0 !important;">
-        <input ng-model="create.register.schoolname" aria-label="schoolname" type="text" placeholder="School name" ng-required="true">
+        <input ng-model="create.register.schoolname" aria-label="schoolname" type="text" placeholder="School name" required>
     </md-input-container>
     <md-input-container class="md-block" style="margin: 10px 0 !important;">
      <!-- Use floating placeholder instead of label -->
-     <md-select ng-model="create.register.schooltype" placeholder="School Type" class="md-no-underline" ng-required="true">
+     <md-select ng-model="create.register.schooltype" placeholder="School Type" class="md-no-underline" required>
           <md-option value="parent">Parent</md-option>
           <md-option value="branch">Branch</md-option>
       </md-select>
@@ -31,17 +25,17 @@
     <!-- address -->
       <span layout="row" flex ng-hide="createdNow" layout-fill>
       <md-input-container  md-no-float class="md-block" style="margin: 10px 0 !important;">
-       <input ng-model="create.register.address" aria-label="firstname" type="text" placeholder="Street name" ng-required>
+       <input ng-model="create.register.address" aria-label="firstname" type="text" placeholder="Street name" required>
       </md-input-container>
       <md-input-container md-no-float class="md-block" style="margin: 10px 0 !important;">
-       <input ng-model="create.register.city" aria-label="lastname" type="text" placeholder="City" ng-required="true">
+       <input ng-model="create.register.city" aria-label="lastname" type="text" placeholder="City" required>
       </md-input-container>
     </span>
     <span layout="column" ng-hide="createdNow" layout-fill>
     <md-input-container flex="100"  md-no-float class="md-block" style="margin: 10px 0 !important;">
       <md-icon md-svg-icon="../../assets/img/black_person24.svg"></md-icon>
-      <md-select placeholder="School Admin" aria-label="address" ng-model="create.register.schooladmin" ng-required="true">
-        <md-option ng-value="user" ng-repeat="user in users">{{user.name}}</md-option>
+      <md-select placeholder="School Admin" aria-label="address" ng-model="create.register.schooladmin" required>
+        <md-option ng-value="user" ng-repeat="user in users" >{{user.name}}</md-option>
       </md-select>
     </md-input-container>
     </span>
@@ -51,6 +45,9 @@
     <!-- end here -->
     <md-toolbar ng-show="existing" class="md-primary" layout="row" layout-fill layout-padding layout-margin>
     <p class="md-body-1">School already registered</p>
+    </md-toolbar>
+    <md-toolbar ng-if="loginerror" class="md-accent" layout="row" layout-fill layout-padding layout-margin>
+      <p class="md-body-1">{{ loginerror }}</p>
     </md-toolbar>
     <span layout="column" layout-align="start start" flex ng-if="createdNows">
       <span layout="row">
@@ -71,7 +68,7 @@
     <md-button ng-hide="createdNow" ng-click="closeDialog()">
       CANCEL
     </md-button>
-      <md-button type="submit" ng-click="createSchool(create.register)" ng-hide="createdNow" class="md-primary">
+      <md-button type="submit" ng-hide="createdNow" class="md-primary">
         CREATE
       </md-button>
       <!-- end hide -->
