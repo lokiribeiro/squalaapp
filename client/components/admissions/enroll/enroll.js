@@ -40,32 +40,7 @@ class EnrollCtrl{
         } else {
           $scope.tooltipVisible = $scope.isOpen;
         }
-      });
-
-      $scope.items = [
-        { name: "New application", icon: "../../assets/img/white_addperson24.svg", direction: "left" }
-      ];
-
-
-      $scope.openDialog = function($event, item) {
-        // Show the dialog
-        $mdDialog.show({
-          clickOutsideToClose: false,
-          escapeToClose: true,
-          controller: function($mdDialog) {
-            // Save the clicked item
-            $scope.FABitem = item;
-            // Setup some handlers
-            $scope.close = function() {
-              $mdDialog.cancel();
-            };
-          },
-          controllerAs: 'admissionsnewapplications',
-          controller: EnrollCtrl,
-          template: '<admissionsnewapplications></admissionsnewapplications>',
-          targetEvent: $event
-        });
-      }
+      });      
 
 
     }

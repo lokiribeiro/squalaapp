@@ -122,7 +122,7 @@ class CollectCtrl{
       }
 
       $scope.items = [
-        //{ name: "Add fees category", icon: "../../assets/img/white_roleadd24.svg", direction: "left" },
+        { name: "Add fees category", icon: "../../assets/img/white_roleadd24.svg", direction: "left" },
         { name: "Add multiple fees", icon: "../../assets/img/white_roleadd24.svg", direction: "left" }
       ];
 

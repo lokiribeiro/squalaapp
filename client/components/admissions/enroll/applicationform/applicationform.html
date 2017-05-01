@@ -1,0 +1,76 @@
+<md-toolbar class="md-primary md-hue-2" layout="row" layout-align="center center">
+  <div flex="100" flex-gt-sm="70" layout="column" layout-fill>
+    <div class="md-toolbar-tools">
+      <div ng-click="goBack()" >
+      <md-tooltip md-direction="bottom">
+        Back
+      </md-tooltip>
+      <md-icon md-svg-icon="../../assets/img/white_backarrow24.svg"></md-icon>
+    </div>
+      <h2 class="md-flex" style="padding-left: 24px !important; color: #fff !important;">View application form</h2>
+      <span flex></span>
+    </div>
+  </div>
+</md-toolbar>
+
+<div class="anim-slide-below-fade" data-anim-speed="500">
+  <div layout="row" layout-align="center start" layout-wrap layout-fill ng-repeat="applicant in applicants">
+    <div flex layout="row" flex-gt-xs="70" layout-wrap layout-fill layout-padding >
+    <div flex-gt-md="30" flex="100" flex-gt-xs="100" layout="column">
+      <md-card>
+        <md-card-header layout="row" layout-align="center center">
+            <img ng-src="{{applicant.photo}}" class="avatar-profile" alt="photo"/>
+        </md-card-header>
+        <md-card-title>
+          <md-card-title-text layout="column" layout-align="center center" layout-wrap>
+            <span class="md-headline" layout-wrap layout="row" layout-align="center center"><span>{{applicant.lastname}}</span> <span>, </span> <span>{{applicant.firstname + ' ' + applicant.middlename}}</span></span>
+            <span class="md-subhead" style="padding-top: 0 !important;">{{applicant.branchname}}</span>
+            <div layout="row" style="padding-top: 0 !important;">
+              <!-- <span class="md-subhead" >{{role._id == profile.profiles_userroleID ? role.role + ' ' : ''}}</span> -->
+              <span class="md-subhead"> {{applicant.status}}</span>
+            </div>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-actions>
+          <md-card-icon-actions  layout="row" layout-align="center center">
+            <md-button class="md-icon-button " aria-label="transfer" ngf-select="uploadFiles($file, $invalidFiles)" >
+              <md-tooltip md-direction="bottom">
+                upload profile photo
+              </md-tooltip>
+              <md-icon md-svg-icon="../../assets/img/black_camera24.svg"></md-icon>
+            </md-button>
+          </md-card-icon-actions>
+        </md-card-actions>
+      </md-card>
+    </div>
+
+
+  <div flex-gt-md="70" flex="100" flex-gt-xs="100" >
+    <md-card>
+    <md-tabs md-dynamic-height md-border-bottom>
+          <md-tab label="Info">
+              <applicantinfo></applicantinfo>
+          </md-tab>
+          <md-tab label="Guardian" >
+              <guardianinfo></guardianinfo>
+          </md-tab>
+          <md-tab label="Fees" >
+              <feesaccount></feesaccount>
+          </md-tab>
+          <md-tab label="Apps" >
+              <appsaccount></appsaccount>
+          </md-tab>
+          <md-tab label="Drive" >
+              <drive></drive>
+          </md-tab>
+        </md-tabs>
+    </md-card>
+
+      <div layout="row" layout-align = "center start" style="margin-top: 8px !important;" ng-show="doneSearching">
+        <md-progress-circular md-mode="indeterminate" ng-show="doneSearching" ></md-progress-circular>
+      </div>
+
+  </div>
+  </div>
+  </div>
+</div>

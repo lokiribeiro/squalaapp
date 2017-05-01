@@ -49,6 +49,7 @@ class parentschoolCtrl{
                 var branches = Branches.find(
                       selector, { limit: limit, skip: skip, sort: {branch_name: sort} }
                   );
+                console.info('branches', branches);
                 return branches;
         },
         totalBranches(){

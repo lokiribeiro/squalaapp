@@ -1,0 +1,164 @@
+<md-toolbar class="md-primary md-hue-2" layout="row" layout-align="center center">
+  <div flex="100" flex-gt-sm="80" layout="column" layout-fill>
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex" style="padding-left: 24px !important; color: #fff !important;">View all applicants</h2>
+      <span flex></span>
+    </div>
+  </div>
+</md-toolbar>
+
+
+<div class="anim-slide-below-fade" data-anim-speed="500">
+
+  <div layout="row" layout-align="center start" layout-wrap layout-fill>
+    <div flex layout="row" flex-gt-xs="80" layout-wrap layout-fill layout-padding >
+    <div flex-gt-md="30" flex="100" flex-gt-xs="100">
+      <md-card>
+      <md-list flex layout-fill >
+          <md-subheader >
+            <div layout-fill layout="row" layout-align="space-between center" >
+            <md-icon md-svg-icon="../../assets/img/black_filter24.svg"></md-icon>
+            <span flex>Filters</span>
+            <md-button ng-show="show" class="md-icon-button" aria-label="more" ng-click="null">
+              <md-icon ng-click="showMore()" md-svg-icon="../../assets/img/black_expandmore24.svg"></md-icon>
+            </md-button>
+            <md-button ng-hide="show" class="md-icon-button" aria-label="less" ng-click="null">
+              <md-icon ng-click="showMore()" md-svg-icon="../../assets/img/black_expandless24.svg"></md-icon>
+            </md-button>
+          </div>
+          </md-subheader>
+          <md-list-item class="md-2-line" ng-click="showRole(fee)" ng-repeat="fee in feescategories" ng-hide="show">
+            <div class="md-list-item-text" layout="column" ng-hide="fee.code == selected.code">
+              <h3>{{fee.code}}</h3>
+            </div>
+            <div class="md-list-item-text" layout="row" layout-align="start center" ng-show="fee.code == selected.code">
+              <h3><md-icon md-svg-icon="../../assets/img/red_check24.svg"></md-icon> {{fee.code}}</h3>
+            </div>
+          </md-list-item>
+      </md-list>
+      <md-list-item ng-hide="show">
+        <div class="md-toolbar-tools" layout="row" >
+          <span flex class="md-subhead">{{'Gender ' + page2 }}</span>
+        </div>
+      </md-list-item>
+    </md-card>
+    </div>
+
+
+  <div flex-gt-md="70" flex="100" flex-gt-xs="100" style="padding-top: 16px !important;">
+    <md-card layout="row" layout-padding style="margin-top: 0 !important; margin-bottom: 8px !important;">
+    <form name="filter.form" layout-fill  style="background-color: transparent !important;">
+
+      <div layout="row" >
+          <md-icon md-svg-icon="../../assets/img/black_search24.svg"></md-icon>
+          <input flex ng-model="searchText" type="text" placeholder="Search" style="border-radius: 4px !important; border-style: hidden !important; margin-left: 12px !important; background-color: transparent !important; color: #555 !important;" >
+          <md-button class="md-icon-button" aria-label="close" ng-click="closeFilter()" ng-hide="searchText == null" style="padding: 0px !important; margin: 0 !important; min-height: 24px !important; width: 24px !important; height: 24px !important;">
+          <md-tooltip md-direction="bottom">
+            Close
+          </md-tooltip>
+          <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
+          </md-button>
+      </div>
+    </form>
+    </md-card>
+
+
+      <md-card ng-if="notdoneSearching" ng-repeat="applicant in applicants" style="margin-bottom: 1px !important; margin-top: 0 !important;" ng-cloak>
+        <md-card-header>
+          <md-card-avatar>
+            <md-tooltip md-direction="bottom">
+              {{applicant.lastname + ', ' + applicant.firstname + ' ' + applicant.middlename}}
+            </md-tooltip>
+            <a ng-click="viewAppForm(applicant)">
+            <img class="md-user-avatar" style="height: 40px !important;" src="{{applicant.photo}}"/>
+            </a>
+          </md-card-avatar>
+          <md-card-header-text >
+            <span class="md-title"><a ng-click="viewAppForm(applicant)">{{applicant.lastname + ', ' + applicant.firstname + ' ' + applicant.middlename}}</a></span>
+            <span hide-xs class="md-subhead">{{applicant.gradelevel}}</span>
+          </md-card-header-text>
+          <md-menu md-position-mode="target-right target" md-offset="0 48">
+            <md-button class="md-icon-button" aria-label="Apps" ng-click="$mdOpenMenu($event)">
+              <md-tooltip md-direction="bottom">
+                more
+              </md-tooltip>
+              <md-icon md-svg-icon="../../assets/img/black_more24.svg"></md-icon>
+            </md-button>
+            <md-menu-content width="2" >
+              <md-menu-item >
+                <md-button ng-click="viewAppForm(applicant)">
+                    <div layout="row" flex>
+                      <p flex>Details</p>
+                      <!-- <md-icon md-svg-icon="../../assets/img/black_launch24.svg"></md-icon> -->
+                    </div>
+                </md-button>
+              </md-menu-item>
+              <md-menu-item >
+                <md-button ng-click="openDialog($event, applicant)">
+                    <div layout="row" flex>
+                      <p flex>Delete</p>
+                      <!-- <md-icon md-svg-icon="../../assets/img/black_delete24.svg"></md-icon>-->
+                    </div>
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </md-card-header>
+      </md-card>
+
+      <div layout="row" layout-align = "center start" style="margin-top: 8px !important;" ng-show="doneSearching">
+        <md-progress-circular md-mode="indeterminate" ng-show="doneSearching" ></md-progress-circular>
+      </div>
+
+
+            <div class="md-toolbar-tools" layout="row" >
+              <span flex class="md-subhead">{{'showing page ' + page + ' of ' + maxPage }}</span>
+              <md-button ng-hide="maxPage == 1 || page == 1" class="md-icon-button" aria-label="prev" ng-click="loadLess()">
+                <md-tooltip md-direction="bottom">
+                  Previous
+                </md-tooltip>
+                <md-icon md-svg-icon="../../assets/img/black_chevronleft24.svg"></md-icon>
+              </md-button>
+              <md-button ng-hide="(maxPage == 1 || page == maxPage) " class="md-icon-button" aria-label="next" ng-click="loadMore()" >
+                <md-tooltip md-direction="bottom">
+                  Next
+                </md-tooltip>
+                <md-icon ng-click="null" md-svg-icon="../../assets/img/black_chevronright24.svg"></md-icon>
+              </md-button>
+            </div>
+             <!--<span hide-xs class="md-subhead">load more</span>-->
+
+
+
+  </div>
+  </div>
+  </div>
+
+
+</div>
+
+
+<div ng-cloak >
+<md-fab-speed-dial ng-hide="demo.hidden" md-direction="up" md-scale md-open="demo.isOpen"
+                       class="md-scale md-fab-bottom-right" ng-class="{ 'md-hover-full': demo.hover }"
+                       ng-mouseenter="demo.isOpen=true" ng-mouseleave="demo.isOpen=false" ng-cloak style="position: fixed !important;">
+      <md-fab-trigger>
+        <md-button aria-label="menu" class="md-fab md-accent">
+          <md-tooltip md-direction="left" md-visible="tooltipVisible">Add</md-tooltip>
+          <md-icon md-svg-src="../../assets/img/white_add24.svg" aria-label="add"></md-icon>
+        </md-button>
+      </md-fab-trigger>
+      <md-fab-actions>
+        <div ng-repeat="item in items">
+          <md-button aria-label="{{item.name}}" class="md-fab md-raised md-mini md-accent"
+                     ng-click="openDialog($event, item)">
+            <md-tooltip md-direction="{{item.direction}}" md-visible="tooltipVisible"
+                        md-autohide="false">
+              {{item.name}}
+            </md-tooltip>
+            <md-icon md-svg-src="{{item.icon}}" aria-label="{{item.name}}"></md-icon>
+          </md-button>
+        </div>
+      </md-fab-actions>
+</md-fab-speed-dial>
+</div>

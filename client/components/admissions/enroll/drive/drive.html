@@ -1,0 +1,59 @@
+<md-toolbar class="md-table-toolbar md-default" ng-hide="filter.show || selected4.length" flex>
+<div class="md-toolbar-tools">
+  <md-button class="md-default md-raised" aria-label="create" ng-click="addStaff($event, selected)" ng-show="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
+    UPLOAD REQUIREMENT
+  </md-button>
+</div>
+</md-toolbar>
+<md-toolbar class="md-table-toolbar md-default"  flex="100" ng-show="filter.show">
+<div class="md-toolbar-tools">
+  <form name="filter.form" flex>
+    <md-input-container md-no-float class="md-block">
+    <md-icon md-svg-icon="../../assets/img/black_search24.svg"></md-icon>
+    <input type="text" ng-model="searchText" placeholder="search">
+    </md-input-container>
+  </form>
+  <md-button class="md-icon-button" aria-label="close" ng-click="closeFilter()">
+  <md-tooltip md-direction="bottom">
+    Close
+  </md-tooltip>
+  <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
+  </md-button>
+</div>
+</md-toolbar>
+<md-toolbar class="md-table-toolbar md-primary md-hue-1 " flex="100" ng-show="selected4.length">
+<div class="md-toolbar-tools" layout-align="space-between center">
+  <div ng-model="selected" flex="80">{{selected4[0].profiles_firstname}} {{selected4[0].profiles_lastname}}</div>
+  <md-button class="md-primary md-raised" aria-label="unassign" ng-click="openProfile2(selected4)" ng-show="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
+    VIEW USER
+  </md-button>
+</div>
+</md-toolbar>
+
+
+<md-table-container>
+  <table md-table md-row-select ng-model="selected4" md-progress="promise" flex>
+    <thead md-head md-order="query.order" md-on-reorder="profiles" class="md-head">
+      <tr md-row>
+        <th md-column md-order-by="profile.profiles_firstname" ng-click="changeSort()" ><span>Requirements</span></th>
+        <th md-column ><span>Email</span></th>
+        <th md-column ><span>Role</span></th>
+      </tr>
+    </thead>
+    <tbody md-body ng-repeat="applicant in applicants track by $index">
+      <tr md-row md-select="document" md-select-id="profile._id" md-auto-select ng-repeat="document in applicant.documents track by $index" ng-cloak>
+        <td md-cell>{{document.requirementID}}</td>
+        <td md-cell>{{document.filename}}</td>
+        <td md-cell><b ng-repeat="requirementdoc in requirementdocs"> {{requirementdoc._id == document.requirementID ? requirementdoc.requirementName : ''}}</b> </td>
+      </tr>
+    </tbody>
+  </table>
+</md-table-container>
+<md-toolbar class="md-table-toolbar md-default" flex="100" ng-show="selected4.length">
+<div class="md-toolbar-tools" layout-align="space-between center">
+  <md-button class="md-default md-raised" aria-label="unassign" ng-click="removeUser($event, selected4)" ng-show="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
+    REMOVE USER
+  </md-button>
+</div>
+</md-toolbar>
+<md-table-pagination ng-hide="filter.show || selected4.length" md-limit="perPage" md-page="page" md-total="{{totalProfiles}}" md-on-paginate="profiles" md-page-select></md-table-pagination>

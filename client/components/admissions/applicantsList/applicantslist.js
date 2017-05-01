@@ -13,60 +13,6 @@ class ApplicantslistCtrl{
   constructor($scope, $timeout, $filter, $window, $mdSidenav, $log, $mdDialog, $state, $q, $mdToast, $rootScope){
       'ngInject';
 
-      angular.element(document).ready(function () {
-        $window.loading_screen.finish();
-
-        $scope.promise = $timeout(function(){
-          var userDetails = Meteor.userId();
-          var selector = {profiles_userID: userDetails};
-          var profileDetails = Profiles.find(selector);
-          var count = profileDetails.count();
-
-
-
-          profileDetails.forEach(function(profileDetail){
-            $scope.firstname = profileDetail.profiles_firstname;
-            $scope.lastname = profileDetail.profiles_lastname;
-            $scope.branchName = profileDetail.profiles_branch;
-            $scope.branchID = profileDetail.profiles_branchID;
-          });
-
-          var toasted = $scope.branchName + ': Hi ' + $scope.firstname + ' ' + $scope.lastname + '!';
-          var pinTo = $scope.getToastPosition();
-
-          $mdToast.show(
-            $mdToast.simple()
-            .textContent(toasted)
-            .position(pinTo )
-            .hideDelay(3000)
-            .theme('Admissions')
-            .action('HIDE')
-            .highlightAction(true)
-            .highlightClass('md-accent')
-          );
-        }, 2000);
-      });
-
-      $scope.getToastPosition = function() {
-        sanitizePosition();
-
-        return Object.keys($scope.toastPosition)
-        .filter(function(pos) { return $scope.toastPosition[pos]; })
-        .join(' ');
-      };
-
-      $scope.toastPosition = angular.extend({},last);
-
-      function sanitizePosition() {
-        var current = $scope.toastPosition;
-
-        if ( current.bottom && last.top ) current.top = false;
-        if ( current.top && last.bottom ) current.bottom = false;
-        if ( current.right && last.left ) current.left = false;
-        if ( current.left && last.right ) current.right = false;
-
-        last = angular.extend({},current);
-      }
 
 
       $scope.subscribe('applicantsNew', function () {
@@ -733,8 +679,8 @@ class ApplicantslistCtrl{
     }
 }
 
-app.component('applicantslist', {
-    templateUrl: 'client/components/admissions/applicantsList/applicantslist.html',
-    controllerAs: 'applicantslist',
+app.component('applicantslists', {
+    templateUrl: 'client/components/admissions3/applicantsList/applicantslist.html',
+    controllerAs: 'applicantslists',
     controller: ApplicantslistCtrl
 })

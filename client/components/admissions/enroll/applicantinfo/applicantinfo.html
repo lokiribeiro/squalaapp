@@ -1,0 +1,121 @@
+
+<div layout="row" layout-align="start start" layout-wrap ng-repeat="applicant in applicants">
+  <div layout="column" layout-align="start start"  flex-gt-md="50" flex="100" flex-gt-xs="100" layout-padding >
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="applicant.applicationNum">APPLICATION NUMBER</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-if="applicant.applicationNum">{{applicant.applicationNum}}</h5>
+
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="applicant.middlename || applicant.firstname || applicant.lastname">STUDENT NAME</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-if="applicant.middlename || applicant.firstname || applicant.lastname" ng-hide="show">{{applicant.firstname + ' '}} {{applicant.middlename + ' ' + applicant.lastname}}</h5>
+    <span layout="row" flex ng-if="show" layout-fill>
+    <md-input-container  layout-fill md-no-float class="md-block" style="margin: 10px 0 !important;">
+        <input ng-model="applicant.firstname" aria-label="firstname" type="text" ng-required placeholder="firstname">
+    </md-input-container>
+
+    <md-input-container layout-fill md-no-float class="md-block" style="margin: 10px 0 !important;">
+        <input ng-model="applicant.lastname" aria-label="lastname" type="text" ng-required placeholder="lastname">
+    </md-input-container>
+
+    </span>
+    <span layout="column" flex ng-if="show" layout-fill>
+    <md-input-container  layout-fill md-no-float class="md-block" style="margin: 10px 0 !important;">
+        <input ng-model="applicant.middlename" aria-label="firstname" type="text" ng-required placeholder="middlename">
+    </md-input-container>
+
+    </span>
+
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="applicant.birthday">BIRTHDAY</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-if="applicant.birthday" ng-hide="show">{{applicant.birthday  | date :'mediumDate'}}</h5>
+    <span layout="row" flex ng-if="show" layout-fill>
+      <md-input-container>
+            <label>Birth date</label>
+            <md-datepicker ng-model="applicant.birthday" name="dateField" md-min-date="minDate"
+              md-max-date="maxDate"></md-datepicker>
+
+            <div ng-messages="myOtherForm.dateField.$error">
+              <div ng-message="valid">The entered value is not a date!</div>
+              <div ng-message="required">This date is required!</div>
+              <div ng-message="mindate">Date is too early!</div>
+              <div ng-message="maxdate">Date is too late!</div>
+            </div>
+          </md-input-container>
+        </span>
+  </div>
+  <div layout="column" layout-align="start start"  flex-gt-md="50" flex="100" flex-gt-xs="100" layout-padding>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="applicant.primaryemail">EMAIL</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-if="applicant.primaryemail" ng-hide="show">{{applicant.primaryemail}}</h5>
+    <span layout="column" ng-if="show" layout-fill>
+    <md-input-container md-no-float class="md-block" style="margin: 10px 0 !important;" ng-if="applicant.primaryemail">
+     <!-- Use floating placeholder instead of label -->
+     <input ng-model="applicant.primaryemail" type="email" placeholder="Primary Email" >
+   </md-input-container>
+    </span>
+
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="applicant.gradelevel">ENROLLING TO GRADE LEVEL</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-if="applicant.gradelevel" ng-hide="show">{{applicant.gradelevel}}</h5>
+    <span layout="column" ng-if="show" layout-fill>
+      <md-input-container  class="md-block" style="margin: 10px 0 !important;">
+        <label>Grade level</label>
+        <md-icon md-svg-icon="../../assets/img/black_gradelevel24.svg"></md-icon>
+        <md-select aria-label="user" ng-model="applicant.gradelevel" md-on-close="clearSearchTerm()"  data-md-container-class="selectdemoSelectHeader" required>
+          <md-option ng-value="applicant.gradelevel | filter: applicant.gradelevel" ng-repeat="gradelevel in gradelevels">{{gradelevel.gradelevel}}</md-option>
+        </md-select>
+        <p class="md-caption">Select grade level to enroll to </p>
+      </md-input-container>
+    </span>
+
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="applicant.branchname">PREFERRED CAMPUS</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-if="applicant.branchname" ng-hide="show">{{applicant.branchname}}</h5>
+    <span layout="row" flex ng-if="show" layout-fill>
+      <md-input-container  class="md-block" style="margin: 10px 0 !important;" ng-if="applicant.branchname">
+        <label>Campus</label>
+        <md-icon md-svg-icon="../../assets/img/black_branch24.svg"></md-icon>
+        <md-select aria-label="user" ng-model="applicant.branchname" md-on-close="clearSearchTerm()"  data-md-container-class="selectdemoSelectHeader" required>
+         <md-option ng-value="applicant.branchname" ng-repeat="branch in branches">{{branch.branch_name}}</md-option>
+       </md-select>
+     <p class="md-caption">Applicant campus preference</p>
+   </md-input-container>
+  </span>
+
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="profile.profiles_address">ADDRESS</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-if="profile.profiles_address" ng-hide="show">{{profile.profiles_address}} {{profile.profiles_city}}  {{profile.profiles_province}}</h5>
+  </div>
+
+  <md-divider></md-divider>
+  <div layout="row" layout-align="start start" layout-fill>
+    <div layout="column" layout-align="start start"   flex layout-padding >
+      <h4 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" >OTHER INFO</h4>
+    </div>
+  </div>
+<div layout="row" layout-align="start start" layout-wrap layout-fill>
+  <div layout="column" layout-align="start start"  flex-gt-md="50" flex="100" flex-gt-xs="100" layout-padding >
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" >DATE APPLIED</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" >{{ applicant.createdAt | date : medium  }}</h5>
+  </div>
+  <div layout="column" layout-align="start start"  flex-gt-md="50" flex="100" flex-gt-xs="100" layout-padding >
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" >ENCODED BY</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;">{{applicant.encoderName}}</h5>
+  </div>
+</div>
+
+
+
+
+</div>
+
+
+
+
+<div layout="row">
+  <md-button class="md-primary" md-no-ink aria-label="create" ng-click="editNow()" ng-hide="($root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin') && show">
+    Edit Profile
+  </md-button>
+  <span flex></span>
+  <md-button class="md-default" md-no-ink aria-label="create" ng-click="editNow()" ng-if="show">
+    Cancel
+  </md-button>
+  <md-button class="md-primary" md-no-ink aria-label="create" ng-click="editNow()" ng-if="show">
+    Save
+  </md-button>
+</div>
+
+<!-- <md-divider></md-divider>-->

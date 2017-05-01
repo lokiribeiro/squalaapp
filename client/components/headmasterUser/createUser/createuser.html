@@ -11,22 +11,24 @@
 
     <!-- hide here -->
     <span layout="row" flex ng-hide="createdNow" >
-    <md-input-container  md-no-float class="md-block" style="margin: 10px 0 !important;">
-        <input ng-model="create.register.firstname" aria-label="firstname" type="text" placeholder="First Name" required>
+    <md-input-container  class="md-block" style="margin: 10px 0 !important;">
+      <label>First name</label>
+      <input ng-model="create.register.firstname" aria-label="firstname" type="text" required>
     </md-input-container>
-    <md-input-container md-no-float class="md-block" style="margin: 10px 0 !important;">
-        <input ng-model="create.register.lastname" aria-label="lastname" type="text" placeholder="Last Name" required>
+    <md-input-container class="md-block" style="margin: 10px 0 !important;">
+      <label>Last name</label>
+      <input ng-model="create.register.lastname" aria-label="lastname" type="text" required>
     </md-input-container>
     </span>
     <span layout="column" ng-hide="createdNow" layout-fill>
-    <md-input-container flex="100"  md-no-float class="md-block" style="margin: 10px 0 !important;">
+    <md-input-container flex="100"  class="md-block" style="margin: 10px 0 !important;">
       <md-icon md-svg-icon="../../assets/img/black_person24.svg"></md-icon>
-        <input ng-model="create.register.username" aria-label="email" type="text" placeholder="Username" required>
+      <input ng-model="create.register.username" aria-label="email" type="text" placeholder="Username (required)" required>
     </md-input-container>
-    <md-input-container md-no-float class="md-block" style="margin: 10px 0 !important;">
+    <md-input-container class="md-block" style="margin: 10px 0 !important;">
      <!-- Use floating placeholder instead of label -->
      <md-icon md-svg-icon="../../assets/img/black_email24.svg"></md-icon>
-     <input ng-model="create.register.email" type="email" placeholder="Primary Email" required >
+     <input ng-model="create.register.email" type="email" placeholder="Primary Email (required)" required >
    </md-input-container>
     </span>
     <span layout="row" ng-hide="createdNow">
@@ -36,18 +38,16 @@
     <md-toolbar ng-show="existing" class="md-primary" layout="row" layout-fill layout-padding layout-margin>
     <p class="md-body-1">Failed to process request</p>
     </md-toolbar>
-    <span layout="column" layout-align="start start" flex ng-if="createdNows">
+    <span layout="column" layout-align="center start" flex ng-if="createdNows">
       <span layout="row">
-      <p>
-        A new user named <b>{{registered.firstname}} {{registered.lastname}} </b> has been created
-      </p>
+        Your newest user can now start using Squala
       </span>
       <span layout="row">
-      <p>
-        Sign in to Squala for APEC Schools services at
-        https://www.squalaforapecschools.edu.ph
-      </p>
+        <h2 style="font-weight:normal">{{registered.firstname}} {{registered.lastname}} </h2>
       </span>
+    </span>
+    <span layout="row" style="background-color: #fafafa;" flex="100" ng-if="createdNows" layout-fill>
+      <img ng-src="../../assets/img/headmaster_icon.png" style="margin: auto 3px auto 0;" >
       <span layout="row" layout-align="start start" layout-fill>
       <p>
         Username: <b>{{registered.username}}</b>
@@ -57,11 +57,6 @@
         Password: <b>{{registered.password}}</b>
       </p>
     </span>
-    </span>
-    <span layout="row" style="background-color: #fafafa;" flex="100" ng-if="createdNows" layout-fill>
-      <img ng-src="../../assets/img/headmaster_icon.png" style="margin: auto 3px auto 0;" >
-      Need to add user anytime, anywhere?
-      Use Squala mobile app.
     </span>
     </md-dialog-content>
     <md-dialog-actions >

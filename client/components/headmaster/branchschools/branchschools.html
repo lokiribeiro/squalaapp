@@ -68,7 +68,7 @@
 </md-table-container>
 <md-table-pagination ng-show="$root.userLoggedInRole == 'superadmin'" md-limit="perPage" md-limit-options="[5, 10, 15]" md-page="page" md-total="{{totalBranches}}" md-on-paginate="branches" md-page-select></md-table-pagination ng-hide="branch.branches_type == 'parent'">
 </md-card> -->
-<h2 style="font-weight:normal; color:#555; margin-bottom: 0 !important; margin-top: 0 !important;" >Branch School{{totalBranches > 1 ? 's' : ''}}</h2>
+<h2 style="font-weight:normal; color:#555; margin-bottom: 0 !important; margin-top: 0 !important;" ng-if="totalBranches">Branch School{{totalBranches > 1 ? 's' : ''}}</h2>
 
   <md-card ng-repeat="branch in branches"  style="margin-bottom: 1px !important; margin-top: 0 !important;" ng-hide="(($root.userLoggedInRole != 'superadmin' && branch.branches_type == 'parent') || ($root.userLoggedInRole != 'superadmin' && branch._id != $root.userLoggedInBranch) || ($root.userLoggedInRole == 'superadmin' && branch._id != $root.userLoggedInBranch && branch.branches_type == 'parent') || (branch.branches_type == 'parent'))" >
     <md-card-header>

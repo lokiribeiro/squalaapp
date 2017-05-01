@@ -1,41 +1,4 @@
-<md-toolbar class="md-primary md-hue-2">
-    <div class="md-toolbar-tools">
-      <img ng-src="../../assets/img/admissions_icon.png" style="margin: auto 3px auto 0;" >
-      <h2 class="md-flex" style="color: #fff !important;">Admissions</h2>
-      <h2 class="md-flex" style="color: #fff !important; border-left: 1px solid rgba(255,255,255,0.2) !important; margin-left: 24px !important; padding-left: 24px !important;">New applications</h2>
-      <span layout-padding flex>
-
-        <md-card layout="row" flex flex-gt-xs="60" style="background-color: #FFAB40 !important; border-radius: 4px !important; box-shadow: none !important; margin: 0px !important;" >
-        <form name="filter.form" layout-fill  style="background-color: transparent !important;">
-
-          <div layout="row" >
-              <md-icon md-svg-icon="../../assets/img/white_search24.svg"></md-icon>
-              <input flex ng-model="searchText" type="search" placeholder="Search" style="border-radius: 4px !important; border-style: hidden !important; margin-left: 12px !important; background-color: transparent !important; color: #fff !important;" >
-              <md-button class="md-icon-button" aria-label="close" ng-click="closeFilter()" ng-hide="searchText == null" style="padding: 0px !important; margin: 0 !important; min-height: 24px !important; width: 24px !important; height: 24px !important;">
-              <md-tooltip md-direction="bottom">
-                Close
-              </md-tooltip>
-              <md-icon md-svg-icon="../../assets/img/white_close24.svg"></md-icon>
-              </md-button>
-          </div>
-        </form>
-        </md-card>
-
-
-
-      </span>
-      <md-button class="md-icon-button" aria-label="Apps" ng-click="$mdOpenMenu($event)">
-        <md-tooltip md-direction="bottom">
-          Help
-        </md-tooltip>
-        <md-icon md-svg-icon="../../assets/img/white_help24.svg"></md-icon>
-      </md-button>
-    </div>
-</md-toolbar>
-
-
-
-  <md-content layout="row" layout-align="center center" layout-padding style="background-color:transparent !important;" layout-fill>
+<div layout="row" layout-align="center center" layout-padding style="background-color:transparent !important;" layout-fill>
     <div layout="column" flex="100" flex-gt-sm="70" layout-align="start start" layout-padding layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 10px;"  ng-cloak>
 
 
@@ -157,4 +120,4 @@
 
 </div>
 </div>
-</md-content>
+</div>

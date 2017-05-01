@@ -2,27 +2,27 @@
   <form name="createuserForm" layout="column" layout-align="start center">
     <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
     <div layout="row" flex>
-      <h2 style="font-weight:normal" ng-hide="createdNow">Add user to {{userType}}</h2>
+      <h2 style="font-weight:normal" ng-hide="createdNow">Upload Requirement</h2>
       <h2 style="font-weight:normal" ng-if="done">Processing</h2>
-      <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Added user</h2>              
+      <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Requirement uploaded</h2>
     </div>
     <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
 
     <!-- address -->
     <span layout="column" ng-hide="createdNow" layout-fill>
       <md-input-container flex="100"  class="md-block" style="margin: 10px 0 !important;">
-        <label>users</label>
-        <md-icon md-svg-icon="../../assets/img/black_person24.svg"></md-icon>
-        <md-select aria-label="user" ng-model="create.register.user" md-on-close="clearSearchTerm()"  data-md-container-class="selectdemoSelectHeader" multiple>
+        <label>requirement type</label>
+        <md-icon md-svg-icon="../../assets/img/black_file24.svg"></md-icon>
+        <md-select aria-label="user" ng-model="applicant.requirementType" md-on-close="clearSearchTerm()"  data-md-container-class="selectdemoSelectHeader">
           <md-select-header class="demo-select-header">
               <input ng-model="searchTerm"
                      type="search"
-                     placeholder="Search for users"
+                     placeholder="Search for requirement type"
                      class="demo-header-searchbox md-text">
             </md-select-header>
-            <md-option ng-value="user" ng-repeat="user in users | filter:searchTerm">{{user.name}}</md-option>
+            <md-option ng-value="requirementdoc._id" ng-repeat="requirementdoc in requirementdocs | filter:searchTerm">{{requirementdoc.requirementName}}</md-option>
         </md-select>
-        <p class="md-caption">Add users to this profile. </p>
+        <p class="md-caption">Upload a document. </p>
       </md-input-container>
     </span>
     <span layout="row" ng-hide="createdNow">
@@ -33,8 +33,8 @@
     <md-button ng-hide="createdNow" ng-click="closeDialog()">
       CANCEL
     </md-button>
-      <md-button type="submit" ng-click="addUsers(create.register)" ng-hide="createdNow" class="md-primary">
-        ADD
+      <md-button type="submit" ngf-select="uploadFiles($file, $invalidFiles, applicant.requirementType)" aria-label="transfer" ngf-max-height="1000" ng-if="applicant.requirementType" class="md-primary">
+        UPLOAD
       </md-button>
       <!-- end hide -->
       <md-button ng-if="createdNows" ng-click="createAnother()">
