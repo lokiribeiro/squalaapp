@@ -14,6 +14,7 @@ import Navigations from '/imports/models/navigations.js';
 import '../imports/ui/anim-in-out.js';
 import ngInfiniteScroll from 'ng-infinite-scroll';
 import ngFileUpload from 'ng-file-upload';
+import ngclipboard from 'ngclipboard';
 //import { FilesCollection } from 'meteor/ostrio:files';
 import '../imports/ui/papaparse.js';
 //import '../imports/ui/taggedInfiniteScroll.js';
@@ -21,7 +22,7 @@ import '../imports/ui/papaparse.js';
 
 
 export var app = angular.module('squala',
-    [angularMeteor, ngMaterial, uiRouter, 'accounts.ui', utilsPagination, ngAnimate, 'material.components.expansionPanels', mdDataTable, 'anim-in-out', ngFileUpload, 'infinite-scroll']).value('THROTTLE_MILLISECONDS', 250);
+    [angularMeteor, ngMaterial, uiRouter, 'accounts.ui', utilsPagination, ngAnimate, 'material.components.expansionPanels', mdDataTable, 'anim-in-out', ngFileUpload, 'infinite-scroll', ngclipboard]).value('THROTTLE_MILLISECONDS', 250);
 
 app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdThemingProvider, $mdIconProvider, $provide) {
     'ngInject';
